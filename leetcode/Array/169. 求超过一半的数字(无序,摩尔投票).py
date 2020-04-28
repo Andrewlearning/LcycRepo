@@ -10,7 +10,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if nums is None or len(nums) == 0: return 0
+        if nums is None or len(nums) == 0:
+            return 0
 
         res = nums[0]
         count = 1
@@ -19,9 +20,11 @@ class Solution(object):
             if count == 0:
                 res = nums[i]
                 count = 1
+
             elif res == nums[i]:
                 count += 1
-            else: count -= 1
+            else:
+                count -= 1
 
         return res
 
@@ -34,6 +37,7 @@ https://algocasts.io/episodes/VlWd8W06
 即使是极端情况，最小的数字是众数，那么nums[len//2]依旧能返回这个数，所以直接这样做
 就可以了。时间 O(nlogn),空间O(1)
 
+摩尔投票法
 时间 O(n),空间O(1)
 我们用res 来记录当前数量最多的数字
 我们用count 来记录当前res记录的数字出现的次数，

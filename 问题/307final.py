@@ -1,4 +1,4 @@
-
+from numpy import *
 
 class V:
     def __init__(self, x, y, z):
@@ -52,12 +52,18 @@ def q3helper(v1,v2,v3):
     a,b,c,d = coeff_helper(v1,v2,v3)
     print(a,b,c,d)
 
-    matrix = [[round(a**2,2 ), a*b, a*c, a*d],
+    matrix = [[a**2,a*b,a*c,a*d],
               [a*b, b**2, b*c, b*d],
-              [a*c, b*c, c*c, c*d],
-              [a*d, b*d, c*d, d*d]]
+              [a*c, b*c, c**2, c*d],
+              [a*d, b*d, c*d,d**2]]
 
-    return matrix
+    np.set_printoptions(suppress=True)
+
+    print(np.array(matrix))
+    return np.array(matrix)
+
+
+
 
 def total(sets):
 
@@ -68,11 +74,10 @@ def total(sets):
 
         for i in range(4):
             for j in range(4):
-                total[i][j] += matrix[i][j]
+                total[i][j] += total[i][j]
 
-    for _ in range(4):
-        print(total[_])
-    # print(total)
+
+
 
 
 
@@ -98,8 +103,8 @@ q2helper(v2,v7,v8,"278")
 q2helper(v2,v8,v9,"289")
 
 # v1connection = [[v1,v2,v6],[v1,v2,v9],[v1,v3,v9],[v1,v3,v4],[v1,v4,v5],[v1,v5,v6]]
-test = [[v1,v2,v6],[v1,v2,v9]]
-total(test)
+# test = [[v1,v2,v6],[v1,v2,v9]]
+# total(test)
 #
-# q3helper(v1,v2,v6)
-# q3helper(v1,v2,v9)
+q3helper(v1,v2,v6)
+q3helper(v1,v2,v9)
