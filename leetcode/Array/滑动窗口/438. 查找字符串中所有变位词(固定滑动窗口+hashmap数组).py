@@ -1,3 +1,15 @@
+"""
+输入:
+s: "cbaebabacd" p: "abc"
+
+输出:
+[0, 6]
+
+解释:
+起始索引等于 0 的子串是 "cba", 它是 "abc" 的字母异位词。
+起始索引等于 6 的子串是 "bac", 它是 "abc" 的字母异位词。
+"""
+
 class Solution(object):
     def equals(self, sc, pc):
         for i in range(len(sc)):
@@ -23,7 +35,8 @@ class Solution(object):
             sc[ord(s[i]) - ord("a")] += 1
             pc[ord(p[i]) - ord("a")] += 1
 
-        if self.equals(sc, pc): res.append(0)
+        if self.equals(sc, pc):
+            res.append(0)
 
         # 然后我们继续比较，我们为了方便把P的长度先弄出来
         # 接下来就是有点滑动窗口的感觉了，在sc的表上操作
@@ -33,6 +46,7 @@ class Solution(object):
         for i in range(pLen, len(s)):
             sc[ord(s[i]) - ord("a")] += 1
             sc[ord(s[i - pLen]) - ord("a")] -= 1
+
             if self.equals(sc, pc):
                 res.append(i - pLen + 1)
         return res
@@ -41,5 +55,6 @@ class Solution(object):
 Time: O(n*k), Space: O(k)
 https://algocasts.io/episodes/LPmwkomq
 答案：
-1.建立两个hashmap来代表两个字符串，然后利用滑动窗口来锁定参与对比的元素个数
+建立两个hashmap来代表两个字符串，然后我们把字符串中较短的那个串的长度，作为固定窗口的长度
+每次比较两个固定窗口中所包含元素的数量和种类是否相同
 """
