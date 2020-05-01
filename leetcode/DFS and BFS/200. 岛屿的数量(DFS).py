@@ -13,8 +13,11 @@ Output: 1
 """
 class Solution(object):
     def numIslands(self, grid):
-        if not grid or not grid[0]:return 0
-        self.m = len(grid); self.n =len(grid[0])
+        if not grid or not grid[0]:
+            return 0
+
+        self.m = len(grid)
+        self.n = len(grid[0])
         count = 0
 
         for i in range(self.m):
@@ -28,6 +31,7 @@ class Solution(object):
     def dfs(self,grid,i,j):
         if i < 0  or j < 0 or i >= self.m or j >= self.n or grid[i][j] != "1":
             return
+
         grid[i][j] = "0"
         self.dfs(grid,i+1,j)
         self.dfs(grid, i - 1, j)

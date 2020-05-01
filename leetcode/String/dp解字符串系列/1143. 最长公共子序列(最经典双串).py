@@ -1,6 +1,11 @@
 """
 Example 1:
 
+一个字符串的 子序列 是指这样一个新的字符串：
+它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+例如，"ace" 是 "abcde" 的子序列, （就是不一定需要是连续的）
+但 "aec" 不是 "abcde" 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。
+
 Input: text1 = "abcde", text2 = "ace"
 Output: 3
 Explanation: The longest common subsequence is "ace" and its length is 3.
@@ -33,6 +38,8 @@ class Solution(object):
 
 
 """
+本题可以和718放在一起看
+
 https://www.youtube.com/watch?v=Dumq-rceuac
 答案：
 1. 我们得把这两个字符串，一个放在横轴，一个放在纵轴，dp就是这个矩阵，用来记录当前横纵坐标上的最大递增子序列
