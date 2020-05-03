@@ -17,7 +17,7 @@ class Solution(object):
                     self.temp = 0
                     self.dfs(grid, i, j)
 
-                    # 对于200，增加了一个记录每个岛屿最大面积的变量
+                    # 对于200题，增加了一个记录每个岛屿最大面积的变量
                     if self.temp > res:
                         res = self.temp
 

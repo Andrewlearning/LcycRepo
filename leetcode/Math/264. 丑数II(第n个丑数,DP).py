@@ -1,6 +1,8 @@
 """
 Write a program to find the n-th ugly number.
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.
+
+一个数仅由 2,3,5的乘积构成
 """
 class Solution(object):
     def nthUglyNumber(self, n):
@@ -10,9 +12,12 @@ class Solution(object):
         """
         if n < 1:return -1
         res = [0]*n
+
+        # 第一个由2，3，5的乘积构成的数字 1 = 2^0 * 3^0 * 5^0
         res[0] = 1
 
         p2 = 0; p3 = 0; p5 = 0
+
         for i in range(1,n):
             minuglynum = min(res[p2]*2,res[p3]*3,res[p5]*5)
             res[i] = minuglynum

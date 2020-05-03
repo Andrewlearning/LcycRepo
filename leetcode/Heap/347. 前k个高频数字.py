@@ -1,4 +1,3 @@
-from collections import Counter
 from heapq import heapify, heappop
 
 
@@ -10,10 +9,20 @@ class Solution(object):
         :rtype: List[int]
         """
         res = []
-        dic = Counter(nums)
+        dic = {}
+
+        # 创建一个 key是num  value是频率的 字典
+        for num in nums:
+            if num in dic:
+                dic[num] += 1
+            else:
+                dic[num] = 1
+
+        # python heap 默认是最小堆，所以我们把每个元素的value取负数放进去，然后就能使这个heap 成为一个最大堆
         max_heap = [(-value, key) for key, value in dic.items()]
 
         heapify(max_heap)
+
         for i in range(k):
             res.append(heappop(max_heap)[1])
         return res

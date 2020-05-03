@@ -60,6 +60,7 @@ Time: O(nm) 我们首先考虑只有一个门的情况，宽度优先搜索最�
 Space: O(nm) 空间复杂度与队列的大小有关。我们最多将 m×n 个位置插入队列，所以空间最大为 m×n
 https://leetcode-cn.com/problems/walls-and-gates/solution/qiang-yu-men-by-leetcode/
 
+本题与994 用同一套解题模版
 
 """
 
