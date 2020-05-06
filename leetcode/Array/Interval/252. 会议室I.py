@@ -8,6 +8,7 @@ Example 2:
 Input: [[7,10],[2,4]]
 Output: true
 """
+
 class Solution(object):
     def meetingRooms(self, intervals):
         """

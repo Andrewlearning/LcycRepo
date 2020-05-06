@@ -1,7 +1,7 @@
 class MinStack(object):
 
-    #mini是一个辅助栈，与data同增同减，但是mini添加的时候
-    #是添加当前（栈自身，以及新增元素）的最小值
+    # mini是一个辅助栈，与data同增同减，但是mini添加的时候
+    # 是添加当前（栈自身，以及新增元素）的最小值
     def __init__(self):
         """
         initialize your data structure here.
