@@ -1,0 +1,3 @@
+在python 中，我们要善于使用collections.Counter(array)来创建词频的hashmap
+key = 单词
+value = 出现次数
