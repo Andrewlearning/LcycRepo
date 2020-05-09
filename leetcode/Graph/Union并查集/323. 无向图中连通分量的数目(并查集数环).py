@@ -15,6 +15,26 @@
 """
 
 
+class UF:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+
+    # 当一个node 不是指向自己的时候，那么它就要一直向上找，直到找到自己的父亲
+    def find(self, x):
+        if x != self.parent[a]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    # union这里，谁的做谁的父亲问题都不大，有涌向的可能就是效率问题
+    def union(self, p, q):
+        proot = self.find(p)
+        qroot = self.find(q)
+        if proot == qroot:
+            return
+
+        self.parent[proot] = qroot
+
+
 class Solution(object):
     def countComponents(self, n, edges):
         """
@@ -22,29 +42,17 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: int
         """
+        uf = UF(n)
 
-        # 并查集
-        father = [i for i in range(n)]
+        # 把所有的边都指向同一个最高节点，
+        for e1, e2 in edges:
+            uf.union(e1, e2)
 
-        # 找到当前节点的最高节点
-        def find(a):
-            if a != father[a]:
-                father[a] = find(father[a])
-            return father[a]
-
-        # 他所做的就是把找到他们的父亲，并把父亲进行一个指向
-        def union(a, b):
-            father[find(b)] = find(a)
-
-        # 把所有的边都指向同一个最高节点
-        for edge in edges:
-            union(edge[0], edge[1])
-
-        # 最后把所有的节点的再指向一次自己的最高父亲
+        #
         for i in range(n):
-            find(i)
+            uf.find(i)
 
-        return len(set(father))
+        return len(set(uf.parent))
 
 """
 261，323这两题可以放在一起看

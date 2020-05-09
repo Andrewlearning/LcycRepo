@@ -24,7 +24,7 @@ class UF:
 
 
 class Solution:
-    def equationsPossible(self, equations: List[str]) -> bool:
+    def equationsPossible(self, equations):
         uf = UF(equations)
 
         # a == b, 把a,b 连到同一个父亲节点里去

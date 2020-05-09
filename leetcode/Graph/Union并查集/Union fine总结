@@ -49,8 +49,76 @@ union 有两种方法
 1-->2  3
 1.union without by rank:合并时不考虑集合的深度 3-->1---->2
 
-我们一般使用两种优化方法：                                                                      /3
-1.union by rank:合并时将元素所在深度小的集合合并到元素所在深度大的集合(比较好，使树的高度没这么高) 1--->2
-2.路径压缩，把每个节点都指向它的最父节点，那么能使这个树的深度最低
+我们一般使用两种优化方法：
+1.union by rank:
+    合并时将元素所在深度小的集合合并到元素所在深度大的集合
+    例如一棵高度为2的树，和一个高度为3的树，那么高度为2的树就要融合到高度为3的树上去
+
+    作用是：(比较好，使树的高度没这么高)，降低find的次数
+
+2.路径压缩
+    在哪里：一般使在find函数里面编写
+    作用是：把每个节点都指向它的最父节点，那么能使这个树的深度最低, 使find的时间复杂度下降成O(1)
+
+
+
+
+一个样板，547，990
+这个模版只做了路径压缩，但是没有做union by rank， 一般解题用这个就已经足够了
+class UF:
+
+    def __init__(self, M):
+        n = len(M)
+        self.parent = [i for i in range(n)]
+
+    # Time O(1)
+    # 当一个node 不是指向自己的时候，那么它就要一直向上找，直到找到根节点
+    # 这种写法等于做了路径压缩，等于一路一直把自己的父节点都指向了根节点
+    def find(self, x):
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+
+    # union这里，谁的做谁的父亲问题都不大，有涌向的可能就是效率问题
+    def union(self, p, q):
+        proot = self.find(p)
+        qroot = self.find(q)
+
+        # 假如说两者的根节点相等，那么我们什么都不操作
+        if proot == qroot:
+            return
+
+        # 假如两个的根节点不想等，我们可以指认任意一个根节点是另一个根节点的父亲
+        self.parent[proot] = qroot
+
+
+路径压缩和union by rank都做了的版本：
+class UF:
+    def __init__(self, n):
+        self.parent = [i for i in range(n+1)]
+        self.rank = [0 for _ in range(n+1)]
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, p, q):
+        proot, qroot = self.find(p), self.find(q)
+        if proot == qroot:
+            return
+
+        # p的深度高的话， 那么要把q连到p上
+        if self.rank[proot] > self.rank[qroot]:
+            self.parent[qroot] = proot
+
+        # q的深度高的话， 那么要把p连到q上
+        elif self.rank[proot] > self.rank[qroot]:
+            self.parent[proot] = qroot
+        # 深度一样的那就随意了，做老爸的rank +1
+        else:
+            self.parent[proot] = qroot
+            self.rank[proot] += 1
 
 
