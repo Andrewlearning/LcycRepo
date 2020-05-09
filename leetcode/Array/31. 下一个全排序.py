@@ -21,7 +21,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        if nums is None or nums < 2: return nums
+        if nums is None or nums < 2:
+            return nums
 
         # step1从低位向高位遍历，找到第一个非递增的数（1）
         p = len(nums) - 2
