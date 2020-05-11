@@ -110,7 +110,9 @@ def bagO1compress():
 
     for i in range(1, N + 1):
         for j in range(0, V+1):
-            # 初始化第i个物品不选，因为有可能超容量
+            # 初始化第i个物品不选，因为有可能超容量，因为这里不操作的话，就默认当前的状态
+            # 等于上一个状态了
+
             if j >= v[i]:
                 # 在选和不选的情况中选出最大值
                 dp[j] = max(dp[j], dp[j - v[i]] + w[i])
