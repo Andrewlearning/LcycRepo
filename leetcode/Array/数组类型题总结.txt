@@ -1,0 +1,32 @@
+
+1.鸽子洞理论
+经典题目类型是
+有一串数量为n 且范围在 0～n-1里的数字，放在一个容量为n的数组里面，假如说里面有数字重复，请找出那个数字
+
+用的方法是原地置换法，就是把 0 放在 0上， 把1 放在 1上
+假如说哪一位的index和value对应不上的话，那么说明出错了
+
+关键模版：
+    for i in range(len(nums)):
+
+        # 加入正确的话， 那么index = 4上 放的数字应该也是 4(nums[4])
+        # 那么nums[4] == nums[nums[4]]
+
+        while nums[i] != nums[nums[i]]:
+            self.swap(nums, i, nums[i])
+
+
+对应题型，lc: 41，442，448，268, 268
+剑指offer： 3
+
+
+2. 旋转数组(二分搜索，压缩范围)
+https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/solution/er-fen-jian-zhi-si-xiang-fen-zhi-si-xiang-by-liwei/
+经典题目是
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
+输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。
+例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。让我们找到这个最小的数字
+
+例如这个题，[3,4,5,   1,2] 我们可以明确把数组分成两堆
+
+我们每次都把mid 和最右边的元素做对比

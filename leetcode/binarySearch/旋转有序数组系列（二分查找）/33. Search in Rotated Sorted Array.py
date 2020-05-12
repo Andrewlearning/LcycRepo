@@ -19,10 +19,12 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        if not nums or len(nums) == 0:return -1
+        if not nums or len(nums) == 0:
+            return -1
 
         left = 0
         right = len(nums) - 1
+
         while left <= right:
             mid = (left+right)//2
             if nums[mid] == target:
@@ -51,7 +53,6 @@ time O(logn) space O(1)
 区间，判断target 这个区间里面，如果不在，则去另一个区间查找
 
   4567 012
-  本写法用的是左闭右闭(二分查找)
 1.我们用 nums[left] <= nums[mid]，来判断mid是落在左边的递增数组
   *为什么用 =，因为当[left] = [mid]时，mid也是在左边的递增数组
   
