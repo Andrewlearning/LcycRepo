@@ -1,27 +1,31 @@
-# class TreeNode:
+# Definition for a binary tree node.
+# class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution:
-    # 返回镜像树的根节点
-    def Mirror(self, root):
-        self.Swaphelper(root)
+class Solution(object):
+    def mirrorTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return
+
+        self.helper(root)
 
         return root
 
-
-
-    def Swaphelper(self, root):
-        if root == None:
+    def helper(self, root):
+        if not root:
             return
+
         root.left, root.right = root.right, root.left
-        self.Swaphelper(root.left)
-        self.Swaphelper(root.right)
 
-
-
+        self.helper(root.left)
+        self.helper(root.right)
 
 
 

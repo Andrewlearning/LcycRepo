@@ -5,7 +5,7 @@ class Solution:
             if (n>>i & 1) == 1:
                 res += 1
 
-        print(res)
+
         return res
 
 
