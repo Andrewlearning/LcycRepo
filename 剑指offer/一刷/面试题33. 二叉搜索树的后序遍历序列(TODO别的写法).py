@@ -1,38 +1,37 @@
-class Solution:
-    def helper(self, sequence):
-        if len(sequence) == 0:
+class Solution(object):
+    def verifyPostorder(self, postorder):
+        """
+        :type postorder: List[int]
+        :rtype: bool
+        """
+        # left, right , root
+        # 本题目按照节点的大小顺序来进行处理
+        # 已知的是 左节点最小， ROOT节点中间， 右节点最大
+
+        if not postorder and len(postorder) == 0:
             return True
 
-        root = sequence[-1]
-        flag = -1
+        return self.helper(postorder)
 
-        for i in range(len(sequence) -1):
-            if sequence[i] > root:
-                flag = i
+    def helper(self, postorder):
+        if len(postorder) == 0:
+            return True
+
+        root = postorder[-1]
+        right_first = -1
+
+        for i in range(len(postorder) - 1):
+            if postorder[i] > root:
+                right_first = i
                 break
 
-        for i in sequence[flag:-1]:
-            if i < root:
+        for j in postorder[right_first:-1]:
+            if j < root:
                 return False
 
-        return self.helper(sequence[0:flag]) and self.helper(sequence[flag:-1])
-
-    def VerifySquenceOfBST(self, sequence):
-
-        if len(sequence) == 0:
-            return False
-
-        return self.helper(sequence)
-
-
-if __name__ == "__main__":
-    solution = Solution()
-    solution.helper([4,6,7,5])
+        return self.helper(postorder[:right_first]) and self.helper(postorder[right_first:-1])
 
 """
-
-一开始先是无什么想法
-
 回顾一下二叉搜索树的基础：
     先序遍历：1。根节点
              2。左节点
@@ -58,6 +57,6 @@ if __name__ == "__main__":
 4，把这两个sequence继续递归分化，重复123的过程
 
 debug点：
-flag的初始值设定应该是sequence的最后以为，因为若flag = 0 ,然后对于【6，7】来说，无法更新flag,后进入判断就会
-报错
+flag的初始值设定应该是sequence的最后一位，因为若flag = 0 ,然后对于【6，7】来说，无法更新flag
+后进入判断就会报错
 """
