@@ -28,11 +28,15 @@ class Solution(object):
         res = 0
 
         while r < n:
+            # 假如hashmap里有这个元素的话，那么更新value
+            # 假如hashmap里有这个元素的话，那么新增一对key-value
             hashmap[s[r]] = r
             r += 1
 
-            # 说明字典里面已经有超过两个不同的字母了， 那么我们要对滑动窗口进行处理
+            # 说明字典里面已经有超过K个不同的字母了， 那么我们要对滑动窗口进行处理
             if len(hashmap) > k:
+
+                # 说明滑动窗口里已经有超过两个不同的字母了， 那么我们要对滑动窗口进行处理
                 leftmost = len(s)
                 for index in hashmap.values():
                     if index < leftmost:
@@ -41,7 +45,7 @@ class Solution(object):
                 # 找到滑动窗口最左边的元素，然后把该元素从字典里面去除
                 del hashmap[s[leftmost]]
 
-                # 调整滑动窗口的位置
+                # 删掉最左边的不重复数组后，调整滑动窗口的左位置
                 l = leftmost + 1
 
             res = max(res, r - l)

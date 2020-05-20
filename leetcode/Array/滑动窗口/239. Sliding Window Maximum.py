@@ -39,7 +39,7 @@ class Solution(object):
             # 一直重复这个循环
             # 假如新元素比原窗口所有数都大，那就把原窗口给清干净
             while window and nums[window[-1]] <= x:
-                window.pop()
+                window.pop(-1)
 
             # 理论上，新加入的元素不管大小，在当前回合都不会对他进行任何操作的
             window.append(i)

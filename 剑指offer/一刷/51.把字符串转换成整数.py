@@ -1,29 +1,4 @@
-
-
-class Solution:
-    def StrToInt1(self, s):
-        bit = 1
-        res = 0
-
-        if len(s) == 0:
-            return 0
-        if len(s) == 1 and  not s[0].isdigit():
-            return 0
-
-        for i in range(len(s) -1 , -1, -1):
-            if s[i].isdigit():
-                res += (ord(s[i]) - ord("0"))*bit
-                bit *= 10
-                continue
-            else:
-                if i == 0 and (s[i] is "+" or s[i] is "-"):
-                    continue
-                else:
-                    return 0
-        print(-1*res  if s[0] is "-" else res)
-        return -1*res  if s[0] is "-" else res
-
-
+面试题46. 把数字翻译成字符串
 
 
 if __name__ == "__main__":

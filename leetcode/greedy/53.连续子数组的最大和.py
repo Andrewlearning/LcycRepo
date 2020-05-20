@@ -38,8 +38,7 @@ Time: O(n), Space: O(1)
 原理非常简单暴力，关键在 cursum = max(i, cursum + i)，看看加上
 下一个数是不是与 直接用下一个数 ，哪个比较大
 
-1.有客观规律就是，假如说你的cursum已经小于0了，那么不如从下一位非0的重新开始
-因为next 绝对大于 next + cursum
+
 2.可以和leetcode 124对比着来看
 
 
