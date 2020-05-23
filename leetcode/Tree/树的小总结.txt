@@ -1,0 +1,28 @@
+
+如何计算树的时间复杂度和空间复杂度？
+
+树的时间复杂度，是看遍历了节点多少次
+树的空间复杂度， 是看递归深度有多少层
+
+举个例子，剑指offer55 - 1, 求二叉度的深度
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+
+        return self.helper(root, 0)
+
+    def helper(self, root, num):
+        if not root:
+            return num
+
+        # num + 1表示当前这一层的高度， 因为我们把初始高度设置成了 1
+        return ma
+
+链接：https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/solution/mian-shi-ti-55-i-er-cha-shu-de-shen-du-xian-xu-bia/
+时间复杂度 O(N) ： N 为树的节点数量，计算树的深度需要遍历所有节点。
+空间复杂度 O(N) ： 最差情况下（当树退化为链表时），递归深度可达到 N

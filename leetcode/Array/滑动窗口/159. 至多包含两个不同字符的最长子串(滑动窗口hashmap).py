@@ -34,8 +34,7 @@ class Solution(object):
 
                 # 删掉最左边的不重复数组后，调整滑动窗口的左位置
                 l = leftmost + 1
-            aba
-            012
+
             res = max(res, r - l)
         return res
 
