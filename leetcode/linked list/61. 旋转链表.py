@@ -7,6 +7,7 @@ class ListNode(object):
         self.val = x
         self.next = None
 
+
 class Solution(object):
     def rotateRight(self, head, k):
         """
@@ -14,22 +15,37 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        if head == None or k <= 0:return head
+        if not head:
+            return head
 
+        # 第一步，先数出链表的长度
         length = 1
-        count = head
-        while count.next != None:
+        toend = head
+        while toend.next != None:
+            toend = toend.next
             length += 1
-            count = count.next
-        count.next = head
 
+        # 第二步，把链表的首尾链接起来
+        toend.next = head
+
+        # 第三步，考虑到k大于长度的情况，那么我们就先取余
         k = k % length
+
+        # 第四步， 就是那出新指针要指向的点，其中有newend, newhead
         newend = head
-        for i in range(length - k - 1):
+        # 1->2->3->4->5->, k = 2
+        # 假如我们要翻转的话，就得让4作为head, 这刚好就是length - k = index 3, 这就是4的位置
+        # 但是我们这里是要先找到newend, 所以就是走到length - k - 1的位置
+        # 最后从0 走到 length-k-1 需要走length-k-2步
+        for _ in range(length - k - 1):
             newend = newend.next
 
+        # 把newhead放在 newend的下一个位置
         newhead = newend.next
+
+        # 把新链表的最后一个节点，指向空
         newend.next = None
+
         return newhead
 """
 // Time: O(n), Space: O(1)

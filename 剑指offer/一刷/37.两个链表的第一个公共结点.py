@@ -3,30 +3,41 @@
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    def FindFirstCommonNode(self, pHead1, pHead2):
-        if pHead1 == None or pHead2 == None:
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if not headA or not headB:
             return None
-        cur1 , cur2 = pHead1 , pHead2
 
-        while cur1 != cur2:
-            cur1 = cur1.next if cur1 != None else  pHead2
-            cur2 = cur2.next if cur2 != None else  pHead1
-        return cur1
+        pa = headA
+        pb = headB
 
+        # 当两个指针没有指向同一个节点时，一直继续循环
+        while pa != pb:
 
+            # 当A指针已经走到空节点时，那么a指针从B链表开始继续走
+            if pa == None:
+                pa = headB
+            # 否则则继续往下走
+            else:
+                pa = pa.next
 
+            # 当B指针已经走到空节点时，那么B指针从A链表开始继续走
+            if pb == None:
+                pb = headA
 
+            # 否则则继续往下走
+            else:
+                pb = pb.next
 
-if __name__ == "__main__":
-    solution = Solution()
-    solution.FindFirstCommonNode()
-
+        # 返回任意一个节点即可
+        return pa
 
 
 """
-记得做过，但是不记得怎么做了
-
 做法：
 这道题和160.Intersection of Two Linked Lists是一样的。都是求两个链表的第一个公共结点。
 方法一：
