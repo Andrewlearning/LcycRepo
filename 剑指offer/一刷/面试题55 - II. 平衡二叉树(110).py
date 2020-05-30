@@ -1,4 +1,27 @@
+"""
+输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
 
+
+示例 1:
+给定二叉树 [3,9,20,null,null,15,7]
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+给定二叉树 [1,2,2,3,3,null,null,4,4]
+
+       1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+
+"""
 
 
 class TreeNode:
@@ -8,24 +31,40 @@ class TreeNode:
         self.right = None
 
 
-class Solution:
-    def IsBalanced_Solution(self, pRoot):
-        self.flag = True
-        self.helper(pRoot)
-        return self.flag
+class Solution(object):
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+
+        # 假如返回的高度不是-1， 即表示二叉树是平衡的
+        return self.helper(root) != -1
 
 
-
-    def helper(self,node,):
-        if node == None or self.flag == False:
+    def helper(self, root):
+        # 明确我们的返回是为高度， 所以遍历到最下面一层的时候，返回的是高度0
+        if not root:
             return 0
 
-        left = self.helper(node.left)
-        right = self.helper(node.right)
+        # 获取左子树的最大高度
+        left = self.helper(root.left)
+        if left == -1:
+            return -1
 
+        # 获取右子树的最大高度
+        right = self.helper(root.right)
+        if right == -1:
+            return -1
+
+        # 看两个子树的最大高度差是不是 > 1
         if abs(left - right) > 1:
-            self.flag = False
-        return left + 1 if left > right else right + 1
+            return -1
+
+        # 关键点在这里， 当前高度 = 1 + 下一层的高度
+        return 1 + max(left, right)
 
 
 """

@@ -49,6 +49,7 @@ class Solution(object):
         return res.next
 
 """
+1
 https://algocasts.io/episodes/JNmDRpOZ
 Time: O(max(m, n)), Space: O(max(m, n))
 答案:

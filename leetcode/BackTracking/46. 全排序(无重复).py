@@ -1,8 +1,10 @@
 """
-Given a collection of distinct integers, return all possible permutations.
-Example:
-Input: [1,2,3]
-Output:
+给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+
+示例:
+
+输入: [1,2,3]
+输出:
 [
   [1,2,3],
   [1,3,2],
@@ -11,6 +13,7 @@ Output:
   [3,1,2],
   [3,2,1]
 ]
+
 """
 class Solution(object):
     def permute(self, nums):
@@ -18,25 +21,34 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        if not nums or len(nums) == 0: return []
+        if not nums:
+            return []
+
         self.res = []
-        self.visited = [False]*len(nums)
-        self.helper(nums,[])
+
+        # 这属于一个比较通用的解法，因为在全排序2会碰到有相同元素的情况
+        # 在那个时候就不太适合用一个 set去储存元素了
+        self.visited = [False] * len(nums)
+        self.helper(nums, -1, [])
+
         return self.res
 
-    def helper(self,nums,temp):
+    def helper(self, nums, idx, temp):
+        if len(temp) > len(nums):
+            return
+
         if len(temp) == len(nums):
             self.res.append(temp[:])
 
         for i in range(len(nums)):
-            if self.visited[i]:
-                continue
 
-            self.visited[i] = True
-            temp.append(nums[i])
-            self.helper(nums,temp)
-            self.visited[i] = False
-            temp.pop(-1)
+            # 假如当前下标还没被访问过, 那我们则进去
+            if self.visited[i] == False:
+                self.visited[i] = True
+                self.helper(nums, i, temp + [nums[i]])
+                self.visited[i] = False
+
+        return
 
 """
 https://www.youtube.com/watch?v=zIY2BWdsbFs
@@ -49,7 +61,4 @@ Time: O(n*n!), Space: O(n)
 4.123,132完成后，把最后一位给pop（）掉，变成12,13,发现还是执行完了，再把最后一位给pop，变成1，最后1被pop()
 5.开始执行以2为首的数
 
-注意：
-1.append()的时候, temp[:],这是temp的深拷贝，即是说，对temp进行任何操作都不会影响到到temp[:]
-假如说我们res.append(temp),那么后面清空temp会影响到res的结果
 """
