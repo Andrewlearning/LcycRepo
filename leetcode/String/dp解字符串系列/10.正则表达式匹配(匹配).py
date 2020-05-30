@@ -8,6 +8,8 @@ class Solution(object):
         ls = len(s)
         lp = len(p)
 
+        # 构造两个长度为 ls+1, lp+1的dp数组
+        # 表示 从都不选， 到全都选的所有可能
         dp = [[False for j in range(lp + 1)] for i in range(ls + 1)]
         dp[0][0] = True
 
@@ -21,7 +23,7 @@ class Solution(object):
 
         for i in range(1, ls + 1):
             for j in range(1, lp + 1):
-                # 当两个当前字母都相等时 或者p当前字符是点好(任意匹配)
+                # 当两个当前字母都相等时 或者p当前字符是点号(当前位置可任意匹配)
                 if s[i - 1] == p[j - 1] or p[j - 1] == ".":
                     dp[i][j] = dp[i - 1][j - 1]
 
