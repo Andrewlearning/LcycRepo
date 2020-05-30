@@ -1,12 +1,21 @@
 """
-The same repeated number may be chosen from candidates unlimited number of times.
-（可重复使用使用candidate里的数）
-Note:
+给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
 
-All numbers (including target) will be positive integers.
-The solution set must not contain duplicate combinations.
+candidates 中的数字可以无限制重复被选取。
+
+说明：
+
+所有数字（包括 target）都是正整数。
+解集不能包含重复的组合。 
+示例 1:
+
+输入: candidates = [2,3,6,7], target = 7,
+所求解集为:
+[
+  [7],
+  [2,2,3]
+]
 """
-
 class Solution(object):
     def combinationSum(self, candidates, target):
         """
@@ -14,22 +23,23 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        if candidates is None or len(candidates) == 0: return []
+        if not candidates:
+                return []
+
         self.res = []
-        self.helper(candidates, target, [], 0)
+        self.helper(candidates, target, 0, [])
         return self.res
 
-    def helper(self, candidates, target, temp, cur):
-        if target < 0: return
-        if target == 0:
-            self.res.append(temp[:])
-            return
+    def helper(self, candidates, target, idx, temp):
+        if target < 0:
+                return
 
-        for i in range(cur, len(candidates)):
-            if candidates[i] <= target:
-                temp.append(candidates[i])
-                self.helper(candidates, target - candidates[i], temp, i)
-                temp.pop(-1)
+        if target == 0:
+                self.res.append(temp[:])
+
+        # candidates 中的数字可以无限制重复被选取, 所以这里的的idx不用变成range(idx+1, ..)
+        for i in range(idx, len(candidates)):
+            self.helper(candidates, target - candidates[i], i, temp + [candidates[i]])
 
 """
 https://www.youtube.com/watch?v=zIY2BWdsbFs

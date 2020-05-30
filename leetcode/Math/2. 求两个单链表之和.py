@@ -25,7 +25,8 @@ class Solution(object):
         res = ListNode(0)
         p = res
 
-        while phead1 or phead2:
+        # 假如这三个数一直都没有结束， 那我们就一直要往下加节点
+        while phead1 or phead2 or carry:
             temp = carry
             carry = 0
 
@@ -43,8 +44,6 @@ class Solution(object):
             p.next = ListNode(temp)
             p = p.next
 
-        if carry != 0:
-            p.next = ListNode(carry)
 
         return res.next
 

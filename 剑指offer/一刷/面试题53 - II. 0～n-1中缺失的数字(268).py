@@ -9,6 +9,7 @@
 输入: [0,1,2,3,4,5,6,7,9]
 输出: 8
 """
+
 class Solution(object):
     def missingNumber(self, nums):
         """
@@ -21,15 +22,16 @@ class Solution(object):
         n = len(nums)
 
         for i in range(n):
-
-            # 关键的一步在这里，我们要在区间的范围内
-            # 不断交换第 i ，nums[i] 上的值给交换，直到是交换完毕或者是越界
+            # nums[i] 表示下标
+            # nums[nums[i]] 表示下标对应的值
+            # 因为序列中有可能出现n , nums[n]会报错，所以我们要过滤掉这个条件
             while 0 <= nums[i] < n and nums[i] != nums[nums[i]]:
                 self.swap(nums, i, nums[i])
 
-        # 找到第一个不在位置上的数字，返回
         for i in range(n):
-            if nums[i] != i:
+            # 这里的i 表示下标
+            # nums[i] 表示下标对应的值
+            if i != nums[i]:
                 return i
 
         return n

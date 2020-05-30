@@ -1,11 +1,51 @@
 """
-Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
 
-Example 1:
+示例 1:
 
-Input: [1,3,4,2,2]
-Output: 2
+输入: [1,3,4,2,2]
+输出: 2
+示例 2:
+
+输入: [3,1,3,4,2]
+输出: 3
+说明：
+
+不能更改原数组（假设数组是只读的）。
+只能使用额外的 O(1) 的空间。
+时间复杂度小于 O(n2) 。
+数组中只有一个重复的数字，但它可能不止重复出现一次。
 """
+# 在每个下标下放对应的数字
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+
+        n = len(nums)
+
+        for i in range(n):
+            # idx   [0,1,2] i     -> nums[i]
+            # value [1,2,3] nums[i] -> nums[i] - 1 = i -> nums[nums[i] - 1]
+            while nums[i] != nums[nums[i] - 1]:
+                self.swap(nums, i, nums[i]-1)
+
+
+        for i in range(n):
+            # idx   [0,1,2] i
+            # value [1,2,3] nums[i]
+            # 所以对应不上的数， 一定是不满足 i == nums[i] - 1的
+            # 所以我们要返回nums[i]这个数
+            if i != nums[i]-1:
+                return nums[i]
+
+    def swap(self, nums, i, j):
+        nums[i], nums[j] = nums[j], nums[i]
+
+
+
 # 二分查找
 # Time: O(n*log(n)), Space: O(1)
 class Solution(object):
