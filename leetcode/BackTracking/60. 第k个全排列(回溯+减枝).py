@@ -62,6 +62,7 @@ class Solution(object):
         # cnt的含义是，假设当前这一位被选中的话，这一位被选中后还剩下多少种可能性
         cnt = self.factorial[n - 1 - index]
 
+        # 因为全排序是从1开始的
         for i in range(1, n + 1):
             # 不能用用过的元素
             if self.used[i]:

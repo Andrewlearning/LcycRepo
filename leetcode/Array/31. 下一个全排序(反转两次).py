@@ -9,10 +9,7 @@
 1,2,3 → 1,3,2
 3,2,1 → 1,2,3
 1,1,5 → 1,5,1
-
-
 """
-
 
 class Solution(object):
     def swap(self, nums, i, j):
@@ -27,7 +24,7 @@ class Solution(object):
             return nums
 
         # 1，2,5,4,3
-        # step1从右向左遍历，找到第一个从左到右非递减的数 num[p] = （2）
+        # step1从右向左遍历，找到第一个从右到左非递增的数 num[p] = （2）
         p = len(nums) - 2
         while p >= 0 and nums[p] >= nums[p + 1]:
             p -= 1
@@ -43,7 +40,7 @@ class Solution(object):
             self.swap(nums, i, p)
 
         # step3，把p后面的元素进行，交换后重排序（反转）， 13 245
-        # 同时，假如说是321，这种递增的，已经达到最大值了，它的next permutation就是反过来123（把最大变最小）
+        # 另一种情况是，假如说是321，这种递增的，已经达到最大值了，它的next permutation就是反过来123（把最大变最小）
         i = p + 1
         j = len(nums) - 1
         while i < j:
@@ -73,5 +70,4 @@ ex:218421
 1.while p >= 0 and nums[p] >= nums[p+1]: p -= 1
 这里p>=0，因为当我们发现这个数组一直递增的时候，我们要让p = -1
 还有当我们遇到相同数字是，p依旧要继续移动
-
 """

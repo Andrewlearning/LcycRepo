@@ -1,6 +1,7 @@
 """
 Implement pow(x, n),
 which calculates x raised to the power n (xn).
+计算 x**n
 """
 
 class Solution(object):
