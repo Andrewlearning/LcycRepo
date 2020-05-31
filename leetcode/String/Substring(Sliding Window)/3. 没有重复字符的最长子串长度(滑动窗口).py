@@ -5,7 +5,7 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        # 我们让l 指向的是，滑动窗口左边界的左边，r指向的是滑动窗口的右边界
+        # 我们让l 指向的是，滑动窗口左边界的左边，r指向的是滑动窗口的右边界(l,r]
         l = -1
         r = 0
 

@@ -11,7 +11,8 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        if s is None or len(s) == 0: return ""
+        if s is None or len(s) == 0:
+            return ""
 
         start = 0
         maxLen = 0
@@ -22,7 +23,7 @@ class Solution(object):
             temp = max(len1 ,len2)
 
             if temp > maxLen:
-                start = i - (temp -1 )//2
+                start = i - (temp - 1)//2
                 maxLen = temp
 
 

@@ -9,11 +9,13 @@ class Solution(object):
             return ""
 
         res = ["" for i in range(numRows)]
+        # i用来记录使用了多少个字母
         i = 0
 
         while i < len(s):
 
             # from up to down
+            # J用来记录字母在竖直方向上要往哪一行进行拼接
             j = 0
             while i < len(s) and j < numRows:
                 res[j] += s[i]

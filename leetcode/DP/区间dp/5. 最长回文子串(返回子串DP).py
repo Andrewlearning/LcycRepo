@@ -30,8 +30,8 @@ class Solution(object):
                     maxLen = j - i + 1
                     start = i
 
-        return s[start: start + maxLen]
-
+        return s[start: start + maxLen
+]
 
 """
 Time: O(n^2), Space: O(n^2)
