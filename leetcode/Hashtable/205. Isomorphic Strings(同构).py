@@ -28,8 +28,7 @@ class Solution(object):
 
         for i in range(len(s)):
             if s[i] in hashmap:
-                if hashmap[s[i]] != t[i]:
-                    return False
+                if hashmap.get(s[i]) != t[i]:return False
             else:
                 if t[i] in hashmap.values():
                     return False
@@ -50,6 +49,8 @@ https://www.youtube.com/watch?v=tBK5f-BJOdg
 4. 假如说s[i] 不在hashmap里面，就要看t[i]在不在hashmap.values()里，有的话说明错了
               若都不在，那就把他们两加进map里
 5.经过重重考验，最后可以return True了ß
+
+
 """
 
 

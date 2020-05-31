@@ -1,5 +1,6 @@
 """
 你要判断是否有可能上完所有课程
+
 https://algocasts.io/episodes/rLmP3yWo
 方法1，把所有课都转换成有向图，先修指向后修，然后进行dfs
 假如说dfs都是可以终止的，说明没有环，也就说明了可以完成这些课：
@@ -14,10 +15,8 @@ time(V+E) Space(V+E)
 输入: 2, [[1,0],[0,1]]
 输出: false
 解释: 总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0；并且学习课程 0 之前，你还应先完成课程 1。这是不可能的。
-
-
 """
-#方法1
+#方法1 DFS
 class Solution(object):
     def hasCycle(self, graph, visited, checked, v):
         # visited被访问过了，说明有环，返回True
@@ -72,39 +71,41 @@ time(V+E) Space(V+E)
      然后？
 """
 
-
+# 拓扑排序
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
         :type numCourses: int
-        :type prerequisites: List[List[int]][后修，先修]
+        :type prerequisites: List[List[int]][你想上的课，pre resquest]
         :rtype: bool
         """
         if numCourses <= 1 or prerequisites is None or len(prerequisites) == 0:
             return True
 
-        # 把每个课都创一个属于自己的list,list里存放着的都是当前index后修的课
+        # 把每个课都创一个属于自己的list,list放着，上完这个课后能上的课
         graph = [[] for i in range(numCourses)]
+
+        # 我们先把每个课的入度都设置成0
         indegree = [0]*numCourses
 
         # (0,1) 1->0 变成[1] = append(0)，把后修的课append进先修的课index
-        # 因为 1->0 , 所以0的indegree +1(初始化indegree)
+        # 因为 1->0 , 所以0的 indegree +1(初始化indegree)
         for pair in prerequisites:
             graph[pair[1]].append(pair[0])
             indegree[pair[0]] += 1
 
         # 我们把indegree 为0的数找出来，作为我们图查询的起点
-        q = []
+        queue = []
         for i in range(len(indegree)):
-            if indegree[i] == 0:
-                q.append(i)
+            if indeee[i] == 0:
+                queue.append(i)
 
-        # 当图查询没结束是，循环江一直进行
+        # count用来记录，有向图从开始到结束，一定要经过多少层节点
         count = 0
-        while len(q) > 0:
+        while len(queue) > 0:
             # 这个v已经是明确没有indegree了，功成身退，计入count中，然后再利用这个V来查询
             # 相邻的节点
-            v = q.pop(0)
+            v = queue.pop(0)
             count += 1
             for i in graph[v]:
                 # 把v指向的节点的的入度减1，即是把v的入度去掉
@@ -112,7 +113,7 @@ class Solution(object):
                 # 去完之后必有新的节点的入度为0，则继续用它来进行这个过程
                 # 如果没有的话则循环结束，返回结果
                 if indegree[i] == 0:
-                    q.append(i)
+                    queue.append(i)
 
         return count == numCourses
 

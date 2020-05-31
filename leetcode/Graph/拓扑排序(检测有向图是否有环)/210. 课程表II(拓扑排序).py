@@ -59,9 +59,6 @@ class Solution(object):
         :type prerequisites: List[List[int]][后修，先修]
         :rtype: bool
         """
-        # if numCourses <= 1 or prerequisites is None or len(prerequisites) == 0:
-        #     return True
-
         # 把每个课都创一个属于自己的list,list里存放着的都是当前index后修的课
         graph = [[] for i in range(numCourses)]
         indegree = [0]*numCourses
