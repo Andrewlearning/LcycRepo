@@ -8,33 +8,48 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if nums is None or len(nums) == 0: return False
-        if len(nums) == 1:return 0
+        if nums is None or len(nums) == 0:
+            return False
+
+        if len(nums) == 1:
+            return 0
+
         n = len(nums)
+
+        # 再跳一次的话，能跳的最远距离
         maxindex = 0
 
-        jump = 0; curEnd = 0
+        # 在当前跳跃的次数里，能跳到的最远距离
+        curEnd = 0
+
+        # 已经跳跃的次数
+        jump = 0
+
 
         for i in range(n):
-            if maxindex >= n-1: return jump + 1
-            if i > maxindex: return -1
+            # 假如说我们再跳一次的话，可以到达或者超越终点，那么我们返回当前的跳跃次数+1
+            if maxindex >= n-1:
+                return jump + 1
 
+            # 假如走到一个下标， 是我们再跳一次也达不到的
+            # 那么说明到达不了这个下标 -> 我们也更跳不到终点
+            if i > maxindex:
+                return -1
+
+            # 假如到了一个下标，已经到我们当前跳跃次数的极限了
+            # 那么说明我们要再跳一次
             if i > curEnd:
                 jump += 1
                 curEnd = maxindex
 
+            # 下一次的跳跃最大距离
             maxindex = max(maxindex,i+nums[i])
+
         return -1
 
 """
 https://algocasts.io/episodesaAEpo1vmQ
 Time: O(n), Space: O(1)
-答案：
-jump 表示跳到i所需要的最小步数
-curEnd 表示，当前步数(jump)所能跳到的最远距离
-maxindex 表示在可走范围内，所能跳到的最远距离
-所以我们在遍历到i > curEnd的时候，说明了再远的话，就需要再跳了
-然后再跳一步的话，curEnd就等于下一步的最远距离maxindex
 """
 
 #Time: O(n), Space: O(n)

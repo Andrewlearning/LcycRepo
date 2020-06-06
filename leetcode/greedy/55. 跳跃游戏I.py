@@ -1,16 +1,18 @@
 """
-55. Jump Game
-Medium
+给定一个非负整数数组，你最初位于数组的第一个位置。
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+判断你是否能够到达最后一个位置。
 
-Given an array of non-negative integers, you are initially positioned at the first index of the array.
+示例 1:
 
-Each element in the array represents your maximum jump length at that position.
+输入: [2,3,1,1,4]
+输出: true
+解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。
+示例 2:
 
-Determine if you are able to reach the last index.
-Input: [2,3,1,1,4]
-Output: true
-Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
-问你能不能跳到最后
+输入: [3,2,1,0,4]
+输出: false
+解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。
 """
 
 
@@ -34,15 +36,15 @@ class Solution(object):
             if i + nums[i] > maxjump:
                 maxjump = i + nums[i]
 
-            # 假如我们当前位置+跳跃距离 >= 最后的位置，说明我们可以完成任务
-            if i + nums[i] >= terminal:
+            # 假如我们最大跳跃距离 >= 最后的位置，说明我们可以完成任务
+            if maxjump >= terminal:
                 return True
 
         #假如我们所有步骤都走完了，还是没有完成任务，说明完不成任务
         return False
 
 """
-// Time: O(n), Space: O(1)
+Time: O(n), Space: O(1)
 1.我们知道，我们能跳到的最远的距离是 curindex + nums[curindex]
   所以我们只需要判断，我们在数组中找到的最大curindex + nums[curindex]
   是否 >= len(nums)-1即可

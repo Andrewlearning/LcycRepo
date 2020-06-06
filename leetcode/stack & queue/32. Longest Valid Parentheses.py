@@ -13,18 +13,27 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        if not s or len(s) == 0: return 0
-        n = len(s)
-        maxLen = 0
-
         stack = [-1]
+        res = 0
+
+
         for i in range(len(s)):
-            if stack[-1] != -1 and s[stack[-1]] == "(" and s[i] == ")":
-                stack.pop()
-                maxLen = max(maxLen , i - stack[-1])
-            else:
+            # 当遇到左括号时，入栈
+            if s[i] == "(":
                 stack.append(i)
-        return maxLen
+
+            # 当遇到")" 时， 我们把"(" 出栈
+            # 但要是单纯 这样用这两者的下标相减，那么 遇到 ()()这种情况将无法处理
+            # 所以我们需要保留 x ()(), X的信息，然后用最右边的的下标 - x的下标，得到答案
+            else:
+                stack.pop(-1)
+                # 当栈为空且 s[i] = ")"时，它的作用是保留长度信息
+                if len(stack) == 0:
+                    stack.append(i)
+                else:
+                    res = max(res, i - stack[-1])
+
+        return res
 
 """
 // Time: O(n), Space: O(n)

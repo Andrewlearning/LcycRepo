@@ -19,8 +19,8 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        # 利用短路来实现递归终止， 到 n - 1 = 0 的时候结束
-        # self.sumNums(n - 1), 每次都往深处递归 self.sumNums(n - 1) + self.sumNums(n - 2) + ... + 2 + 1
+        # 假如 n > 1 and self.sumNums(n - 1) 为False
+        # 那么self.sumNums(n - 1)就无法继续递归下去了，就往下面的self.res += n执行了。
         n > 1 and self.sumNums(n - 1)
 
         # 利用回溯来完成加减

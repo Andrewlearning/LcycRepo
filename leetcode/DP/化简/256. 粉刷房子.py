@@ -6,11 +6,16 @@ class Solution(object):
         """
         if not costs:
             return 0
+
+        # dp[i][j], i表示第几号房子，j表示用哪个颜色
+        # dp[i][j]表示对当前房子用这种颜色，所能达到的最小值
         dp = [[0] * 3 for _ in range(len(costs))]
 
+        # 初始化
         dp[0][0] = costs[0][0]
         dp[0][1] = costs[0][1]
         dp[0][2] = costs[0][2]
+
 
         for i in range(1, len(costs)):
             dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + costs[i][0]

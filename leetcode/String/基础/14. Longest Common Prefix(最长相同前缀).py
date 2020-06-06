@@ -1,14 +1,20 @@
 """
-Write a function to find the longest common prefix string amongst an array of strings.
+编写一个函数来查找字符串数组中的最长公共前缀。
 
-If there is no common prefix, return an empty string "".
-Example 1:
-Input: ["flower","flow","flight"]
-Output: "fl"
-Example 2:
-Input: ["dog","racecar","car"]
-Output: ""
-Explanation: There is no common prefix among the input strings.
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1:
+
+输入: ["flower","flow","flight"]
+输出: "fl"
+示例 2:
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+说明:
+
+所有输入只包含小写字母 a-z 。
 """
 class Solution(object):
     def longestCommonPrefix(self, strs):
@@ -16,27 +22,30 @@ class Solution(object):
         :type strs: List[str]
         :rtype: str
         """
-        if not strs or len(strs) == 0: return ""
+        if not strs and len(strs) == 0:
+            return ""
 
-        shortest_str = min(strs, key=len)
+        length = len(strs)
 
-        for i in range(len(shortest_str)):
-            for string in strs:
-                if shortest_str[i] != string[i]:
-                    return shortest_str[:i]
+        # 第一个单词
+        first = strs[0]
 
-        return shortest_str
+        # 我们按照第一个单词的长度来进行遍历，依次比对每个单词的bit
+        for i in range(len(first)):
+
+            # 从第二个单词开始，依次和第一个单词进行比对
+            for j in range(1, length):
+
+                # 当第一个单词的长度长于后面的单词的时候， 我们应该返回 first[:i]
+                # 又或者当两个单词在 第i个字符不相等的时候，我们应该返回first[:i]
+                if i >= len(strs[j]) or first[i] != strs[j][i]:
+                    return first[:i]
+
+        return first
+
 
 """
-Time:O(N^2) space:O(1)
-答案
-1.首先我们先把字符串列表里长度最小的子串(shortest_str)给找出来
-2.然后遍历这个这个字串,并横向对比所有字串，假如说shortest_str[i] != string[i]
-  那么就返回最后从开头到第i位的切片
-3.正常情况下都是可以返回出结果的，除非: 1.["abc"] [""]
-                                这种情况就会跳过shortest_str[i] != string[i]的逻辑，无法return
-                                    2.["ab","ab"]
-                                完全相同的子串，那么也会跳过不想等的逻辑
- 所以这里最好的解决办法就是return shortest_str.
+Time: O(k*n), Space: O(1)
+https://algocasts.io/episodes/D1mRAeWz
 """
 
