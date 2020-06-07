@@ -35,6 +35,7 @@ class Solution(object):
         left_max = max(self.helper(root.left), 0)
         right_max = max(self.helper(root.right), 0)
 
+        # 这里是关键点！！！最大路径和，不代表是一定是从上到下的
         # 把经过当前节点的所有path都找出来，然后求出他们的最大值
         curnode_sum = root.val + left_max + right_max
 

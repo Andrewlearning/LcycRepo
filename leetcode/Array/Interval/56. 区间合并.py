@@ -1,10 +1,10 @@
 """
-融合interval
-Example 1:
-Input: [[1,3],[2,6],[8,10],[15,18]]
-Output: [[1,6],[8,10],[15,18]]
-Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
-注意，这题的intervals给的是没有排序过的
+给出一个区间的集合，请合并所有重叠的区间。
+
+示例 1:
+输入: [[1,3],[2,6],[8,10],[15,18]]
+输出: [[1,6],[8,10],[15,18]]
+解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6]
 """
 class Solution(object):
     def merge(self, intervals):
@@ -20,9 +20,12 @@ class Solution(object):
             #    []  or  [1,3] [4,5]
             if not merge or merge[-1][-1] < interval[0]:
                 merge.append(interval)
-            # [1,3] [2,4]
+
+            # 当区间可以合并的时候， 我们要把merge里面的最后一个字母
+            # 改变一下 [1,3] [2,4]
             else:
                 merge[-1][-1] = max(merge[-1][-1],interval[-1])
+
         return merge
 
 """

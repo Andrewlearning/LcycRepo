@@ -1,18 +1,22 @@
-class Solution:
+# coding=utf-8
+class Solution(object):
     def alienOrder(self, words):
-        # 每个字母代表图的一个顶点
-        # 邻接表表示有向图
+        """
+        :type words: List[str]
+        :rtype: str
+        """
 
-        # key: 每个字母  value: 比当前字母优先级低的字母
         graph = {}
+        indegree = {}
 
-        # 构建图顶点
+        # 初始化graph 和 入度表
+        # 注意这个初始化是要对每个出现的字符都进行初始化
         for word in words:
             for char in word:
-                if char not in graph:
-                    graph[char] = []
+                graph[char] = []
+                indegree[char] = 0
 
-        # 两两单词进行比较，确定图的方向
+        # 给graph赋值
         for i in range(len(words) - 1):
             j = 0
             while j < len(words[i]) and j < len(words[i + 1]):
@@ -22,51 +26,42 @@ class Solution:
                     break
                 j += 1
 
-        # key: 元素  value: 元素所对应的入度是多少
-        in_degrees = {}
+        # 填充入度表
+        for nexts in graph.values():
+            for next in nexts:
+                indegree[next] += 1
+
+        # 把入度为0的点装进queue里
+        queue = []
+        for key in indegree.keys():
+            if indegree[key] == 0:
+                queue.append(key)
+
         res = []
-
-        # 首先把每个char的入度都设成0
-        for char in graph:
-            in_degrees[char] = 0
-
-        # 我们可以理解，graph的元素，全都是被指向的元素。所以元素出现一次，入度就要+1
-        for values in graph.values():
-            for char in values:
-                in_degrees[char] += 1
-
-        queue = [k for (k, v) in in_degrees.items() if v == 0]
         while queue:
-            cur = queue.pop()
-            res.append(cur)
+            pre = queue.pop(0)
+            res.append(pre)
 
-            for next in graph[cur]:
-                in_degrees[next] -= 1  # 删除该入度为0的节点后，该节点指向的节点入度减1
-                if in_degrees[next] == 0:
+            # 删除了pre节点，那么这个pre所对应的next,全部的入度都要-1
+            # 然后顺带检查next的入度是否为0， 如果为0的话那么要把next加入queue
+            for next in graph[pre]:
+                indegree[next] -= 1
+                if indegree[next] == 0:
                     queue.append(next)
 
-        # 判断非法顺序(判断有向图是否有环)
         is_unval = False
-        if len(res) != len(graph):  # 出队元素个数不等于图顶点个数，说明有环
+        # 出队元素个数不等于图顶点个数，说明有环
+        if len(res) != len(graph):
             is_unval = True
 
-        # abc 排在 ab前面，也属于非法输入
+        # abc
+        # ab  ,这种情况，a->a b->b不可能， c->""也不可能
         for i in range(len(words) - 1):
             if len(words[i]) > len(words[i + 1]) and words[i][:len(words[i + 1])] == words[i + 1]:
                 is_unval = True
                 break
 
-        if is_unval:
-            return ""
-
-        # 无法判断顺序的返回随机顺序
-        if not is_unval and res == []:
-            return "".join([k for k in graph])
-
-
-        return "".join(res)
+        return "" if is_unval == True else "".join(res)
 
 # 作者：zhouquan
 # 链接：https://leetcode-cn.com/problems/alien-dictionary/solution/python3-tuo-bu-pai-xu-by-zhouquan/
-# 来源：力扣（LeetCode）
-# 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

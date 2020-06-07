@@ -76,44 +76,49 @@ class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
         :type numCourses: int
-        :type prerequisites: List[List[int]][你想上的课，pre resquest]
+        :type prerequisites: List[List[int]]
         :rtype: bool
         """
-        if numCourses <= 1 or prerequisites is None or len(prerequisites) == 0:
+        if not prerequisites and len(prerequisites) == 0:
             return True
 
-        # 把每个课都创一个属于自己的list,list放着，上完这个课后能上的课
-        graph = [[] for i in range(numCourses)]
+        graph = {}
+        indegree = {}
 
-        # 我们先把每个课的入度都设置成0
-        indegree = [0]*numCourses
+        # 初始化构造图的顶点, 点 ->[]
+        # 初始化入度， 点 -> 0
+        for node in range(numCourses):
+            graph[node] = []
+            indegree[node] = 0
 
-        # (0,1) 1->0 变成[1] = append(0)，把后修的课append进先修的课index
-        # 因为 1->0 , 所以0的 indegree +1(初始化indegree)
-        for pair in prerequisites:
-            graph[pair[1]].append(pair[0])
-            indegree[pair[0]] += 1
+        # 开始给图的顶点赋予意义， 上一节课->[下一节课]
+        for next, pre in prerequisites:
+            graph[pre].append(next)
 
-        # 我们把indegree 为0的数找出来，作为我们图查询的起点
+        # 构造入度和表 点 : 指向这个点的数量有多少
+        for next, pre in prerequisites:
+            indegree[next] += 1
+
+        # 把入度为0的点都加入到queue里去
         queue = []
-        for i in range(len(indegree)):
-            if indeee[i] == 0:
-                queue.append(i)
+        for key in indegree:
+            if indegree[key] == 0:
+                queue.append(key)
 
-        # count用来记录，有向图从开始到结束，一定要经过多少层节点
+        # count等于是图的层数，假如说图有环，或者有点不可到达，那么count是不可能
+        # 等于numcourse的
         count = 0
-        while len(queue) > 0:
-            # 这个v已经是明确没有indegree了，功成身退，计入count中，然后再利用这个V来查询
-            # 相邻的节点
-            v = queue.pop(0)
+        while queue:
             count += 1
-            for i in graph[v]:
-                # 把v指向的节点的的入度减1，即是把v的入度去掉
-                indegree[i] -= 1
-                # 去完之后必有新的节点的入度为0，则继续用它来进行这个过程
-                # 如果没有的话则循环结束，返回结果
-                if indegree[i] == 0:
-                    queue.append(i)
+            pre = queue.pop(0)
+
+            # 删除上一个节点，所以与之对应的下一个节点所有的入度都要-1
+            for next in graph[pre]:
+                indegree[next] -= 1
+
+                # 把入度为0的节点加入到queue
+                if indegree[next] == 0:
+                    queue.append(next)
 
         return count == numCourses
 

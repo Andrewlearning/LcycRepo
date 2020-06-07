@@ -21,11 +21,11 @@ class Solution(object):
         for interval in intervals:
 
             # minheap[0]是最早的结束时间
-            # 假如说 开始时间 > 结束时间, 那说明可以共用一间房
+            # 假如说 新会议开始时间 > 老会议最早结束时间, 那说明可以共用一间房
             if minheap and interval[0] >= minheap[0]:
                 heapq.heapreplace(minheap, interval[1])
 
-            # 假如说 开始时间 < 结束时间，说明不能共用一间房，所以要push一个新房间的结束时间进去
+            # 假如说 新会议开始时间 < 老会议最早结束时间，说明不能共用一间房，所以要push一个新房间的结束时间进去
             else:
                 heapq.heappush(minheap, interval[1])
 
@@ -40,12 +40,6 @@ class Solution(object):
 所以我们只需要两个房间
 
 答案：
-https://www.youtube.com/watch?v=wB884_Os58U
+https://leetcode-cn.com/problems/meeting-rooms-ii/solution/hui-yi-shi-ii-by-leetcode/
 time O(nlogn) , space O(n)
-我们知道，假如说当前的continer里最早空出来的房间 比 interval开始的时间晚，说明要多开一个房间
-1.heap为空，把interval.end加进heap
-  heap不为空，且interval.end > continer[0]
-  这两种情况，要加入新房间
-2.假如说heap不为空 且 interval.end <= continer[0]
-  说明不用加新房间，我们只需要更新以下新的结束时间
 """

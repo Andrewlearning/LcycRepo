@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
 
@@ -45,7 +46,8 @@ class Solution(object):
         j = len(nums) - 1
         while i < j:
             self.swap(nums, i, j)
-            i, j = i + 1, j - 1
+            i += 1
+            j -= 1
 
 
 """

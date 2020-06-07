@@ -60,6 +60,7 @@ class Solution(object):
             return
 
         # cnt的含义是，假设当前这一位被选中的话，这一位被选中后还剩下多少种可能性
+        # 假如说有五位，然后目前选中第三位(index = 2), 那我们应该剩两位的可能， 所以 5 - 2 - 1 = 2
         cnt = self.factorial[n - 1 - index]
 
         # 因为全排序是从1开始的

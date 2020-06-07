@@ -5,8 +5,6 @@ output: 6
 Input: ")()())"
 Output: 4
 """
-
-
 class Solution(object):
     def longestValidParentheses(self, s):
         """
@@ -36,9 +34,6 @@ class Solution(object):
         return res
 
 """
-// Time: O(n), Space: O(n)
+Time: O(n), Space: O(n)
 https://algocasts.io/episodes/n5GqbVpA
-答案：
-1.algocasts 里的p,代表的就是stack peek元素
-2.
 """

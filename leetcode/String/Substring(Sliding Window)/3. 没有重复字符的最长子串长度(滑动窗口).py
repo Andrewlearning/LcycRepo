@@ -27,9 +27,10 @@ class Solution(object):
             # if s[r] 不在 hashmap
             else:
                 hashmap[s[r]] = r
-                res = max(res, r - l)
 
             r += 1
+
+            res = max(res, r - l)
 
         return res
 

@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 给定一个可包含重复数字的序列，返回所有不重复的全排列。
 
@@ -12,8 +13,6 @@
 ]
 
 """
-
-
 class Solution(object):
     def permuteUnique(self, nums):
         """
