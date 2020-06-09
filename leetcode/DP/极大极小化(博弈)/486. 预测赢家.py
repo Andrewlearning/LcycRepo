@@ -35,7 +35,7 @@ class Solution(object):
         # 保证初始化的时候，至少留[i,j]两个位置
         for i in range(length - 2, -1, -1):
             for j in range(i, length, 1):
-                # 当前我方和对方的最大分差是，我拿了nums[i]赚的，减去上一轮对方赚的
+                # 当前我方和对方的最大分差是，我拿了nums[i]赚的，减去下一轮对方赚的
                 dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])
 
         # 因为玩家一第一个选，所以他拥有所有数字的选择权

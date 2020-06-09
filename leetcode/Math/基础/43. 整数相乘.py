@@ -20,6 +20,7 @@ class Solution(object):
                 plow = i + j + 1
 
                 sum = res[plow] + product
+                # 注意，此时的phigh是下一回合的plow, 所以要+=
                 res[phigh] += sum // 10
                 res[plow] = sum % 10
 

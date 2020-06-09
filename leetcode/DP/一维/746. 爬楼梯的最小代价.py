@@ -11,7 +11,8 @@ class Solution:
         :rtype: int
         """
 
-        if not cost: return 0
+        if not cost:
+            return 0
 
         dp = [0] * len(cost)
         dp[0] = cost[0]

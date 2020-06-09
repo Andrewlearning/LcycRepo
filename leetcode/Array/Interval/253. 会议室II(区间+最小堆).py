@@ -17,6 +17,8 @@ class Solution(object):
         :rtype: int
         """
         intervals.sort(key = lambda x:x[0])
+
+        # heap表示，为满足会议需求，需要同时开多少个房间
         minheap = []
         for interval in intervals:
 
@@ -25,7 +27,8 @@ class Solution(object):
             if minheap and interval[0] >= minheap[0]:
                 heapq.heapreplace(minheap, interval[1])
 
-            # 假如说 新会议开始时间 < 老会议最早结束时间，说明不能共用一间房，所以要push一个新房间的结束时间进去
+            # 1.假如说 新会议开始时间 < 老会议最早结束时间，说明不能共用一间房，所以要push一个新房间的结束时间进去
+            # 2.没有房间在被使用，这就不存在房间的共用了，所以要加房间
             else:
                 heapq.heappush(minheap, interval[1])
 

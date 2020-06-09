@@ -37,8 +37,7 @@ class Solution(object):
 
         # 初始化
         for i in range(n):
-            for j in range(k):
-                dp[i][j] = costs[i][j]
+            dp[0][j] = costs[0][j]
 
         for i in range(1, n):
             for j in range(k):

@@ -49,3 +49,39 @@ dp[i,0] = min(dp[i-1,1], dp[i-1,2]) + cost(i,0)
 dp[i,1] = min(dp[i-1,0], dp[i-1,2]) + cost(i,1)
 dp[i,2] = min(dp[i-1,0], dp[i-1,1]) + cost(i,2)
 """
+
+# dfs + memo
+class Solution(object):
+    def minCost(self, costs):
+        """
+        :type costs: List[List[int]]
+        :rtype: int
+        """
+        if costs == []:
+            return 0
+        self.memo = {}
+        self.costs = costs
+        return min(self.helper(0, 0), self.helper(0, 1), self.helper(0, 2))
+
+    def helper(self, n, color):
+        if (n, color) in self.memo:
+            return self.memo[(n, color)]
+
+        if n == len(self.costs) - 1:
+            pass
+
+        cur_cost = self.costs[n][color]
+
+        if n == len(self.costs) - 1:
+            pass
+        elif color == 0:
+            cur_cost += min(self.helper(n + 1, 1), self.helper(n + 1, 2))
+        elif color == 1:
+            cur_cost += min(self.helper(n + 1, 0), self.helper(n + 1, 2))
+        elif color == 2:
+            cur_cost += min(self.helper(n + 1, 0), self.helper(n + 1, 1))
+
+        self.memo[(n, color)] = cur_cost
+
+        return cur_cost
+
