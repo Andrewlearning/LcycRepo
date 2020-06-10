@@ -1,5 +1,6 @@
 """
-把一个无序的列表变成一个摇摆序列
+把一个无序且有重复的数组 变成一个 摇摆序列
+这里的摇摆序列指的是，奇数位比偶数位大
 """
 class Solution(object):
     def wiggleSort(self, nums):
@@ -7,19 +8,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        if not nums and len(nums) == 0: return []
+        if not nums and len(nums) == 0:
+            return
 
-        alist = sorted(nums)
+        nums.sort()
         n = len(nums)
         left = (n - 1) // 2
         right = n - 1
 
         for i in range(n):
             if i % 2 == 0:
-                nums[i] = alist[left]
+                nums[i] = nums[left]
                 left -= 1
             else:
-                nums[i] = alist[right]
+                nums[i] = nums[right]
                 right -= 1
 
 

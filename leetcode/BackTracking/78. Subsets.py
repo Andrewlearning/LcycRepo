@@ -31,6 +31,7 @@ class Solution(object):
     def helper(self,nums,temp,cur):
         self.res.append(temp[:])
 
+        # 保证不越界的措施在这里
         for i in range(cur,len(nums)):
             temp.append(nums[i])
             self.helper(nums,temp,i+1)

@@ -19,14 +19,17 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
-        if not nums or len(nums) == 0:return res
+        if not nums or len(nums) == 0:
+            return res
         nums = sorted(nums)
 
         for p in range(len(nums) - 3):
-            if p > 0 and nums[p] == nums[p-1]:continue
+            if p > 0 and nums[p] == nums[p-1]:
+                continue
 
             for k in range(p+1,len(nums)-1):
-                if k > p+1 and nums[k] == nums[k-1]: continue
+                if k > p+1 and nums[k] == nums[k-1]:
+                    continue
                 i = k + 1
                 j = len(nums)-1
 
@@ -35,9 +38,13 @@ class Solution(object):
                     s = nums[i] + nums[j] + nums[k] + nums[p]
                     if s == target:
                         res.append([nums[i], nums[j], nums[k], nums[p]])
-                        while i < j and nums[i] == nums[i+1]: i += 1
-                        while i < j and nums[j] == nums[j-1]: j -= 1
-                        i += 1 ; j -= 1
+                        while i < j and nums[i] == nums[i+1]:
+                            i += 1
+                        while i < j and nums[j] == nums[j-1]:
+                            j -= 1
+                        i += 1
+                        j -= 1
+
                     elif s < target:
                         i += 1
                     else:
