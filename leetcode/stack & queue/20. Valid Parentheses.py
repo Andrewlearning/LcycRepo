@@ -9,46 +9,32 @@ Input: "(]"
 Output: false
 就是判断左右两边的括号能不能合上
 """
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        check = ["()","{}","[]"]
+        stack = []
+        for char in s:
 
+            if char in "({[":
+                stack.append(char)
 
-def isValid(self, s):
-    """
-    :type s: str
-    :rtype: bool
-    """
-    if s is None:
-        return
-
-    match = {"{": "}", "[": "]", "(": ")"}
-    stack = []
-
-    for i in s:
-        if i in match.keys():
-            stack.append(i)
-        else:
-            if len(stack) == 0:
-                return False
-
-            left = stack.pop(-1)
-            if i == match[left]:
-                continue
             else:
-                return False
+                if len(stack) == 0:
+                    return False
 
-    if len(stack) != 0:
-        return False
+                cur = stack.pop(-1) + char
+                if cur not in check:
+                    return False
 
-    return True
+        return len(stack) == 0
 
 
 """
 这题利用stack来做
-
-解法：
-从s里拿出一个元素
-1.是左括号，则push进stack
-2.是右括号，则pop出peak元素
-3.s遍历结束时，看看stack是不是空的，如空则完成，没空则false
 
 remark:
 1.注意else这种情况，有可能输入的只是一个右字符串，那么pop的话会返回错误结果

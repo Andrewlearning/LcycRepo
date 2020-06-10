@@ -19,36 +19,37 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
-        if not nums or len(nums) == 0:
-            return res
-        nums = sorted(nums)
+        nums.sort()
+        first = 0
 
-        for p in range(len(nums) - 3):
-            if p > 0 and nums[p] == nums[p-1]:
+        for first in range(len(nums) - 3):
+            if first > 0 and nums[first - 1] == nums[first]:
                 continue
 
-            for k in range(p+1,len(nums)-1):
-                if k > p+1 and nums[k] == nums[k-1]:
+            for second in range(first + 1, len(nums) - 2):
+                if second > first + 1 and nums[second - 1] == nums[second]:
                     continue
-                i = k + 1
-                j = len(nums)-1
 
+                l = second + 1
+                r = len(nums) - 1
 
-                while i < j:
-                    s = nums[i] + nums[j] + nums[k] + nums[p]
-                    if s == target:
-                        res.append([nums[i], nums[j], nums[k], nums[p]])
-                        while i < j and nums[i] == nums[i+1]:
-                            i += 1
-                        while i < j and nums[j] == nums[j-1]:
-                            j -= 1
-                        i += 1
-                        j -= 1
+                while l < r:
+                    temp = [nums[first], nums[second], nums[l], nums[r]]
+                    total = sum(temp)
 
-                    elif s < target:
-                        i += 1
+                    if total == target:
+                        res.append(temp)
+                        while l < r and nums[l] == nums[l + 1]:
+                            l += 1
+                        while l < r and nums[r - 1] == nums[r]:
+                            r -= 1
+                        l += 1
+                        r -= 1
+
+                    elif total > target:
+                        r -= 1
                     else:
-                        j -= 1
+                        l += 1
         return res
 
 if __name__ == "__main__":
