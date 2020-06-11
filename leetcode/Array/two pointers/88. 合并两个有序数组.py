@@ -9,6 +9,8 @@ nums2 = [2,5,6],       n = 3
 
 Output: [1,2,2,3,5,6]
 """
+
+
 class Solution(object):
     def merge(self, nums1, m, nums2, n):
         """
@@ -18,24 +20,30 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        if not nums1 or not nums2 or m == 0 : return nums1
 
-        i = m - 1; j = n - 1; k = m + n - 1
-        while i >= 0 and j >= 0:
-            if nums1[i] > nums2[j]:
-                nums1[k] = nums1[i]
-                i -= 1
+        p = m + n - 1
+        p1 = m - 1
+        p2 = n - 1
+
+        while p1 >= 0 and p2 >= 0:
+            if nums1[p1] > nums2[p2]:
+                nums1[p] = nums1[p1]
+                p -= 1
+                p1 -= 1
             else:
-                nums1[k] = nums2[j]
-                j -= 1
-            k -= 1
+                nums1[p] = nums2[p2]
+                p -= 1
+                p2 -= 1
 
-        while i >= 0:
-            nums1[k] = nums1[i]
-            k , i = k -1 , i - 1
-        while j >= 0:
-            nums1[k] = nums2[j]
-            k , j = k -1 , j -1
+        while p1 >= 0:
+            nums1[p] = nums1[p1]
+            p -= 1
+            p1 -= 1
+        while p2 >= 0:
+            nums1[p] = nums2[p2]
+            p -= 1
+            p2 -= 1
+
         return nums1
 
 """

@@ -15,27 +15,27 @@ Output:
   []
 ]
 """
+
+
 class Solution(object):
     def subsets(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        if nums is None or len(nums) == 0: return []
 
         self.res = []
-        self.helper(nums,[],0)
+        self.helper(nums, 0, [])
+
         return self.res
 
-
-    def helper(self,nums,temp,cur):
+    def helper(self, nums, idx, temp):
         self.res.append(temp[:])
 
-        # 保证不越界的措施在这里
-        for i in range(cur,len(nums)):
-            temp.append(nums[i])
-            self.helper(nums,temp,i+1)
-            temp.pop(-1)
+        # 这个for循环确保了 index不会越界
+        # 因为当要越界的时候 range(idx, len(nums))过不去
+        for i in range(idx, len(nums)):
+            self.helper(nums, i + 1, temp + [nums[i]])
 
 if __name__  == "__main__":
     solution = Solution()

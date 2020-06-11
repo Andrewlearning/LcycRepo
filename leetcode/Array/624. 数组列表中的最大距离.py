@@ -22,21 +22,22 @@ class Solution(object):
         :type arrays: List[List[int]]
         :rtype: int
         """
-        max_value = -sys.maxsize
-        min_value = sys.maxsize
+        last_max = -sys.maxsize
+        last_min = sys.maxsize
         res = 0
 
         for i in range(len(arrays)):
-            # tempmin, max表示当前回合的最大最小值
-            tmpMin = arrays[i][0]
-            tmpMax = arrays[i][-1]
+            # 表示当前回合的最大最小值
+            cur_min = arrays[i][0]
+            cur_max = arrays[i][-1]
 
             # 题目规定我们不能用同一个数组的最大最小值相减得到答案
             # 所以我们要用这次的减去上次的
-            res = max(max_value - tmpMin, tmpMax - min_value, res)
+            # 第一次循环，res为0，等同于初始化，因为我们至少要经历两个列表才可以得出一个res
+            res = max(last_max - cur_min, cur_max - last_min, res)
 
             # 更新
-            max_value = max(max_value, tmpMax)
-            min_value = min(min_value, tmpMin)
+            last_max = max(last_max, cur_max)
+            last_min = min(last_min, cur_min)
 
         return res

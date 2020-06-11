@@ -1,53 +1,39 @@
 class Solution(object):
-    # O(n^2) O(1)
-    def largestRectangleArea(self, heights):
-        """
-        :type heights: List[int]
-        :rtype: int
-        """
-        if not heights or len(heights) == 0: return 0
-        res = 0
-        n = len(heights)
-        
-        for i in range(n):
-            height = heights[i]
-            left = i
-            right = i
-            while left >= 0 and heights[left] >= height: left -= 1
-            while right < n and heights[right] >= height: right += 1
-            res = max(res, height*(right - left - 1))
-        
-        return res
-
     # O(n) O(n)
     def largestRectangleAreaStack(self, heights):
-        if not heights or len(heights) ==  0:
+        if not heights and len(heights) ==  0:
             return 0
+
         res = 0
         n = len(heights)
+        # 递增的单调栈，遇到递增的数字，把下标加入
         stack = []
         r = 0
 
         for r in range(n+1):
+            # 当r在直方图范围内时，h = height[r]
+            # 当r不在直方图范围内时， h = 0
             h = 0 if r == n else heights[r]
 
+            # 当r遍历到一个 小与 栈顶元素的值时。 那么开始计算高度
+            # [l , index]这个范围就是矩形的宽
             while len(stack) != 0 and h < heights[stack[-1]]:
+
                 index = stack.pop()
                 l = -1 if len(stack) == 0 else stack[-1]
                 res = max(res, heights[index] * (r - l - 1))
 
+            # 1.当r遍历发现一直递增，则加入r的下标
+            # 2.上面计算完毕后，我们也加入r的下标，因为比r高大的已经被pop完了
+            # 3.当stack为空的时候
             stack.append(r)
+
         return res
 
 
 """
 https://algocasts.io/episodes/RVmVlopQ
-答案：
-1.第一种做法比较简单直接，它的做法是，遍历整个数组(python不能过，java能过)
-    然后拿到数组中的每一个高度后，创建两个指针，向两边扩展，遇到比自己大的数，就继续扩展，遇到比自己小的数，就停止扩展。
-    这是因为我们把当前遍历到的高度，作为我们一个大矩形的高度，所以只有当左右直方图都比自己高的时候，才能继续走下去
-    
-2.第二种做法有点抽象，我到现在也只稍微理解了点
+
   同样的，我们也是遍历整个高度数组，同时把 i对应的数h 作为高度
   
   当 h >= 栈顶元素时，我们一直把h给加入stack中
