@@ -21,6 +21,8 @@ class Solution(object):
 
         # l,r是滑动窗口的[l,r]
         left, right = 0, 0
+
+        # 最小子串开始的下标， 和子串的最小长度
         start, length = 0, len(s) + 1
 
         # 里面放着滑动窗口 还需要多少字母(数量)
@@ -43,7 +45,7 @@ class Solution(object):
                     start = left
                     length = right - left + 1
 
-                # 缩小范围
+                # 缩小范围，移动滑动窗口的左边界
                 if s[left] in required:
                     required[s[left]] += 1
                     if required[s[left]] > 0:

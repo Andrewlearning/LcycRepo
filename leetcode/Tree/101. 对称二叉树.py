@@ -25,5 +25,9 @@ class Solution(object):
         if not left or not right:
             return False
 
-        # 在确保 当前的对称性满足之后， 我们继续判断下面的节点
-        return left.val == right.val and self.helper(left.left, right.right) and self.helper(left.right, right.left)
+        # 当两个节点的值都不相等的话，那么返回FALSE
+        if left.val != right.val:
+            return False
+
+        # 我们继续判断下面的节点
+        return self.helper(left.left, right.right) and self.helper(left.right, right.left)
