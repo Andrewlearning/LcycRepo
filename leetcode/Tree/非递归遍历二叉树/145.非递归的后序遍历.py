@@ -24,14 +24,17 @@ class Solution(object):
 
         while stack:
             node = stack.pop(-1)
-            res.insert(0, node.val)
+            res.append(node.val)
             # left right root
-            # so , we should push right later, so that we can pop right first
+            # -> root right left
 
-            if node.left: stack.append(node.left)
-            if node.right: stack.append(node.right)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
 
-        return res
+
+        return res[::-1]
 
 """
 非递归的树遍历，要数后序遍历最难
@@ -46,8 +49,8 @@ class Solution(object):
   3
 1  2
 例如 l r root,[1,2,3]， 
-那我们反向访问，root,r,l,不就是[3,2,1],我们插入顺序变成从前插入的话，不就等于了
-[3],[2,3],[1,2,3]了吗
+那我们反向访问，root,r,l,不就是[3,2,1]
 
-最后直接输出结果就好
+最后我们再反过来返回答案即可
+
 """

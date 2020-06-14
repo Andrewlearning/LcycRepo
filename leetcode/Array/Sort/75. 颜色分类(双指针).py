@@ -17,7 +17,7 @@ class Solution(object):
         mid = 0
         right = len(nums) - 1
 
-
+        # 这里注意是 <= ?
         while mid <= right:
             if nums[mid] == 0:
                 self.swap(left, mid, nums)
