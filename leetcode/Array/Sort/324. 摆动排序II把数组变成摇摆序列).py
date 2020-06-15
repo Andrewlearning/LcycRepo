@@ -2,27 +2,30 @@
 把一个无序且有重复的数组 变成一个 摇摆序列
 这里的摇摆序列指的是，奇数位比偶数位大
 """
+
+
 class Solution(object):
     def wiggleSort(self, nums):
         """
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        if not nums and len(nums) == 0:
-            return
+        if not nums and len(nums) == 0: return []
 
-        nums.sort()
+        sortedlist = sorted(nums)
         n = len(nums)
-        left = (n - 1) // 2
-        right = n - 1
+        small = (n - 1) // 2
+        large = n - 1
 
         for i in range(n):
+            # 偶数的时候要填比较小的
             if i % 2 == 0:
-                nums[i] = nums[left]
-                left -= 1
+                nums[i] = sortedlist[small]
+                small -= 1
+            # 奇数是要填比较大的
             else:
-                nums[i] = nums[right]
-                right -= 1
+                nums[i] = sortedlist[large]
+                large -= 1
 
 
 """

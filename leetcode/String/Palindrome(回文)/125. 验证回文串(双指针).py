@@ -1,18 +1,22 @@
 """
 Given a string, determine if it is a palindrome,
-considering only alphanumeric（数字和字母） characters and ignoring cases（忽略大小写）.
+considering only（只考虑，说明遇到符号那些可以跳过） alphanumeric（数字和字母）
+characters and ignoring cases（忽略大小写）.
 """
-
-
 class Solution(object):
     def is_alphanumeric(self, char):
         return ("a" <= char <= "z") or \
                ("A" <= char <= "Z") or \
                ("0" <= char <= "9")
 
-    def is_ignoring_case(self, a, b):
-        if "a" <= a <= "z": a = chr(ord(a) - 32)
-        if "a" <= b <= "z": b = chr(ord(b) - 32)
+    # 假如出现大小写的情况，我们把两个字母都转换成大写的形式，来统一进行比较
+    def convertLowtoHigh(self, a, b):
+        convert = ord("a") - ord("A")
+        if "a" <= a <= "z":
+            a = chr(ord(a) - convert)
+        if "a" <= b <= "z":
+            b = chr(ord(b) - convert)
+
         return a == b
 
     def isPalindrome(self, s):
@@ -20,16 +24,21 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        if s is None or len(s) == 0: return True
+        if s is None and len(s) == 0:
+            return True
+
         i = 0
         j = len(s) - 1
         while i < j:
+
+            # 跳过不合法的字母
             while i < j and not self.is_alphanumeric(s[i]):
                 i += 1
             while i < j and not self.is_alphanumeric(s[j]):
                 j -= 1
 
-            if i < j and not self.is_ignoring_case(s[i], s[j]):
+            # 转换成统一格式来进行比较
+            if i < j and not self.convertLowtoHigh(s[i], s[j]):
                 return False
             i += 1
             j -= 1

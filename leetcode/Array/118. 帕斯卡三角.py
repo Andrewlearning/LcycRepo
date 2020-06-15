@@ -7,6 +7,8 @@
   [1,3,3,1],
  [1,4,6,4,1]
 """
+
+
 class Solution(object):
     def generate(self, numRows):
         """
@@ -19,13 +21,14 @@ class Solution(object):
 
         res = []
 
-
         for i in range(numRows):
-            # i是每一层的个数，因为i是从0 ~ numrow-1, 所以在下面要进行设置
+            # 第0行有一个元素，第1行有一个元素，第2行有三个元素
+            # 我们等于先把要处理的行 先初始化
+            # 且该行的头尾都为1, 这个也要初始化
             temp = [1 for _ in range(i + 1)]
 
-            # j是操作的当前元素
-            # j 应该从 [1, jjjj, 1] 第一个数字，和最后一个数字中间操作
+            # 所以头尾的1 我们就不用进行操作了
+            # 然后当前的 [j] = [j-1][j]
             for j in range(1, len(temp) - 1):
                 temp[j] = res[i - 1][j - 1] + res[i - 1][j]
 
@@ -36,5 +39,4 @@ class Solution(object):
 """
 https://algocasts.io/episodes/jwmBr5m8
 Time: O(n^2), Space: O(1)
-这题主要是边边角角的地方比较多
 """

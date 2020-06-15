@@ -25,9 +25,8 @@ class Solution(object):
         # queue存的是，当前的单词，以及变化的次数
         queue = [[beginWord, 1]]
 
-        # new_char_pool = "abcdefghijklmnopqrstuvwxyz"
         # 这个的作用是待会可以从里面取 原单词中没有的字母
-        new_char_pool = string.ascii_lowercase
+        new_char_pool = "abcdefghijklmnopqrstuvwxyz"
 
 
         wordList = set(wordList)
@@ -61,6 +60,5 @@ class Solution(object):
 上面的做法用的是单向BFS，时间复杂度比较高
 思路：https://www.youtube.com/watch?v=vWPCm69MSfs
 
-new_char_pool = string.ascii_lowercase代表26个小写字母
 wordList = set(wordList)，避免单词重复出现的情况，提升了效率
 """

@@ -5,6 +5,8 @@
 
 输入: "acba"
 输出: True
+
+ab (1) cd (c) ba
 """
 class Solution(object):
     def validPalindrome(self, s):

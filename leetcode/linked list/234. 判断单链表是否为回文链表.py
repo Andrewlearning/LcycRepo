@@ -13,11 +13,13 @@ class Solution(object):
         if not head:
             return True
 
+        # 记录链表长度
         length = 0
         check = head
         while check:
             length += 1
             check = check.next
+
 
         pre = None
         cur = head
@@ -49,5 +51,4 @@ Time: O(n), Space: O(1)
 这种方法是最优解，我们先用一个变量来记录链表的总长度
 然后反转前半段链表， 然后pre,从中间向左走， cur从中间向右走
 一次次来进行比
-
 """
