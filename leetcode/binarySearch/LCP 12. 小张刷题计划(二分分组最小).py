@@ -10,6 +10,7 @@
 输出：0
 解释：在前三天中，小张每天求助小杨一次，这样他可以在三天内完成所有的题目并不花任何时间。
 """
+import sys
 class Solution(object):
     def minTime(self, times, m):
         """
@@ -21,6 +22,7 @@ class Solution(object):
         # 所以在这里不和440 一样
         l = 0
         r = sum(times)
+        res = sys.maxsize
 
         while l <= r:
             mid = (l+r) // 2
@@ -44,10 +46,11 @@ class Solution(object):
                     interal_max = time
 
             if count <= m:
+                res = min(res, mid)
                 r = mid - 1
             else:
                 l = mid + 1
-        return l
+        return res
 
 
 # 作者：kinger-2

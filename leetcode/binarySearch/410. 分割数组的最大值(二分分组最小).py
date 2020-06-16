@@ -1,5 +1,6 @@
 """
 给定一个非负整数数组和一个整数 m，你需要将这个数组分成 m 个非空的连续子数组。设计一个算法使得这 m 个子数组各自和的最大值最小。
+（使得每个子数组的大小最平均）
 
 输入:
 nums = [7,2,5,10,8]
@@ -36,19 +37,22 @@ class Solution(object):
             count = 1
 
             for i in range(length):
+                sub_sum += nums[i]
+
                 # 说明当前区间超过 我们想要分配的范围了
-                if sub_sum + nums[i] > mid:
+                if sub_sum > mid:
                     # 那么我们该找下一个区间了
                     count += 1
                     sub_sum = nums[i]
-                else:
-                    sub_sum += nums[i]
 
-            # 假如说我们分配的区间数量，小于题目要求的数量，说明我们每个区间分配的数分多了
+
+            # 假如说我们分配的区间数量，小于题目要求的数量，说明我们每个区间分配的数字 分多了
             # 那么我们要把下一次分配的最大值 缩小一下， r = mid - 1
             if count <= m:
                 res = min(res, mid)
                 r = mid - 1
+
+            # 假如count 太多，说明我们把树分的太散了，要让分组的最低值高一点
             else:
                 l = mid + 1
 
