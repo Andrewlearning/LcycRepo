@@ -8,6 +8,7 @@ class Solution(object):
         res = [0 for i in range(rowIndex + 1)]
         res[0] = 1
 
+        # 这个赋值过程要重复 rowIndex + 1次
         for i in range(rowIndex + 1):
 
             # 当前回合的最右元素定为1
