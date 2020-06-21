@@ -1,35 +1,17 @@
 import sys
 class Solution(object):
-    # 1
     def FindGreatestSumOfSubArray(self, nums):
         res = -sys.maxsize
         sum = 0
 
         for num in nums:
+            # 看重新开始收益大， 还是继续选择收益大
             sum = max(num, sum + num)
+
+            # 看之前结果大, 还是当前结果大
             res = max(res, sum)
 
         return res
-
-    # 2
-    def maxSubArray(self, array):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        # 我们为什么一开始不把sum 定成0呢？
-        # 因为我们的测试条件中有可能会出现，[-5,-1,-2]这种情况
-        cursum = maxsum = array[0]
-        for i in array[1:]:
-            if cursum <= 0:
-                cursum = i
-            else:
-                cursum += i
-
-            # 假如在出现[-5,-1,-2]这种情况，我们对比的是，前面的序列和小点，还是当前index小点
-            # 就是虽然两种情况都很烂，但是还是可以比较一下
-            maxsum = max(cursum, maxsum)
-        return maxsum
 
 if __name__ == "__main__":
     solution = Solution()

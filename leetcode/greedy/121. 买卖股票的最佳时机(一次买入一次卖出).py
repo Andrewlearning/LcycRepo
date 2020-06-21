@@ -17,20 +17,20 @@ class Solution(object):
         """
         if not prices:
             return 0
-        low = sys.maxsize
+
+        minprice = sys.maxsize
         maxprofit = 0
 
-        for p in prices:
-            if p < low:
-                low = p
+        for price in prices:
+            # 我们不断更新股票的历史最低价格
+            minprice = min(minprice, price)
 
-            if p - low > maxprofit:
-                maxprofit = p - low
+            # 任何一个当前价格都有可能是历史最高价格，所以要不断尝试
+            maxprofit = max(maxprofit, price - minprice)
 
         return maxprofit
 
 """
 我们可以维持两个变量——minprice 和 maxprofit
 它们分别对应迄今为止所得到的最小的谷值和最大的利润（卖出价格与最低价格之间的最大差值）。
-
 """
