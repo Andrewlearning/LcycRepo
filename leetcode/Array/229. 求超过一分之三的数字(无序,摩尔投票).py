@@ -45,7 +45,7 @@ class Solution(object):
             c1 -= 1
             c2 -= 1
 
-        # 检查两个出现次数最多的数，符不符合 n/3的要求
+        # 检查两个出现次数最多的数，符不符合  > n//3的要求
         c1 = 0
         c2 = 0
         for num in nums:
@@ -54,6 +54,8 @@ class Solution(object):
             elif num == num2:
                 c2 += 1
 
+        # 这里必须要大于，因为假如说 >=的话
+        # 遇上[]输入的话，会返回错误结果
         if c1 > len(nums) // 3:
             res.append(num1)
 

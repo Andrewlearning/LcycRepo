@@ -1,8 +1,9 @@
 """
-Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
 
-You may assume that the array is non-empty and the majority element always exist in the array.
-求众数
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+
+
 """
 class Solution(object):
     def majorityElement1(self, nums):
@@ -10,7 +11,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if nums is None or len(nums) == 0:
+        if nums is None and len(nums) == 0:
             return 0
 
         res = nums[0]
@@ -31,12 +32,6 @@ class Solution(object):
 
 """
 https://algocasts.io/episodes/VlWd8W06
-方法一：暴力解，一次次循环找出最大的数，O(n^2) 空间O(1)
-方法二：用字典记录，然后找出最大的value，时间空间都为O（n)
-方法三，把nums排序好，然后返回nums[len//2].因为众数的数量是大于等于一半的，所以
-即使是极端情况，最小的数字是众数，那么nums[len//2]依旧能返回这个数，所以直接这样做
-就可以了。时间 O(nlogn),空间O(1)
-
 摩尔投票法
 时间 O(n),空间O(1)
 我们用res 来记录当前数量最多的数字

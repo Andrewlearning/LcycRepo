@@ -29,11 +29,11 @@ class Solution(object):
         :rtype: int
         """
 
-        n = len(s) - 1
+        n = len(s)
         res = 0
         temp = 1
 
-        for i in range(n, -1, -1):
+        for i in range(n-1, -1, -1):
             res += (ord(s[i]) - ord("A") + 1) * temp
             temp *= 26
 
