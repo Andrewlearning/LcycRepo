@@ -1,6 +1,5 @@
 """
 Example 1:
-
 一个字符串的 子序列 是指这样一个新的字符串：
 它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
 例如，"ace" 是 "abcde" 的子序列, （就是不一定需要是连续的）
@@ -11,11 +10,9 @@ Output: 3
 Explanation: The longest common subsequence is "ace" and its length is 3.
 Example 2:
 
-Input: text1 = "abc", text2 = "abc"
-Output: 3
-Explanation: The longest common subsequence is "abc" and its length is 3.
 找出字符串1和2的最长相同子序列是多长（不要求连续）->例1
 """
+
 
 class Solution(object):
     def longestCommonSubsequence(self, text1, text2):
@@ -24,16 +21,25 @@ class Solution(object):
         :type text2: str
         :rtype: int
         """
-        if not text1 or not text2: return 0
 
-        dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]
+        # 初始化dp数组， dp[text1用了几个字符][text2用了几个字符]
+        dp = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)]
 
-        for i in range(len(text1)):
-            for j in range(len(text2)):
-                if text1[i] == text2[j]:
-                    dp[i + 1][j + 1] = dp[i][j] + 1
+        # 我们不用定义初始状态，因为dp[0][0]两个空字符串没有公共序列
+
+        # 从两个字符串的第一个字符开始遍历
+        for i in range(1, len(text1) + 1):
+            for j in range(1, len(text2) + 1):
+
+                # 假如两个字符相等
+                if text1[i - 1] == text2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+
+                # 假如两个字符不相等，因为不要求连续
+                # 我们只要把距离当前状态最近的两个状态的最值，转移到当前状态就好
                 else:
-                    dp[i + 1][j + 1] = max(dp[i + 1][j], dp[i][j + 1])
+                    dp[i][j] = max(dp[i][j - 1], dp[i - 1][j])
+
         return dp[-1][-1]
 
 
