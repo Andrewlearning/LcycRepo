@@ -31,11 +31,13 @@ class Solution(object):
 
         n = len(s)
         res = 0
-        temp = 1
+        bit = 1
 
         for i in range(n-1, -1, -1):
-            res += (ord(s[i]) - ord("A") + 1) * temp
-            temp *= 26
+            # +1是因为 "A" 对应1
+            # 假如说不+， 那么"A"对应0
+            res += (ord(s[i]) - ord("A") + 1) * (26**bit)
+            bit += 1
 
         return res
 

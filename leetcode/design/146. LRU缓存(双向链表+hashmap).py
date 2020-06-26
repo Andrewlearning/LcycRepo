@@ -96,3 +96,6 @@ class LRUCache(object):
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
+
+# 本题，创建双向链表的时候是顺时针创建
+# 但是插入节点的时候，是逆时针插入，所以就是说head是最久未被访问的节点，head.pre是第二久未被访问的节点

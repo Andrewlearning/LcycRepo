@@ -8,39 +8,57 @@
 输出: 7
 """
 
+
 class Solution(object):
     def calculate(self, s):
         """
         :type s: str
         :rtype: int
         """
-        if not s or len(s) == 0:
-            return 0
 
-        op = "+"
         num = 0
+        # op总是在下一个数字出现前，先定义好
+        # 我们初始化第一个数字时正数
+        # 那么假如说第一个数字是 -3, 那么op会先变成-，然后再读取到3，再把-3加进栈中
+        op = "+"
         stack = []
 
         for i in range(len(s)):
+            # 当我们遇到数字时，我们先把这个数字记录下来
+            # 先记录数字的原因是
+            # 我们把数字拆解成这样的形势 (+)14 (-)2 (*)3 这样加进栈里面
+            # 到最后把它们都加起来
             if "0" <= s[i] <= "9":
                 num = num * 10 + int(s[i])
 
+            # 要理解这个else的含义
+            # 当前读取到s[i]这个符号，是留给下一个回合使用的
+            # 这个回合，我们要把上一次读取到的op,与上一次读取到的num，合在一起加进stack
             if s[i] in "+-*/" or i == len(s) - 1:
                 if op == "+":
                     stack.append(num)
                 if op == "-":
                     stack.append(-num)
+
+                # 在这里，乘除法的优先级比较高，所以他们不能直接放进栈里，和别的元素相加
+                # 而是要把他们的优先级降下来，降到与 +-一样，再加入栈
+                # 所以便有了以下的操作
                 if op == "*":
                     stack.append(stack.pop() * num)
                 if op == "/":
                     # 这里是因为python2的语言特性问题
+                    # 例如 -3/2,我们想让它等于-1
+                    # 但python算出来是等于-2的
                     if stack[-1] < 0:
                         stack.append((stack.pop() + num - 1) / num)
                     else:
                         stack.append(stack.pop() / num)
 
+                # 上一次的op已经使用完了，把它更新成s[i],留给下一个num使用
                 op = s[i]
+                # 上一个num已经使用完了，把它变成0，用来给下一个num赋值
                 num = 0
+
         return sum(stack)
 
 s = Solution()
