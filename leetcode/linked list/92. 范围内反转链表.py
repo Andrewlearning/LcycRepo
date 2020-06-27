@@ -23,52 +23,47 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
-
-        if not head: return None
+        if not head:
+            return head
 
         pre = None
-        nex = None
         cur = head
 
+        # 这里，例如是2的话，那我们从位置1开始走，走到2，走一步就好了
         while m > 1:
             pre = cur
             cur = cur.next
-            m, n = m - 1, n - 1
+            m -= 1
+            n -= 1
 
+        # 在我们翻转完指定范围以后，start的位置 1(start) 2<-3<-4 5
         start = pre
+        # 在我们翻转完指定范围以后，start的位置 1(start) 2(tail)<-3<-4  5
         tail = cur
-        # 这个反转链表，的开始反转点在一开始的cur,结束点在while后的pre
 
         while n:
-            nex = cur.next
-
-
+            next = cur.next
             cur.next = pre
 
             pre = cur
-            cur = nex
+            cur = next
             n -= 1
 
-        # 此时，cur已经走到了第五位，但是pre还在第四位,我们需要把反转序列的尾node连到序列的头部
-        # 把反转序列的头node,连到序列的尾部
+        # 1(start) 2(tail)<-3<-4(pre)  5(cur)
         if start:
             start.next = pre
+
+
+        # 当出现 [3,5] 1 1 这个测试条件的话
+        # None(start) 3(tail,pre) 5(cur)
+        # 反正走判断完美契合
         else:
             head = pre
 
+        # 1(start) 2(tail)<-3<-4(pre)  5(cur)
         tail.next = cur
         return head
 
 """
-看答案：https://leetcode.com/problems/reverse-linked-list-ii/solution/
-答案：
-这题和反转链表挺不一样的，因为这题要求最后的指针都是正的，不像那题是反着的
-于是我们有了最后处理这一步
-
-1。重要的是
-   开始时，pre在要反转序列以外，cur在反转序列的第一个node
-   结束时，pre是在被反转链表里的最后一个node, 而cur不在反转的node里
-
-2。本题关键在最后几步，我们要把 反转序列的最后一个node,练到头部，把反转序列的第一个node连到尾部
-  这样才能形成一个正向的链表
+https://leetcode.com/problems/reverse-linked-list-ii/solution/
 """
