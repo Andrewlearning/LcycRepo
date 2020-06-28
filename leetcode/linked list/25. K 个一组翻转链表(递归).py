@@ -26,6 +26,7 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
+        # base case
         # 假如说没节点或者只剩下一个节点的话，那么不用进行反转
         if head == None or head.next == None:
             return head

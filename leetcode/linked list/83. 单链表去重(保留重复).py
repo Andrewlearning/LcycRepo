@@ -11,14 +11,19 @@ class Solution(object):
         :rtype: ListNode
         """
 
-        if not head: return
+        if not head:
+            return
+
         cur = head
 
         while cur:
 
+            # 我们只要求 cur, 和 cur.next的值不相等就好
+            # 所以能保留重复数字中的其中一个
             while cur.next and cur.val == cur.next.val:
                 cur.next = cur.next.next
 
+            # 当cur.next跟 cur的值不一样了，说明可以连起来了
             cur = cur.next
 
         return head

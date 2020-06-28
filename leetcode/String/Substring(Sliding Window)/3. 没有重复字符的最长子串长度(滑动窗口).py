@@ -5,8 +5,8 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        # 我们让l 指向的是，滑动窗口左边界的左边，r指向的是滑动窗口的右边界(l,r]
-        l = -1
+        # 我们让l 指向的是，滑动窗口左边界，r指向的是滑动窗口的右边界[l,r]
+        l = 0
         r = 0
 
         hashmap = {}
@@ -17,10 +17,10 @@ class Solution(object):
             # 当s[r]这个元素已经在hashmap中，且s[r]这个元素是在滑动窗口中
             # 因为hashmap的元素，不会因为不在滑动窗口内，就删除
             # 所以得到s[r] 对应的index，有可能是不在滑动窗口内的
-            if s[r] in hashmap and hashmap[s[r]] > l:
+            if s[r] in hashmap and hashmap[s[r]] >= l:
 
                 # 更新滑动窗口左边界，且s[r]这个元素已经不在窗口内了
-                l = hashmap[s[r]]
+                l = hashmap[s[r]] + 1
                 # 把这个元素的新下标放进hashmap
                 hashmap[s[r]] = r
 
@@ -30,7 +30,7 @@ class Solution(object):
 
             r += 1
 
-            res = max(res, r - l)
+            res = max(res, r - l + 1)
 
         return res
 
