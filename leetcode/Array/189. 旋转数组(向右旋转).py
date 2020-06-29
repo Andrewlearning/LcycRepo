@@ -27,10 +27,10 @@ class Solution(object):
         # 先总体反转一遍
         self.reverse(s, 0, length - 1)
 
-        # 然后再把 【0，n] 反转一遍
+        # 然后再把 [0，n] 反转一遍
         self.reverse(s, 0, n - 1)
 
-        # 然后再把 【n， length-1] 反转一遍
+        # 然后再把 [n， length-1] 反转一遍
         self.reverse(s, n, length - 1)
 
         # 这样就能达到我们想要的效果了
@@ -46,6 +46,17 @@ class Solution(object):
 
 """
 https://algocasts.io/episodes/Z5mzgwGd
+这种题，怎么看往左还是往右呢，自己先试试就知道了
+
+k = 3
+# 原始数组                  : 1 2 3 4 5 6 7
+# 反转所有数字后             : 7 6 5 4 3 2 1
+# 反转前 k 个数字后          : 5 6 7 4 3 2 1
+# 反转后 n-k 个数字后        : 5 6 7 1 2 3 4 --> 结果
+
+
+# 链接：https://leetcode-cn.com/problems/rotate-array/solution/xuan-zhuan-shu-zu-by-leetcode/
+
 
 下面这题是向左旋转的， 面试题58 - II. 左旋转字符串
 """
