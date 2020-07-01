@@ -7,6 +7,8 @@
 输入: [1,2,3,4,5]
 输出: [120,60,40,30,24]
 """
+
+
 class Solution(object):
     def constructArr(self, a):
         """
@@ -14,4 +16,17 @@ class Solution(object):
         :rtype: List[int]
         """
 
-        # 用倒三角的做法来做
+        length = len(a)
+        b = [1 for _ in range(length)]
+
+        for i in range(1, length):
+            b[i] = b[i - 1] * a[i - 1]
+
+        temp = 1
+        # 因为对于我们来说，最开始的话，是要从最边缘既是a[i+1]开始的
+        # b[i] a[i+1], i+1 = length-1
+        for i in range(length - 2, -1, -1):
+            temp *= a[i + 1]
+            b[i] *= temp
+
+        return b

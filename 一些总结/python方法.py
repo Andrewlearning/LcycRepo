@@ -11,12 +11,9 @@ a = cmp()
 
 
 
-enumerate：
-
-
 
 #https://blog.csdn.net/qwe1257/article/details/83272340
-collections.Counter
+# collections.Counter
 
 from collections import Counter
 colors = ['red', 'blue', 'red', 'green', 'blue', 'blue']
@@ -26,8 +23,8 @@ print (dict(c))
 
 
 
-filter函数
-起到过滤作用，把需要过滤的东西储存到b中
+# filter函数
+# 起到过滤作用，把需要过滤的东西储存到b中
 a = [11, 20, 4, 5, 16, 28]
 b = filter(lambda x: x % 2 != 0, a)
 

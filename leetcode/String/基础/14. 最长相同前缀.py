@@ -41,6 +41,7 @@ class Solution(object):
                 if i >= len(strs[j]) or first[i] != strs[j][i]:
                     return first[:i]
 
+        # 假如说以上流程都没有提前结束，那么说明first就是strs里最短的前缀，返回
         return first
 
 

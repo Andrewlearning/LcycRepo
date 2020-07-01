@@ -1,17 +1,4 @@
 """
-你要判断是否有可能上完所有课程
-
-https://algocasts.io/episodes/rLmP3yWo
-方法1，把所有课都转换成有向图，先修指向后修，然后进行dfs
-假如说dfs都是可以终止的，说明没有环，也就说明了可以完成这些课：
-有环，例如： 3的课需要2的前置，2的前置是3，所以这两门课永远没办法去上，
-dfs到了这里也无法终结
-
-checked[]:用来储存dfs结束的节点，说明这个点开始的路径无环
-
-节点总数是V，边的总数是E,构造图花费V+E,遍历图也需要V+E
-time(V+E) Space(V+E)
-
 输入: 2, [[1,0],[0,1]]
 输出: false
 解释: 总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0；并且学习课程 0 之前，你还应先完成课程 1。这是不可能的。
@@ -62,13 +49,6 @@ class Solution(object):
 """
 time(V+E) Space(V+E)
 方法2：拓扑排序 = 顶点染色 + 记录顺序
-入度，进入一个节点边的条数，称为入度
-出度，出一个节点边的条数，称为出度
-做法：先找出入度为0的点，然后把这个点的出度边都删除
-     删除后，找出第二个入度为0的点，然后再把这个点的出度给删除
-     ...
-     我们按这样的节奏把所有入度为0的点给找出来
-     然后？
 """
 
 # 拓扑排序
@@ -85,27 +65,27 @@ class Solution(object):
         graph = {}
         indegree = {}
 
-        # 初始化构造图的顶点, 点 ->[]
-        # 初始化入度， 点 -> 0
+        # 初始化构造图的顶点, pre ->[next1,next2]
+        # 初始化入度， next -> 0
         for node in range(numCourses):
             graph[node] = []
             indegree[node] = 0
 
-        # 开始给图的顶点赋予意义， 上一节课->[下一节课]
         for next, pre in prerequisites:
+            # 开始给图的顶点赋予意义， 上一节课->[下一节课]
             graph[pre].append(next)
 
-        # 构造入度和表 点 : 指向这个点的数量有多少
-        for next, pre in prerequisites:
+            # 构造入度和表 点 : 指向这个点的数量有多少
             indegree[next] += 1
+
 
         # 把入度为0的点都加入到queue里去
         queue = []
-        for key in indegree:
-            if indegree[key] == 0:
-                queue.append(key)
+        for pre in indegree:
+            if indegree[pre] == 0:
+                queue.append(pre)
 
-        # count等于是图的层数，假如说图有环，或者有点不可到达，那么count是不可能
+        # count记录我们总共已经上过了几门课，假如有课不可到达，那么count是不可能 == numCourse的
         # 等于numcourse的
         count = 0
         while queue:
@@ -121,12 +101,6 @@ class Solution(object):
                     queue.append(next)
 
         return count == numCourses
-
-"""
-remark:
-这题即使不写判断边界条件也不会出错，因为我们在创造graph的时候，默认最差就是创造出一个
-【】(num = 0)，然后即使这样进行下去，count == numcourses
-"""
 
 
 

@@ -9,18 +9,22 @@ class Solution(object):
         """
         if "1" in digits or "0" in digits or len(digits) == 0 or digits is None:
             return []
+
         self.res = []
         self.helper(digits, 0, "")
         return self.res
 
-    def helper(self, digits, index, ans):
-        if len(ans) == len(digits):
-            self.res.append(ans[:])
+    def helper(self, digits, index, temp):
+
+        if len(temp) == len(digits):
+            self.res.append(temp[:])
+            # 注意这个return, 要不然函数执行下去，index会out of range
             return
+
         chars = self.mapping[ord(digits[index]) - ord("2")]
 
         for char in chars:
-            self.helper(digits, index+1, temp+char)
+            self.helper(digits, index+1, temp + char)
 
 
 """

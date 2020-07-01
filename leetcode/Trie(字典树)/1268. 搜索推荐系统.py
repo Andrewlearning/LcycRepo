@@ -39,7 +39,6 @@ class Solution:
         cur = root
 
         # 假如说当前这个字母已经不在字典树了，那么后续的字母即使在也没意义了
-        #
         flag = False
 
 
