@@ -23,6 +23,7 @@ class Trie(object):
         self.root = {}
         self.end_of_word = "#"
 
+    # 构建trie
     def insert(self, word):
         """
         Inserts a word into the trie.
@@ -31,10 +32,12 @@ class Trie(object):
         """
         node = self.root
         for char in word:
-            node = node.setdefault(char,{})
-        node[self.end_of_word] = self.end_of_word
+            if char not in node:
+                node[char] = {}
+            node = node[char]
+        node["#"] = "#"
 
-
+    # 完全搜索一个单词在不在trie里面
     def search(self, word):
         """
         Returns if the word is in the trie.
@@ -46,8 +49,9 @@ class Trie(object):
             if char not in node:
                 return False
             node = node[char]
-        return self.end_of_word in node
+        return "#" in node
 
+    # 只搜索prefix在不在trie里面
     def startsWith(self, prefix):
         """
         Returns if there is any word in the trie that starts with the given prefix.
@@ -59,7 +63,9 @@ class Trie(object):
             if char not in node:
                 return False
             node = node[char]
+
         return True
+
 
 if __name__ == "__main__":
     solution = Trie()
