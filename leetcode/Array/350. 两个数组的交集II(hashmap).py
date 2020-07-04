@@ -11,6 +11,7 @@
 输出: [4,9]
 
 """
+import collections
 class Solution(object):
     def intersect(self, nums1, nums2):
         """

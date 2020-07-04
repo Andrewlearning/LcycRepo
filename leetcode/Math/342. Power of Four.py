@@ -5,9 +5,25 @@ class Solution(object):
         :type num: int
         :rtype: bool
         """
-        return num != 0 and num &(num-1) == 0 and num & 1431655765== num
+        return num != 0 and num & (num-1) == 0 and num & 1431655765== num
 
 
+    def PowerOfFour(self, num):
+        """
+        :type num: int
+        :rtype: bool
+        """
+        if num == 1:
+            return True
+        if num < 4:
+            return False
+
+        while num != 1:
+            if num % 4 != 0:
+                return False
+            num //= 4
+
+        return num == 1
 """
 答案
 https://leetcode.com/problems/power-of-four/discuss/80461/Python-one-line-solution-with-explanations
