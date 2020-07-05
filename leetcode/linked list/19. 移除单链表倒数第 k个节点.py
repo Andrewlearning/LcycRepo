@@ -1,3 +1,9 @@
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
 class Solution(object):
     def removeNthFromEnd(self, head, k):
         """
@@ -5,22 +11,24 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
+        if not head:
+            return
 
-        front = head
-        last = head
+        dummy = ListNode(0)
+        dummy.next = head
+        fast = slow = dummy
 
-        while front.next != None and k:
-            front = front.next
-            k -= 1
+        # 先让快指针领先k个节点
+        for i in range(k):
+            fast = fast.next
 
-        if k != 0: return head
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
 
-        while front.next != None:
-            front = front.next
-            last = last.next
+        slow.next = slow.next.next
 
-        last.next = last.next.next
-        return head
+        return dummy.next
 
 """
 https://algocasts.io/episodes/eAGQQlG4
@@ -28,6 +36,4 @@ https://algocasts.io/episodes/eAGQQlG4
 注意：
 1. 我们进行while 循环的时候，要while front.next: 这样front才不会 = None
 2. 假如说k 超过链表长度的话，那我们直接返回整个链表就好了
-
-
 """

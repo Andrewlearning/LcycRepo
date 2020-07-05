@@ -35,13 +35,11 @@ class RandomizedSet(object):
         if val in self.hashmap:
             val_index = self.hashmap[val]
             last_value = self.nums[-1]
-
             # 把last_value的index变成 原来val所在的index
             # 把last_value 放在val之前所在的index上(在self.nums里已经把val抹除了)
             # 所做的一切，都是把last_value,放在val本应该存在的位置上，然后我们再把val给去除
 
             self.hashmap[last_value],self.nums[val_index] = val_index,last_value
-
             # 把多余的last_value 给pop()掉，因为它已经附值在val之前的index上了
             # 把hashmap 中把 val给去掉
             self.nums.pop(),self.hashmap.pop(val,0)

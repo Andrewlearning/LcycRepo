@@ -52,31 +52,29 @@ https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/solution/liang-ge
 """
 
 # 这题假如说给的两个数组是排序过的，那要怎么做？ 利用双指针
-    def intersect(self, nums1, nums2):
-        nums1.sort()
-        nums2.sort()
-        result = []
-        i, j = 0, 0
-        while i < len(nums1) and j < len(nums2):
+def intersect(self, nums1, nums2):
+    nums1.sort()
+    nums2.sort()
+    result = []
+    i, j = 0, 0
+    while i < len(nums1) and j < len(nums2):
 
-            # 前两个都是为了 找到 nums[i] == nums[j]
-            if nums1[i] < nums2[j]:
-                i += 1
-            elif nums1[i] > nums2[j]:
-                j += 1
+        # 前两个都是为了 找到 nums[i] == nums[j]
+        if nums1[i] < nums2[j]:
+            i += 1
+        elif nums1[i] > nums2[j]:
+            j += 1
 
-            # 当两个元素相等时
-            else:
-                result.append(nums1[i])
-                i += 1
-                j += 1
+        # 当两个元素相等时
+        else:
+            result.append(nums1[i])
+            i += 1
+            j += 1
 
-        return result
+    return result
 
 """
 时间复杂度：O(n+m)。其中 n，m 分别代表了数组的大小。
 空间复杂度：O(min(n,m))，我们对较小的数组进行哈希映射使用的空间。
-
-
 https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/solution/leetcode350-liang-ge-shu-zu-de-jiao-ji-ii-by-lsg-2/
 """

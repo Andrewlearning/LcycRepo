@@ -19,11 +19,13 @@ class Solution(object):
         intervals.sort(key = lambda x:x[0])
 
         # heap表示，为满足会议需求，需要同时开多少个房间
+        # 只记录每个房间的结束时间
         minheap = []
+
         for interval in intervals:
 
             # minheap[0]是最早的结束时间
-            # 假如说 新会议开始时间 > 老会议最早结束时间, 那说明可以共用一间房
+            # 假如说 新会议开始时间 >= 老会议最早结束时间, 那说明可以共用一间房
             if minheap and interval[0] >= minheap[0]:
                 heapq.heapreplace(minheap, interval[1])
 
