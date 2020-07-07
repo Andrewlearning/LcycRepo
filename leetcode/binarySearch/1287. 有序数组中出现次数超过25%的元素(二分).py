@@ -11,7 +11,7 @@ class Solution(object):
         # 在这里，我们把这个数组分成了四份，我们只去查看那四个点上
         # 因为假如说有值是超过25%，在这四个点上，必有一个点是这个数，等于是一种减枝
         for i in range(0, n, span):
-            # 找到左右
+            # 找到左右,[]
             left = bisect.bisect_left(arr, arr[i])
             right = bisect.bisect_right(arr, arr[i])
 

@@ -14,7 +14,7 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        res = [[0 for i in range(n)] for j in range(n)]
+        res = [[0] * n for _ in range(n)]
         left = 0
         right = n-1
         top = 0

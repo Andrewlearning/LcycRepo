@@ -58,16 +58,11 @@ class Solution(object):
             # 2买2卖，手头上没股票（不可能再买了），看股票之前卖赚的多还是现在卖赚最多
             profit[i][2][0] = max(profit[i-1][2][0], profit[i-1][1][1] + prices[i])
 
-        end = len(prices) - 1
+
 
 
         # 中间都是0是因为，手上没股票了，利润才可能是最大的
-        return max(profit[end][0][0], profit[end][1][0], profit[end][2][0])
+        return max(profit[-1][0][0], profit[-1][1][0], profit[-1][2][0])
 
 """
-profit[i][k][j]
-这个递推有三个状态，i = 天数，  k = 之前交易了多少次,          j = 目前是持有还是不持有股票,还是已经到了买卖限制了 
-                i (0-n-1)    k (0,k)k表示总交易次数的限制   j (0,1)                                   
-
-假如说题目要求可以持有多只股票，那么j的含义可以变成目前持有多少只股票
 """

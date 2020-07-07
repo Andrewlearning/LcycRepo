@@ -1,3 +1,8 @@
+
+
+123
+
+
 """
 Say you have an array for which the i-th element is the price of a given stock on day i.
 
@@ -52,10 +57,7 @@ class Solution(object):
 
 
 
-        end = len(prices) - 1
-
-
-        return max(profit[end][n-1])
+        return max(profit[-1][n-1])
 
 
 if __name__ == "__main__":

@@ -20,6 +20,8 @@
 []]
 
 """
+# 本题的每个节点，不单单要存储到下一个节点的字典
+# 还要储存一个word列表，所以要用一个class
 class Trie:
     def __init__(self):
         self.child = dict()
@@ -44,6 +46,7 @@ class Solution:
 
         for char in searchWord:
             # 当前char不存在，那么后续的单词存在也没意义了,因为往下输入肯定也不会找到任何一个单词
+            # 遍历到下一个字母，直接append([]), 因为前缀已经对不上了
             if flag or char not in cur.child:
                 res.append([])
                 flag = True
@@ -61,16 +64,16 @@ class Solution:
             if char not in cur.child:
                 cur.child[char] = Trie()
 
-            # 进入到一个新的 Trie() 或者是一个之前存在的 Trie()
+           # 进到下一层
             cur = cur.child[char]
 
-            # 往这个节点的list 添加word, 因为用到了char，这个字母
+            # 往新的一层添加word,因为我们可以通过char访问到这层
             cur.words.append(word)
 
             # 然后对这个这个list进行排序
             cur.words.sort()
 
-            # 假如list长度大于3，那么我们就要pop（）掉
+            # 假如list长度大于3，那么我们就要pop（）掉不在前三的单词
             if len(cur.words) > 3:
                 cur.words.pop()
 
