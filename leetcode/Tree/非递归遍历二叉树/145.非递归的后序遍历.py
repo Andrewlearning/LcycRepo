@@ -28,10 +28,12 @@ class Solution(object):
             # left right root
             # -> root right left
 
-            if node.right:
-                stack.append(node.right)
+            # 先进，后出，left先进，left后出
             if node.left:
                 stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+
 
 
         return res[::-1]

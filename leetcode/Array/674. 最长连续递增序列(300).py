@@ -8,22 +8,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
+        if not nums and len(nums) == 0:
             return 0
 
-        res = 1
-        temp = 1
+        dp = [1 for _ in range(len(nums))]
+        res = 0
 
-        for i in range(1,len(nums)):
-            # 假如发现不是递增，那么重头计算
-            if nums[i-1] >= nums[i]:
-                temp = 1
+        for i in range(len(nums)):
+            # 只有满足nums[i - 1] < nums[i]的时候，我们才能算作连续递增
+            if i > 0 and nums[i - 1] < nums[i]:
+                dp[i] = max(dp[i], dp[i - 1] + 1)
 
-            # 假如发现是递增，那么则一直加下去，同时更新状态
-            else:
-                temp += 1
-                if temp > res:
-                    res = temp
+            # 记录
+            res = max(res, dp[i])
+
         return res
 
 """

@@ -25,6 +25,7 @@ class Solution(object):
 
             cur = stack.pop(-1)
             res.append(cur.val)
+
             cur = cur.right
 
         return res

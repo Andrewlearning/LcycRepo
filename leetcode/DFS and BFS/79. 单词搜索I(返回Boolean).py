@@ -19,35 +19,38 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
-        self.res = False
+        if not board:
+            return False
+
         self.lr = len(board)
         self.lc = len(board[0])
-        self.visited = [[False] * self.lc for _ in range(self.lr)]
+        self.visited = []
+        self.res = False
 
         for i in range(self.lr):
             for j in range(self.lc):
                 if board[i][j] == word[0]:
-                    if self.helper(board, word, i, j, 0):
-                        return True
+                    if self.helper(board, word, 0, i, j):
+                        self.res = True
 
-        return False
+        return self.res
 
-    def helper(self, board, word, i, j, index):
-        if index == len(word):
-            return True
-        if i < 0 or j < 0 or i >= self.lr or j >= self.lc or index > len(word) or self.visited[i][j] == True or \
-                board[i][j] != word[index]:
+    def helper(self, board, word, index, i, j):
+        if i < 0 or j < 0 or i >= self.lr or j >= self.lc or [i, j] in self.visited or index >= len(word) or board[i][
+            j] != word[index]:
             return False
 
-        self.visited[i][j] = True
+        if index == len(word) - 1:
+            return True
 
-        res = self.helper(board, word, i + 1, j, index + 1) \
-              or self.helper(board, word, i - 1, j, index + 1, ) \
-              or self.helper(board, word, i, j + 1, index + 1, ) \
-              or self.helper(board, word, i, j - 1, index + 1, )
+        self.visited.append([i, j])
 
-        self.visited[i][j] = False
+        res = self.helper(board, word, index + 1, i + 1, j) \
+              or self.helper(board, word, index + 1, i - 1, j) \
+              or self.helper(board, word, index + 1, i, j + 1) \
+              or self.helper(board, word, index + 1, i, j - 1)
 
+        self.visited.pop(-1)
         return res
 
 """

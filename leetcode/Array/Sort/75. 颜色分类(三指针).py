@@ -17,7 +17,10 @@ class Solution(object):
         mid = 0
         right = len(nums) - 1
 
-        # 这里注意是 <= ?
+        # 这里注意是 <=
+        # case = [2,0,1]
+        # 第一次： [1,0,2] mid = 1, right = 1
+        # 所以我们最后还缺一次验证
         while mid <= right:
             if nums[mid] == 0:
                 self.swap(left, mid, nums)

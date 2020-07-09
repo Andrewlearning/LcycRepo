@@ -5,23 +5,25 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def preorderTraversal(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
-        root left right
         """
+        # root, left, right
         if not root:
             return []
 
-        res = []
         stack = [root]
+        res = []
 
-        while len(stack) != 0:
-            node = stack.pop(-1)
+        while stack:
+            node = stack.pop()
             res.append(node.val)
 
+            # stack, 先进，后出，right先进，right后出
             if node.right:
                 stack.append(node.right)
             if node.left:

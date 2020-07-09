@@ -11,22 +11,26 @@ Explanation: The longest increasing subsequence is [2,3,7,101], therefore the le
 """
 class Solution(object):
     def lengthOfLIS(self, nums):
-        if nums is None or len(nums) == 0:return
-
-        res = 1
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums and len(nums) == 0:
+            return 0
 
         # 表示到当前位置上，最长且不连续的递增子串长度是多少
-        dp = [1 for i in range(len(nums))]
+        dp = [1 for _ in range(len(nums))]
+        res = 0
 
         for i in range(len(nums)):
-            for j in range(i,-1,-1):
+            for j in range(0, i):
                 # 假如说我们发现当前字母[i], 大于之前的某个字母[j]
                 # 那么我们就要看是否能更新dp[i]的最大值
-                if dp[j] < dp[i]:
+                if nums[i] > nums[j]:
                     dp[i] = max(dp[i], dp[j] + 1)
 
             # 因为dp[-1]不代表拥有最长子串，所以我们要记录每一次的最大值
-            res = max(res,dp[i])
+            res = max(res, dp[i])
 
         return res
 

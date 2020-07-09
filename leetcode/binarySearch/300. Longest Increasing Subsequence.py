@@ -9,29 +9,27 @@ Explanation: The longest increasing subsequence is [2,3,7,101], therefore the le
 资料：https://algocasts.io/episodes/yRp3Mym4
 """
 
+
 class Solution(object):
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
-        if not nums or len(nums) == 0:
+        if not nums and len(nums) == 0:
             return 0
 
-        length = len(nums)
-        res = [0]*length
-        res[0] = 1
+        # 从每个元素出发的话，最短的递增公共子串都是1
+        dp = [1 for _ in range(len(nums))]
+        res = 0
 
-        for i in range(1,length):
-            for j in range(i):
+        for i in range(len(nums)):
+            for j in range(0, i):
                 if nums[i] > nums[j]:
-                    cur = res[j] + 1
-                else:
-                    cur = 1
-                res[i] = max(res[i],cur)
+                    dp[i] = max(dp[i], dp[j] + 1)
+            res = max(res, dp[i])
 
-        len_max = max(res)
-        return len_max
+        return res
 
 """
 时间复杂度O(N^2) 空间复杂O（N），新开了一个list,比较垃圾
