@@ -8,10 +8,13 @@ class Solution(object):
         if not s and len(s) == 0:
             return 0
 
+        # 代表一串数， 例如括号外的所有数字，或者括号内的所有数字
         res = 0
 
         # 初始化为正数
         sign = 1
+
+        # 代表单个数
         num = 0
         stack = []
 

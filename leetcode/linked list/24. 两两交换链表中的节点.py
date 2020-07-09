@@ -28,7 +28,7 @@ class Solution(object):
         :rtype: ListNode
         """
         # base case, 假如说递归到最后，没有节点，或者是只有一个节点
-        if head == None or head.next == None:
+        if head is None or head.next is None:
             return head
 
         # 1(cur) -> 2(next)  (3 4)

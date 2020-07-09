@@ -11,7 +11,7 @@ class Solution(object):
     def shuffle(self):
         ans = self.nums[:]                     # copy list
         for i in range(len(ans)-1, 0, -1):     # start from end
-            j = random.randrange(0, i+1)    # generate random index, [0,i]里随便取一个数
+            j = random.randint(0, i)    # generate random index, [0,i]里随便取一个数
             ans[i], ans[j] = ans[j], ans[i]    # swap
         return ans
 

@@ -1,4 +1,5 @@
 """
+          左  下   右  上
 矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。
 如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。
 给出两个矩形，判断它们是否重叠并返回结果。
@@ -21,11 +22,11 @@ class Solution(object):
         :type rec2: List[int]
         :rtype: bool
         """
-        # 排除四种错误情况
-        return not (rec1[2] <= rec2[0] or  # left
-                    rec1[3] <= rec2[1] or  # bottom
-                    rec1[0] >= rec2[2] or  # right
-                    rec1[1] >= rec2[3])  # top
+        # 排除四种错误情况，这四个条件满足其中一个，都不可能相交
+        return not (rec1[2] <= rec2[0] or  # left rec1的右边 比rec2的左边小
+                    rec1[3] <= rec2[1] or  # bottom rec1的上 比rec2的下要低
+                    rec1[0] >= rec2[2] or  # right  rec1的左边 比rec2的右边大
+                    rec1[1] >= rec2[3])  # top rec1的下面 比rec2的上面大
 
 # 作者：LeetCode-Solution
 # 链接：https://leetcode-cn.com/problems/rectangle-overlap/solution/ju-xing-zhong-die-by-leetcode-solution/

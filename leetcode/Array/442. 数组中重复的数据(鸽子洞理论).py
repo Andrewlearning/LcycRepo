@@ -11,6 +11,7 @@
 [2,3]
 """
 
+# 本题关系 index = value - 1
 class Solution(object):
     def findDuplicates(self, nums):
         """

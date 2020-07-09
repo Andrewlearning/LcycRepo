@@ -24,12 +24,6 @@
 #         self.left = None
 #         self.right = None
 
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
 
 class Solution(object):
     def levelOrderBottom(self, root):
@@ -42,28 +36,22 @@ class Solution(object):
 
         queue = [root]
         res = []
+        temp = []
 
         while queue:
-            # queue用来装这一层需要遍历的元素 以及下一层需要装进去的元素
+            val = [node.val for node in queue]
+            res.append(val)
 
-            # temp用来当前这一层的结果
+            for node in queue:
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
+
+            queue = temp
             temp = []
 
-            # 我们用这个for 循环锁住了queue的取值范围，所以后面无论怎么放都不会影响到
-            # 我们当前这一层的情况
-            for i in range(len(queue)):
-                node = queue.pop(0)
-                temp.append(node.val)
-
-                if node.left:
-                    queue.append(node.left)
-
-                if node.right:
-                    queue.append(node.right)
-
-            res.insert(0,temp)
-
-        return res
+        return res[::-1]
 
 """
 其实就是树的层级遍历，因为我们要把每一层都作为一个List储存在res里，最后反转一遍

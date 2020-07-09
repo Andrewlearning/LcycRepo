@@ -13,6 +13,7 @@ Output:
 [5,6]
 在这个长度为8的数组，缺少了5，6这两个数
 """
+# 本题关系 index = value - 1
 class Solution(object):
     def findDisappearedNumbers(self, nums):
         """
