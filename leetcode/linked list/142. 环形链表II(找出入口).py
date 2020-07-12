@@ -28,14 +28,16 @@ class Solution(object):
 
         quick = head
         slow = head
+
         while quick and quick.next:
             quick = quick.next.next
             slow = slow.next
             if quick == slow:
                 break
 
+        # 链表已经走出范围了
         if quick is None or quick.next is None:
-            return -1
+            return
 
         fast = head
         while slow != fast:
@@ -56,8 +58,6 @@ class Solution(object):
 2。若没走完，且在环内相遇，则把快慢指针的其中一个设为头节点，然后两个指针一步一步走
 走到相遇的地方就是环的入口
 
-remark:
-1.尚且搞不清楚leetcode的运行机制，反正没有头两行就是一定过不了，但是我不是已经写了
-检测机制了吗？？？
+
 
 """

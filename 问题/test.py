@@ -1,65 +1,49 @@
-import sys
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+import random
+import heapq
 
 
-class Question(object):
-    def question2(self, root, n):
+def pickMachine(machines, possible):
+    pickMap = {1: 0, 2: 0, 3: 0, 4: 0}
+    same = {1: 0, 2: 0, 3: 0, 4: 0}
 
-        self.res = []
-        self.helper(root, n, [])
-
-        # for _ in range(len(self.res)):
-        #     print(_+1, self.res[_])
-        # print(n ,len(self.res))
-
-        for n in range(1,11):
-            self.helper(root, n, [])
-            print(n ,len(self.res))
-            self.res = []
+    possible = [sum(possible[0:i+1]) for i in range(4)]
 
 
+    for time in range(10000):
+        pickeds = helper(possible)
+        if len(pickeds) == 1:
+            same[pickeds[0]+1] += 1
+        else:
+            for picked in pickeds:
+                pickMap[picked + 1] += 1
+
+    print(pickMap)
+    minHeap = []
+    for key in pickMap.keys():
+        heapq.heappush(minHeap, (pickMap[key], key))
 
 
-    def helper(self, root, n, temp):
-        if root.val == "E":
-            if n == 0:
-                if temp not in self.res:
-                    self.res.append(temp + ["E"])
-                return
-            else:
-                return
-
-        if n <= 0:
-            return
-
-        self.helper(root.left, n - 1, temp + [root.val])
-        self.helper(root.right, n - 1, temp + [root.val])
+    return [heapq.heappop(minHeap)[1] for _ in range(2)]
 
 
+def helper(possible):
+    picked = []
+    for i in range(2):
+        pick = random.randint(0, 100)
+        if 0 <= pick <= possible[0]:
+            picked.append(0)
+        elif possible[0] < pick <= possible[1]:
+            picked.append(1)
+        elif possible[1] < pick <= possible[2]:
+            picked.append(2)
+        elif possible[2] < pick <= possible[3]:
+            picked.append(3)
 
+    if set(picked) == 1:
+        return picked[:1]
+    else:
+        return picked
 
-if __name__ == "__main__":
-    A = TreeNode("A")
-    B = TreeNode("B")
-    C = TreeNode("C")
-    D = TreeNode("D")
-    E = TreeNode("E")
-    F = TreeNode("F")
-    G = TreeNode("G")
-    H = TreeNode("H")
-
-    A.left = H; A.right = B
-    B.left = A; B.right = C
-    C.left = B; C.right = D
-    D.left = C; D.right = E
-    E.left = D; E.right = F
-    F.left = E; F.right = G
-    G.left = F; G.right = H
-    H.left = G; H.right = A
-
-    question = Question()
-    question.question2(A, 1)
+machines = [1, 2, 3, 4]
+possible = [20, 35, 25, 20]
+pickMachine(machines, possible)

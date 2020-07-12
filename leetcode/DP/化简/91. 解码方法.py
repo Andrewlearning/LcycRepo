@@ -9,7 +9,7 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        if not s or len(s) == 0:
+        if not s and len(s) == 0:
             return 0
 
         dp = [0] * (len(s) + 1)

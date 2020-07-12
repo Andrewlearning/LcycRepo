@@ -20,25 +20,18 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        # 343
-        if n <= 3:
-            return n - 1
+        # 记录当长度为i时，的最大乘积
+        dp = [0 for _ in range(n + 1)]  # dp[0] dp[1]其实没用
 
-        # 根据数学规律， 把数字分成三等分是最容易出最大积
-        # 其次是 分成两等分
-        a = n // 3
+        # 1 * 1 = 1
+        dp[2] = 1
+        res = -1
 
-        # 下面这种情况考虑的是，当不能完全三等分的情况, 所余出来的值
-        b = n % 3
+        for i in range(3, n + 1):
+            for j in range(i):
+                # (i-j) * j 等于是只剪一次
+                # j * dp[i - j] 等于是，剪一段长度为j的下来，剩下的用之前的最优解去乘
+                dp[i] = max(dp[i], max((i - j) * j, j * dp[i - j]))
+        return dp[n]
 
-        # 说明刚好可以三等分 a*a*a
-        if b == 0:
-            return int(pow(3, a))
-        # 说明还是可以三等分 (a-1) * (a-1) * (a-1) * 4
-        if b == 1:
-            return int(pow(3, a - 1) * 4)
-        # a * a * a * 2
-        if b == 2:
-            return int(math.pow(3, a) * 2)
-
-# https://leetcode-cn.com/problems/integer-break/solution/343-zheng-shu-chai-fen-tan-xin-by-jyd/
+# 链接：https://leetcode-cn.com/problems/jian-sheng-zi-lcof/solution/xiang-jie-bao-li-di-gui-ji-yi-hua-ji-zhu-dong-tai-/

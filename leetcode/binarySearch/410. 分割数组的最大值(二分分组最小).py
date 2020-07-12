@@ -22,7 +22,10 @@ class Solution(object):
         :type m: int
         :rtype: int
         """
+        # 每个分组的最小和，就是一个数组的最大元素值
         l = max(nums)
+
+        # 每个分组的最大和，就是一个数组总和
         r = sum(nums)
         length = len(nums)
 
@@ -31,7 +34,7 @@ class Solution(object):
         while l <= r:
             # 区间和的最大值
             mid = (l + r) // 2
-            # 区间和
+            # 当前区间的和
             sub_sum = 0
             # 按照当前mid，总共能分几个区间
             count = 1
@@ -46,13 +49,13 @@ class Solution(object):
                     sub_sum = nums[i]
 
 
-            # 假如说我们分配的区间数量，小于题目要求的数量，说明我们每个区间分配的数字 分多了
+            # 假如说我们分配的区间数量，小于题目要求的数量，说明我们每个区间分配的和 分多了
             # 那么我们要把下一次分配的最大值 缩小一下， r = mid - 1
             if count <= m:
                 res = min(res, mid)
                 r = mid - 1
 
-            # 假如count 太多，说明我们把树分的太散了，要让分组的最低值高一点
+            # 假如count 太多，说明我们把和分的太小了，要让分组的和高一点
             else:
                 l = mid + 1
 
