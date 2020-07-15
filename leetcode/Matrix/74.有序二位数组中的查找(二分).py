@@ -3,29 +3,37 @@
 这题应该用二分查找来做
 """
 
+
 class Solution(object):
-    def searchMatrix(self, array, target):
+    def searchMatrix(self, matrix, target):
         """
-        :type array: List[List[int]]
+        :type matrix: List[List[int]]
         :type target: int
         :rtype: bool
         """
-        if not array or len(array) == 0:
+
+        if not matrix and len(matrix) == 0:
             return False
 
+        lr = len(matrix)
+        lc = len(matrix[0])
         left = 0
-        right = len(array) * len(array[0]) - 1
+        right = lr * lc - 1
 
         while left <= right:
-            mid = (left + right) // 2
-            num = array[mid // len(array[0])][mid % len(array[0])]
 
-            if target == num:
+            mid = (left + right) // 2
+
+            # 注意这里 //的是lc
+            i = mid // lc
+            j = mid % lc
+
+            if matrix[i][j] == target:
                 return True
-            elif target > num:
-                left = mid + 1
-            else:
+            elif matrix[i][j] > target:
                 right = mid - 1
+            else:
+                left = mid + 1
 
         return False
 

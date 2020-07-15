@@ -15,7 +15,7 @@
                [3---------4]
 
 
-输出: 1, 移除【1，3】
+输出: 1, 移除[1,3]
 """
 
 
@@ -31,7 +31,6 @@ class Solution(object):
 
         # 本题最大的难点，为什么要按照结束时间来排序呢？
         # 首先我们得思考一个问题，怎样才算一个区间与另一个区间相交呢？
-
         intervals.sort(key=lambda x: x[1])
 
         lenIntervals = len(intervals)
