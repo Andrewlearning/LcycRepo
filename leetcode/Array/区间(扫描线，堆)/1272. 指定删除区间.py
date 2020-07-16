@@ -24,6 +24,7 @@ class Solution(object):
                 res.append(interval)
             # 两个区间有重叠部分
             else:
+                # 注意这里，头跟头比，尾和尾比
                 # interval的左边比remove的左边长，[interval  )[remove]
                 if interval[0] < toBeRemoved[0]:
                     res.append([interval[0], toBeRemoved[0]])

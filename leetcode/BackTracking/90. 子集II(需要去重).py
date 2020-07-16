@@ -17,27 +17,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        if nums is None or len(nums) == 0: return []
 
         self.res = []
-        nums = sorted(nums)
-        self.helper(nums, [], 0)
+        nums.sort()
+        self.helper(nums, 0, [])
         return self.res
 
-    def helper(self, nums, temp, cur):
+    def helper(self, nums, index, temp):
         self.res.append(temp[:])
 
-        for i in range(cur, len(nums)):
-            if i > cur and nums[i] == nums[i-1]: continue
-            temp.append(nums[i])
-            self.helper(nums, temp, i + 1)
-            temp.pop(-1)
-
-
-
-if __name__ == "__main__":
-    solution = Solution()
-    print(solution.subsetsWithDup([1, 2, 2]))
+        for i in range(index, len(nums)):
+            if i > index and nums[i] == nums[i - 1]:
+                continue
+            self.helper(nums, i + 1, temp + [nums[i]])
 
 """
 https://www.youtube.com/watch?v=FTgi4CT7U2o

@@ -8,6 +8,8 @@
 输出：2
 解释：区间 [3,6] 被区间 [2,8] 覆盖，所以它被删除了
 """
+
+
 class Solution(object):
     def removeCoveredIntervals(self, intervals):
         """
@@ -20,25 +22,26 @@ class Solution(object):
 
         res = 0
 
-        # 按照第一个元素来进行排序的原因是，只有左边先超越了，才有可能实现覆盖别人
-        # -x[1]按这个的排序的原因是，有可能出现 [[1,2],[1,4]]这种情况
-        # 这时候需要先把[1,4]放前面，然后让2 < 4,也被记录被删除的范围内
+        # 头按从小到大排， 尾从大到小排
         intervals.sort(key=lambda x: (x[0], -x[1]))
 
-        # res记录的是，不用被删除的区间，即使，没有两头被覆盖的区间
+        # res记录的是，不用被删除的区间，即是，没有两头被覆盖的区间
         res = 0
-        # 上一个区间的末尾所在位置
-        cur_end = 0
 
-        for interval in intervals:
-            # 因为后一个区间的头，肯定比前一个区间的后
-            # 所以假如说 前一个区间[1] >= 后一个区间的[1]，那么就会被覆盖
+        # 上一个区间的末尾所在位置
+        last_end = 0
+
+        for cur in intervals:
+            # 因为 last_head <= cur_head
+            # 所以我们要保证不出现  last_head <= cur_head < cur_end <= last_end就好饿了
 
             # 我们这里取不会被覆盖的情况
-            if cur_end < interval[1]:
+            if last_end < cur[1]:
                 res += 1
-                cur_end = interval[1]
+                last_end = cur[1]
 
         return res
+
+# https://leetcode-cn.com/problems/remove-covered-intervals/solution/sao-miao-xian-fa-by-liweiwei1419/
 
 # https://leetcode-cn.com/problems/remove-covered-intervals/solution/sao-miao-xian-fa-by-liweiwei1419/

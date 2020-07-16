@@ -15,6 +15,7 @@ class ListNode(object):
         self.val = x
         self.next = None
 
+
 class Solution(object):
     def partition(self, head, x):
         """
@@ -22,13 +23,17 @@ class Solution(object):
         :type x: int
         :rtype: ListNode
         """
-        if not head :return head
 
-        smaller = ListNode(0) ;larger = ListNode(0)
-        ps = smaller ; pl = larger
+        if not head:
+            return head
+
+        smaller = ListNode(0)
+        larger = ListNode(0)
+        ps = smaller
+        pl = larger
 
         cur = head
-        while cur != None:
+        while cur:
             if cur.val >= x:
                 pl.next = cur
                 pl = pl.next
@@ -43,7 +48,6 @@ class Solution(object):
 
 """
 Time: O(n), Space: O(1)
-原理不难
 答案:
 1.创建两条链表，一条储存大于等于的节点，一条储存小于节点
 2.然后把小于等于的节点的最尾端，连到大于等于的头

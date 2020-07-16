@@ -20,13 +20,25 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        if n < 0: return 0
-        dp = [0]*(n+1)
+        if n < 0:
+            return 0
+
+        # n个节点所能构成的二叉树的数量
+        dp = [0] * (n + 1)
         dp[0] = 1
-        for i in range(1,n+1):
-            for j in range(1,i+1):
-                dp[i] += dp[j-1] * dp[i-j]
+        dp[1] = 1
+
+        # 在存在i个节点时
+        for i in range(2, n + 1):
+            # 我们用j作为root节点
+            # 所以比j小的共有j-1个元素，比j大的有i-j哥元素
+            for j in range(1, i + 1):
+                # i所有能构成树的情况，
+                dp[i] += dp[j - 1] * dp[i - j]
+
         return dp[n]
+
+# https://leetcode-cn.com/problems/unique-binary-search-trees/solution/hua-jie-suan-fa-96-bu-tong-de-er-cha-sou-suo-shu-b/
 
 
 """

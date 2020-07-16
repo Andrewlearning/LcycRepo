@@ -25,25 +25,29 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: int
         """
-
-        if not intervals or len(intervals) == 0:
+        if not intervals and len(intervals) == 0:
             return 0
 
-        # 本题最大的难点，为什么要按照结束时间来排序呢？
-        # 首先我们得思考一个问题，怎样才算一个区间与另一个区间相交呢？
+        # 按照区间的结束来进行从小到大排序
         intervals.sort(key=lambda x: x[1])
 
+        # 所有的区间的数量
         lenIntervals = len(intervals)
+
+        # 不重叠区间的数量
         disconnect = 1
 
-        cur_end = intervals.pop(0)[1]
+        # 第一个区间
+        cur = intervals[0]
 
-        for new_l, new_r in intervals:
-
-            if new_l >= cur_end:
+        for i in range(1, len(intervals)):
+            # 当发现两个区间不重叠的时候，disconnect += 1, 更新cur
+            if cur[1] <= intervals[i][0]:
                 disconnect += 1
-                cur_end = new_r
+                cur = intervals[i]
 
+
+        # 所有区间 - 不重叠区间 = 重叠区间的数量
         return lenIntervals - disconnect
 
 
