@@ -7,13 +7,17 @@ class Solution(object):
         if not ratings:
             return 0
 
+        # 我们先初始化，先假设每个位置上的孩子都是平价最低的
         candy = [1 for i in range(len(ratings))]
 
         for i in range(1, len(ratings)):
+            # 假如说 1 2(那么他应该要比左边多1)
             if ratings[i] > ratings[i - 1]:
                 candy[i] = candy[i - 1] + 1
 
+
         for j in range(len(ratings) - 2, -1, -1):
+            # 假如说 2(那么他应该比右边有多1) 1
             if ratings[j] > ratings[j + 1]:
                 candy[j] = max(candy[j], candy[j + 1] + 1)
 

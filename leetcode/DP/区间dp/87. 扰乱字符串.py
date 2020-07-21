@@ -18,7 +18,7 @@ class Solution:
             for j in range(length):
                 dp[i][j][1] = s1[i] == s2[j]
 
-        # 我们对比区间的范围 2～length
+        # 我们对比区间的范围 2～length, 从小到大就是这个递推式的变化过程
         for k in range(2, length + 1):
             # 枚举S中的起点位置
             for i in range(length - k + 1):  # 也就是在s1中枚举i的位置，因为后面会出现i+w的情况，而w最大就是k，
@@ -26,7 +26,7 @@ class Solution:
 
                 # 枚举T中的起点位置
                 for j in range(length - k + 1):
-                    # 枚举划分位置，s1[:k]中从
+                    # w枚举划分位置，s1[:k]中从
                     for w in range(1, k):
                         # 第一种情况：S1->T1  S2->T2
                         if dp[i][j][w] and dp[i + w][j + w][k - w]:

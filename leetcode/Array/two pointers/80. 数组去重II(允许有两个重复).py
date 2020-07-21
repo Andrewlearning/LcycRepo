@@ -5,7 +5,7 @@ class Solution(object):
         :rtype: int
         """
 
-        if not nums or len(nums) == 0:
+        if not nums and len(nums) == 0:
             return 0
 
         # 排序数组, 所以我们顺序遍历就好了
@@ -15,20 +15,22 @@ class Solution(object):
         # r 是用来遍历的，同时作为去重的手段
         r = 0
 
+        # 假如说r循环过后，我们要判断r是否会越界，才能给l赋值
         while r < len(nums):
 
-            # 我们在上一次循环里，已经让r落在一个没有重复数字的位置上，然后在这里进行填充
+            # l的第一次赋值是，r刚进入重复数值期间
+            # l的第二次赋值是，r在重复数值区间的最后一位
             nums[l] = nums[r]
+            l += 1
 
             # 把r移动到重复数字的最后一位 例如 "11113" r的位置就移动到3前面两位 1 1 1(r) 13
             while r + 2 < len(nums) and nums[r] == nums[r + 2]:
                 r += 1
 
-            # 指向下一个填充的位置
             # 1 1 1 1(r) 3
-            l += 1
+            # 在这里，r会移动到有允许有两次重复的最后一个字符上
             r += 1
 
-            # 这里的1，会被填充两次，第一次是从上一个数字进入到1的范围，第二次是从1的范围出去的时候
+
 
         return l

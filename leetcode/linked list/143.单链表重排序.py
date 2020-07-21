@@ -29,17 +29,18 @@ class Solution(object):
         l1 = head
 
         while l1 and l2:
-            next = l1.next
+            l1_next = l1.next
+            l2_next = l2.next
 
-            # 把l1连到l2
+            # 两个节点相互连接
             l1.next = l2
+            l2.next = l1_next
 
-            # 移动l2指针
-            l2 = l2.next
-            # 把l2上的节点连到l1
-            l1.next.next = next
-            # 移动l1指针
-            l1 = next
+            # 到下一个位置
+            l1 = l1_next
+            l2 = l2_next
+
+        return head
 
     def findMid(self, head):
         quick = head

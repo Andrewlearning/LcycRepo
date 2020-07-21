@@ -1,6 +1,17 @@
 """
+给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。
 
+说明：
+拆分时可以重复使用字典中的单词。
+你可以假设字典中没有重复的单词。
+
+示例 1：
+输入: s = "leetcode", wordDict = ["leet", "code"]
+输出: true
+解释: 返回 true 因为 "leetcode" 可以被拆分成 "leet code"。
 """
+
+
 class Solution(object):
     def wordBreak(self, s, wordDict):
         """
@@ -8,10 +19,20 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        dp = [False] * (len(s) + 1)
+        if not s or not wordDict:
+            return False
+
+        # dp[i] 表示，当有i个字符时，是否可以拼成一个单词
+        dp = [False for _ in range(len(s) + 1)]
+
+        # 初始化
         dp[0] = True
+
+        # 这里的i,j都是按照s的度来进行衡量
         for i in range(len(s)):
             for j in range(i, len(s)):
+                # dp[i] 表示s[0, i-1]可以拼成单词
+                # s[i: j+1] 表示s[i, j] 可以拼成单词
                 if dp[i] and s[i: j + 1] in wordDict:
                     dp[j + 1] = True
 

@@ -3,26 +3,35 @@ Input: "aaa"
 Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 """
-class Solution(object):
-    def expend(self,string,left,right):
-        count = 0
-        while left <= right and left >= 0 and right < len(string) and\
-                string[left] == string[right]:
-            left -= 1
-            right += 1
-            count += 1
 
-        return count
+
+class Solution(object):
     def countSubstrings(self, s):
         """
         :type s: str
         :rtype: int
         """
-        if len(s) == 0 or s is None:return 0
+        if not s and len(s) == 0:
+            return 0
+
         res = 0
         for i in range(len(s)):
-            res += self.expend(s,i,i)
-            res += self.expend(s,i,i+1)
+            res += self.expend(s, i, i)
+            res += self.expend(s, i, i + 1)
+
+        return res
+
+    def expend(self, s, l, r):
+        if len(s) == 0 or r >= len(s):
+            return 0
+
+        res = 0
+        # 当发现可以扩散的时候，res += 1
+        while -1 < l <= r < len(s) and s[l] == s[r]:
+            res += 1
+            l -= 1
+            r += 1
+
         return res
 
 
