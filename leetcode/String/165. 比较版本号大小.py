@@ -7,7 +7,7 @@ class Solution(object):
         :rtype: int
         """
 
-        #怎么去掉”01“里面的0的
+        #怎么去掉”01“里面的0的??
         versions1 = [int(v) for v in version1.split(".")]
         versions2 = [int(v) for v in version2.split(".")]
 
@@ -23,9 +23,9 @@ class Solution(object):
         return 0
 
 
+
 """
 https://www.youtube.com/watch?v=ycgUISujdMI
 其实这题的主要思想就是，我们把点去掉，然后一位一位的比较
 1.假如说出现 “1.22” 和 “1.2”这种情况， 我们就默认帮“1.2”补一个0
-2.假如说出现“01" 这种，我们要把已开头的0去掉，至于
 """

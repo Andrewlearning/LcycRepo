@@ -13,17 +13,25 @@ class Solution(object):
         dummy = ListNode(0)
         cur = head
 
-        while cur != None:
+        while cur:
+            # p每次都是从链表头开始，然后每次都对比p指向的元素，与cur所在的元素的大小，确认cur要插向哪里
             p = dummy
+            # 记录下一个位置
             cur_next = cur.next
 
-            while p.next != None and p.next.val <= cur.val:
+            # 对比p所在的元素 与 cur所在的元素的大小
+            while p.next and p.next.val <= cur.val:
                 p = p.next
 
+            # 假如p -> None, 那么 p -> cur -> None
+            # 假如 p -> 2, 那么 p -> 1 ->2
             cur.next = p.next
             p.next = cur
+
+            # 移动到下一个位置
             cur = cur_next
 
+        return dummy.next
 """
 Time: O(n^2), Space: O(1)
 https://algocasts.io/episodes/XZWvVNW7

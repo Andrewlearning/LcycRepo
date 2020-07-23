@@ -1,3 +1,9 @@
+"""
+给定s1,s2,s3三个字符串
+判断s1,s2能否通过字符串顺序拼成s3
+
+"""
+
 class Solution(object):
     def isInterleave(self, s1, s2, s3):
         """
@@ -6,7 +12,7 @@ class Solution(object):
         :type s3: str
         :rtype: bool
         """
-        if s1 == None or s2 == None or s3 == None:
+        if s1 is None or s2 is None or s3 is None:
             return False
 
         l1 = len(s1)
@@ -31,7 +37,7 @@ class Solution(object):
         for i in range(1, l1 + 1):
             for j in range(1, l2 + 1):
                 k = i + j
-                # 看看是否满足递推条件
+                # 看看是否满足拼凑条件，每次只拿s1,s2的一个字符串来看是否和s3匹配
                 dp[i][j][k] = (dp[i - 1][j][k - 1] and s1[i - 1] == s3[k - 1]) or (
                             dp[i][j - 1][k - 1] and s2[j - 1] == s3[k - 1])
 

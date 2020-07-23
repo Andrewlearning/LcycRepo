@@ -29,7 +29,6 @@ class Solution(object):
                 right = self.diffWaysToCompute(input[i + 1:])
 
                 # 已知 left(数字) i（符号）right(数字)
-                print(left, right)
                 for x in left:
                     for y in right:
                         res.append(self.helper(int(x), int(y), input[i]))

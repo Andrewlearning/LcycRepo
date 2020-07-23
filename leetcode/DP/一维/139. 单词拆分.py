@@ -28,7 +28,8 @@ class Solution(object):
         # 初始化
         dp[0] = True
 
-        # 这里的i,j都是按照s的度来进行衡量
+        # i,j代表的是s的下标，对应到dp上是i+1, j+1
+        # 假如说i = True, 那就是dp[i+1] = True
         for i in range(len(s)):
             for j in range(i, len(s)):
                 # dp[i] 表示s[0, i-1]可以拼成单词

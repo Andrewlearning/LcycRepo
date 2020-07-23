@@ -28,6 +28,8 @@ class Solution(object):
         """
         ns = len(s)
         nt = len(t)
+
+        # dp[t][s]
         dp = [[0] * (ns + 1) for _ in range(nt + 1)]
         for j in range(ns + 1):
             dp[0][j] = 1
@@ -40,7 +42,7 @@ class Solution(object):
                     dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1]
                 else:
                     dp[i][j] = dp[i][j - 1]
-        # print(dp)
+
         return dp[-1][-1]
 
 # 链接：https://leetcode-cn.com/problems/distinct-subsequences/solution/dong-tai-gui-hua-by-powcai-5/

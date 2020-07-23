@@ -62,4 +62,8 @@ class Solution(object):
         # 最后把乱序的节点交换一下
         x.val, y.val = y.val, x.val
 
+# 我们要理解这个题的规则，一棵树的两个节点交换，肯定是一个节点大，一个节点小
+# 那么违反规则的话，那就是 一个节点比pre小， 一个节点比next大
+# 因为BST是从小到大递增的话， 就肯定是有一个节点被后面挪到了前面，才能实现一个节点比next大，那么这个节点就是x
+# 一个节点比pre小，这个节点就是y
 # 解法2的图 https://leetcode-cn.com/problems/recover-binary-search-tree/solution/san-chong-jie-fa-xiang-xi-tu-jie-99-hui-fu-er-cha-/
