@@ -13,26 +13,30 @@
 
 翻译年糕： 这个图里面总共有多少个不同的 父亲， 有多少个不同的集合
 """
-
-
 class UF:
     def __init__(self, n):
-        self.parent = [i for i in range(n)]
+        # 首先有多少个节点，那么就创建一个有多少个key-value对的字典
+        # 节点值 ：父亲
+        # 初始化是，每个节点的福清都是自己
+        self.parent = {}
+        for i in range(n):
+            self.parent[i] = i
 
-    # 当一个node 不是指向自己的时候，那么它就要一直向上找，直到找到自己的父亲
+    # union是，我们把两个节点的最父亲节点找到
+    # 然后把其中一个节点的父亲指向另一个节点的父亲
+    # 使得两个子树都有同样的父亲
+    def union(self, a, b):
+        self.parent[self.find(b)] = self.find(a)
+
+    # 最父亲节点的特征是：他的父亲也是自己
+    # 所以我们要找到一个节点的最父亲节点，那么就是当 自己 != 父亲时
+    # 父亲 = 父亲的父亲，这样一直找下去
+    # 最后父亲节点就是最父亲节点
+    # 同时这个函数，可以帮助一个节点直接连接上他的最父亲节点
     def find(self, x):
-        if x != self.parent[a]:
+        if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
-
-    # union这里，谁的做谁的父亲问题都不大，有涌向的可能就是效率问题
-    def union(self, p, q):
-        proot = self.find(p)
-        qroot = self.find(q)
-        if proot == qroot:
-            return
-
-        self.parent[proot] = qroot
 
 
 class Solution(object):
@@ -42,18 +46,21 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: int
         """
+        # 构造uf
         uf = UF(n)
 
-        # 把两个节点的父节点连起来
-        for e1, e2 in edges:
-            uf.union(e1, e2)
+        # 把每个子节点都指向他的父亲节点
+        for edge in edges:
+            uf.union(edge[0], edge[1])
 
-        # 这里是最关键的一步，很多节点只是联通在一起了，但是不代表
-        # 他们指向向的是同一个根节点，所以最后我们还是要全部节点找一次最父节点
+        # 我们把每个节点都指向他的最父亲节点
         for i in range(n):
             uf.find(i)
 
-        return len(set(uf.parent))
+        res = set(uf.parent.values())
+
+        # 最后看最父亲节点有几个
+        return len(res)
 
 """
 261，323这两题可以放在一起看

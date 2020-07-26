@@ -38,7 +38,7 @@ class WordDictionary(object):
                 # 本题的难点在这里，就是我们遇到"." 应该要怎么去处理
                 # 答案是，把本层，除了"." 以外的节点，都全部找一遍
                 if char == ".":
-                    return any(dfs(node[j], word[i + 1:]) for j in node if j != "end")
+                    return any(dfs(node[j], word[i + 1:]) for j in node if j != "#")
                 elif char not in node:
                     return False
                 node = node[char]

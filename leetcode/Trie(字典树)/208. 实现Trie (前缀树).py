@@ -21,7 +21,6 @@ class Trie(object):
         Initialize your data structure here.
         """
         self.root = {}
-        self.end_of_word = "#"
 
     # 构建trie
     def insert(self, word):

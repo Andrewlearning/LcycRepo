@@ -3,7 +3,7 @@ def swap(array, i, j):
 
 
 #  Time: O(log(n))
-# 然后在这个
+# i开始，往下面所有分支去查看
 def siftDown(array, i, end):
     parent = i
     child = 2 * parent + 1
@@ -14,7 +14,8 @@ def siftDown(array, i, end):
             child += 1
 
         # 假如说parents已经大于最大的孩子节点，说明已经不用进行换位操作了
-        if array[parent] > array[child]: break
+        if array[parent] > array[child]:
+            break
 
         # 假如孩子节点真的大与parent,则换位，换位后，检查更下面的节点
         # 例如在最顶层更换的节点，那么就要检查下面的节点是不是也满足最大堆的条件
