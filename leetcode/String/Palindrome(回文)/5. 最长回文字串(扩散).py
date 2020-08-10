@@ -4,6 +4,8 @@ class Solution(object):
         while left >= 0 and right < len(s) and s[left] == s[right]:
             left -= 1
             right += 1
+
+        # 返回回文串长度
         return (right - 1) - (left + 1) + 1
 
     def longestPalindrome(self, s):
@@ -18,16 +20,17 @@ class Solution(object):
         maxLen = 0
 
         for i in range(len(s)):
-            len1 = self.expend(s ,i ,i)
-            len2 = self.expend(s ,i ,i +1)
+            len1 = self.expend(s, i, i)
+            len2 = self.expend(s, i, i + 1)
             temp = max(len1 ,len2)
 
             if temp > maxLen:
+                # 得到回文串的开头下标
                 start = i - (temp - 1)//2
                 maxLen = temp
 
 
-        return s[start:start +maxLen]
+        return s[start: start + maxLen]
 
 """
 https://algocasts.io/episodes/VBpLqWD8

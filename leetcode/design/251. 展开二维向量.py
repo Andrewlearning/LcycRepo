@@ -34,7 +34,7 @@ class Vector2D(object):
             self.x += 1
             self.y = 0
 
-        # 读取当前x,y所在未知的值
+        # 若没有在一个cell的最后一个位置，那么将直接读取当前位置的值，并把y指针向后移动
         res = self.element[self.x][self.y]
         # 移动到下一个元素
         self.y += 1

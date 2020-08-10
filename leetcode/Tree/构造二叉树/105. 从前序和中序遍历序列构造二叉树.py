@@ -19,6 +19,7 @@ class Solution(object):
         :type inorder: List[int]
         :rtype: TreeNode
         """
+        # 假如说任意一个list为空的话，说明节点已经用完，应该返回None
         if not preorder or not inorder:
             return None
 

@@ -20,7 +20,7 @@ class Solution(object):
         #假如说只有一遍找到的话，被找到的节点肯定是最近公共祖先，因为他最先被找到，且另外一个节点
         #肯定在它下面
         left = self.lowestCommonAncestor(root.left,p,q)
-        right = self.lowestCommonAncestor(root.left,p,q)
+        right = self.lowestCommonAncestor(root.right,p,q)
 
         #假如左右子树都找到pq,说明两个节点肯定在一左一右，返回当前root
         if left and right:

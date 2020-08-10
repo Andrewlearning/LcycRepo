@@ -4,7 +4,8 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        if not height: return 0
+        if not height:
+            return 0
 
         res = 0
         left = 0

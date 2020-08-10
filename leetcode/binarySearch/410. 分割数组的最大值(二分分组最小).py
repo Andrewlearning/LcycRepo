@@ -31,6 +31,7 @@ class Solution(object):
 
         res = r
 
+        # 本题的终止条件，必须是不满足l <= r才能退出，意思就是即便是刚好能分到m个，也要继续循环下去，来保证能得到一个最小的res
         while l <= r:
             # 区间和的最大值
             mid = (l + r) // 2
@@ -42,9 +43,9 @@ class Solution(object):
             for i in range(length):
                 sub_sum += nums[i]
 
-                # 说明当前区间超过 我们想要分配的范围了
+                # 和超过mid的话，那么nums[i]则不算进上一个区间内，它将单独将作为一个新区间重新开始
                 if sub_sum > mid:
-                    # 那么我们该找下一个区间了
+                    # 那么我们该找下一个区间了，区间数+1
                     count += 1
                     sub_sum = nums[i]
 

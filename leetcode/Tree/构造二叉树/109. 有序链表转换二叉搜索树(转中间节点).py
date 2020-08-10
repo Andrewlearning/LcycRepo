@@ -39,6 +39,7 @@ class Solution(object):
         return self.helper(head, None)
 
     def helper(self, head, tail):
+        # 当链表只有一个节点的时候，直接返回那个节点
         if head == tail:
             return
 
@@ -57,6 +58,9 @@ class Solution(object):
     def findMid(self, head, tail):
         slow = fast = head
 
+        # 注意这里的处理方式
+        # 因为在这里我们等于是让tail = None
+        # 所以我们不能让 fast, fast.next = tail
         while fast != tail and fast.next != tail:
             slow = slow.next
             fast = fast.next.next

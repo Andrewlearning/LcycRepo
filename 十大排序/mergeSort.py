@@ -1,4 +1,4 @@
-def merge(left,right):
+
 def merge(left,right):
     l = 0
     r = 0

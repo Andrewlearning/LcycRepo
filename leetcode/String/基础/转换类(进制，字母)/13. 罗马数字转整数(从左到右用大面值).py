@@ -35,22 +35,22 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-    mapping = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-    l = len(s)
+        mapping = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        l = len(s)
 
-    # 我们首先将 最后一个元素的值给赋予到res上
-    res = mapping[s[l - 1]]
+        # 我们首先将 最后一个元素的值给赋予到res上
+        res = mapping[s[l - 1]]
 
-    for i in range(l - 2, -1, -1):
-        # 每次我们都只比较i,和i-1 的大小关系
-        # 左边数字比右边大， VI = 6 II = 2
-        if mapping[s[i]] >= mapping[s[i + 1]]:
-            res += mapping[s[i]]
-        # 左边数字比右边小, IV = 4
-        else:
-            res -= mapping[s[i]]
+        for i in range(l - 2, -1, -1):
+            # 每次我们都只比较i,和i-1 的大小关系
+            # 左边数字比右边大， VI = 6 II = 2
+            if mapping[s[i]] >= mapping[s[i + 1]]:
+                res += mapping[s[i]]
+            # 左边数字比右边小, IV = 4
+            else:
+                res -= mapping[s[i]]
 
-    return res
+        return res
 
 """
 Time: O(n), Space: O(1)

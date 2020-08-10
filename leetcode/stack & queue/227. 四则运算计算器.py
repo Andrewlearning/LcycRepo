@@ -20,6 +20,8 @@ class Solution(object):
         # 为啥不是-1，+1，因为这里有四种运算符
         # op仅代表上一次的数字
         op = "+"
+
+        # stack用来放各个 符号*数字
         stack = []
 
         for i in range(len(s)):

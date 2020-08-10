@@ -14,17 +14,19 @@ class Solution(object):
         # 初始化为正数
         sign = 1
 
-        # 代表单个数
+        # 代表单个数, 用来计算符号内的数
         num = 0
+
+        # stack用来放括号外面的符号 和 数字
         stack = []
 
         for char in s:
             # num用于记录读取到的数字
-            if char.isdigit():
+            if "0" <= char <= "9":
                 num = num * 10 + int(char)
 
             # 同样的，我们是先获得符号再获得数字 例如 3 + 4, 那么读取过程为 +3， +4
-            elif char in ["-", "+"]:
+            elif char in "-+":
                 # 所以这里sign是上一个符号， num是当前读取到的数字
                 res += sign * num
 

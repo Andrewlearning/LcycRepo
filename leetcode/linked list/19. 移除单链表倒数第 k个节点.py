@@ -14,6 +14,7 @@ class Solution(object):
         if not head:
             return
 
+        # 用dummy的原因是，有可能出现链表只有一个元素的情况，例如 [1] 1, 结果是[]
         dummy = ListNode(0)
         dummy.next = head
         fast = slow = dummy

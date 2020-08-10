@@ -24,8 +24,8 @@
 # 还要储存一个word列表，所以要用一个class
 class Trie:
     def __init__(self):
-        self.child = dict()
-        self.words = list()
+        self.child = {}
+        self.words = []
 
 
 class Solution:
@@ -36,14 +36,11 @@ class Solution:
         for word in products:
             self.addWord(root, word)
 
-
         res = []
         cur = root
 
         # 假如说当前这个字母已经不在字典树了，那么后续的字母即使在也没意义了
         flag = False
-
-
         for char in searchWord:
             # 当前char不存在，那么后续的单词存在也没意义了,因为往下输入肯定也不会找到任何一个单词
             # 遍历到下一个字母，直接append([]), 因为前缀已经对不上了
