@@ -3,12 +3,12 @@ def swap(array, i, j):
 
 
 #  Time: O(log(n))
-# i开始，往下面所有分支去查看
+# i开始，往下面所有分支去查看，直到走到end
 def siftDown(array, i, end):
     parent = i
     child = 2 * parent + 1
 
-    while child < end:
+    while child <= end:
         # 看哪个孩子节点比较大，就把child定位到那里，方便后面放上去
         if child + 1 <= end and array[child] < array[child + 1]:
             child += 1
@@ -32,7 +32,9 @@ def buildMaxHeap(array, end):
 
 # // Time: O(n*log(n)), Space: O(1)
 def sort(array):
-    if not array or len(array) == 0: return
+    if not array or len(array) == 0:
+        return
+
     # 这一步把最大堆创建好
     buildMaxHeap(array, len(array) - 1)
 

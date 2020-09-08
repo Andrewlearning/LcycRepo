@@ -11,7 +11,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        if not nums and len(nums) == 0: return []
+        if not nums and len(nums) == 0:
+            return []
+
         # left-0 mid-1 right-2
         left = 0
         mid = 0

@@ -14,7 +14,7 @@ trie.search("app");     // returns true
 写一个字典树
 """
 
-
+{"A":{"B":{}}}
 class Trie(object):
     def __init__(self):
         """

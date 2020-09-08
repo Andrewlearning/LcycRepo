@@ -29,7 +29,8 @@ class Solution(object):
         return self.res
 
     def helper(self, root):
-        if root == None: return 0
+        if root is None:
+            return 0
 
         #这题有负数，所以我们在找子树的最大和时，一定要让max(子树和，0），避免负数入选
         left_max = max(self.helper(root.left), 0)
