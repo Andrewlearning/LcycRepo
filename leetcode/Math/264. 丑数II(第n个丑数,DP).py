@@ -10,22 +10,27 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        if n < 1:return -1
-        res = [0]*n
+        if n < 1:
+            return -1
 
-        # 第一个由2，3，5的乘积构成的数字 1 = 2^0 * 3^0 * 5^0
-        res[0] = 1
+        res = [1 for i in range(n)]
 
-        p2 = 0; p3 = 0; p5 = 0
+        p2 = 0
+        p3 = 0
+        p5 = 0
 
-        for i in range(1,n):
-            minuglynum = min(res[p2]*2,res[p3]*3,res[p5]*5)
-            res[i] = minuglynum
-            if minuglynum == res[p2] * 2: p2 += 1
-            if minuglynum == res[p3] * 3: p3 += 1
-            if minuglynum == res[p5] * 5: p5 += 1
+        for i in range(1, n):
+            cur_min = min(res[p2] * 2, res[p3] * 3, res[p5] * 5)
+            res[i] = cur_min
 
-        return res[n-1]
+            if cur_min == res[p2] * 2:
+                p2 += 1
+            if cur_min == res[p3] * 3:
+                p3 += 1
+            if cur_min == res[p5] * 5:
+                p5 += 1
+
+        return res[n - 1]
 
 """
 Time: O(n), Space: O(n)

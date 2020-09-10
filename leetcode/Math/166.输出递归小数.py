@@ -61,8 +61,9 @@ class Solution(object):
             div = rmd*10 // den
             # 更新余数
             rmd = rmd*10 % den
-
             res.append(str(div))
+
+
         return "".join(res)
 
 

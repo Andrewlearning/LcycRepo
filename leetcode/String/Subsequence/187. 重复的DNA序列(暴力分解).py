@@ -18,7 +18,8 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
-        if s < 10: return []
+        if s < 10:
+            return []
 
         seen = set()
         repeat = set()
