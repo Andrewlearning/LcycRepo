@@ -27,7 +27,7 @@ class Solution(object):
             return "0"
 
         res = []
-        if (num < 0) ^ (den < 0):
+        if num * den < 0:
             res.append("-")
 
         num, den = abs(num), abs(den)

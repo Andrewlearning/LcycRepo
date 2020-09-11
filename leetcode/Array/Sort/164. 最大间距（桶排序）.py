@@ -9,6 +9,7 @@
 输出: 3
 解释: 排序后的数组是 [1,3,6,9], 其中相邻元素 (3,6) 和 (6,9) 之间都存在最大差值 3。
 """
+import sys
 class Solution(object):
     def maximumGap(self, nums):
         """
@@ -33,7 +34,7 @@ class Solution(object):
         bkt_size = (maxima - minima) // margin + 1
 
         # 初始化每个桶的最大值最小值
-        bkt_min = [float("inf")] * bkt_size
+        bkt_min = [sys.maxsize] * bkt_size
         bkt_max = [0] * bkt_size
 
         for num in nums:
@@ -44,10 +45,12 @@ class Solution(object):
             bkt_min[idx] = min(bkt_min[idx], num)
             bkt_max[idx] = max(bkt_max[idx], num)
 
+        # lastBktIdx指向上一个有元素的桶，因为中间有可能出现空桶
         res = lastBktIdx = 0
+
         for i in range(1, bkt_size):
             # 桶里的最大最小值并没进行过改变，说明桶里没有元素，跳过
-            if bkt_min[i] == float("inf") or bkt_max == 0:
+            if bkt_min[i] == sys.maxsize and bkt_max[i] == 0:
                 continue
 
             # res = 当前桶的最小值 - 上个桶的最大值，得到相邻元素间的最大差值

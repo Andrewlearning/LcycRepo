@@ -17,14 +17,9 @@
 
 # Write your MySQL query statement below
 
-SELECT
-    a.Name as Employee
-FROM
-    Employee as a, Employee as b
-WHERE
-    a.ManagerId = b.Id
-        AND a.Salary > b.Salary
-;
+select a.Name as Employee
+from Employee as a join Employee as b on a.ManagerId = b.Id
+where a.Salary > b.Salary;
 
 
 -- 链接：https://leetcode-cn.com/problems/employees-earning-more-than-their-managers/solution/chao-guo-jing-li-shou-ru-de-yuan-gong-by-leetcode/

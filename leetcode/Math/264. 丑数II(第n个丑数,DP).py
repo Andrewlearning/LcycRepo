@@ -11,7 +11,7 @@ class Solution(object):
         :rtype: int
         """
         if n < 1:
-            return -1
+            return n
 
         res = [1 for i in range(n)]
 
@@ -23,6 +23,8 @@ class Solution(object):
             cur_min = min(res[p2] * 2, res[p3] * 3, res[p5] * 5)
             res[i] = cur_min
 
+            # 为什么要三个if, 而不是elif
+            # 因为有可能产生的cur_min, 可以由不同的乘积得到，我们要更新全部指针
             if cur_min == res[p2] * 2:
                 p2 += 1
             if cur_min == res[p3] * 3:
