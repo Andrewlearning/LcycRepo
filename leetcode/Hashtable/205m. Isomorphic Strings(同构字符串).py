@@ -21,15 +21,22 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if not s or not t: return True
+        if not s or not t:
+            return True
 
+        # 用来记录两个单词的字母要怎么匹配
         hashmap = {}
-        if len(s) != len(t):return False
+        if len(s) != len(t):
+            return False
 
         for i in range(len(s)):
             if s[i] in hashmap:
-                if hashmap.get(s[i]) != t[i]:return False
+                if hashmap[s[i]] != t[i]:
+                    return False
             else:
+                # "ab"
+                # "aa"
+                # 此时a:a已经在dict里面了，但是b作为key却没在里面，但是a已经和a匹配过了，所以要返回false
                 if t[i] in hashmap.values():
                     return False
                 else:
@@ -48,7 +55,7 @@ https://www.youtube.com/watch?v=tBK5f-BJOdg
 3. 假如说s[i] 在hashmap里面，那么取出s[i]的value,看和t[i]对不对的上
 4. 假如说s[i] 不在hashmap里面，就要看t[i]在不在hashmap.values()里，有的话说明错了
               若都不在，那就把他们两加进map里
-5.经过重重考验，最后可以return True了ß
+5.经过重重考验，最后可以return True了
 
 
 """

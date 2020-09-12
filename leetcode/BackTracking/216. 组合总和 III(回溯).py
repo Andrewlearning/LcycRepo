@@ -36,6 +36,4 @@ class Solution(object):
         # 每次遍历，我们都不再使用之前的元素，所以是i+1
         for i in range(cur, 10):
                 self.helper(n, k-1, i+1, temp + [i])
-"""
 
-"""

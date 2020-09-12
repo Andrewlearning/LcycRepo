@@ -16,8 +16,11 @@ class MyStack(object):
         Initialize your data structure here.
         """
         self.queue1 = []
+
+        # 中转站
         self.queue2 = []
 
+    # 元素全放到queue1里
     def push(self, x):
         """
         Push element x onto stack.
@@ -26,26 +29,28 @@ class MyStack(object):
         """
         self.queue1.append(x)
 
-
-
     def pop(self):
         """
         Removes the element on top of the stack and returns that element.
         :rtype: int
         """
-        if self.queue1 < 0:
+        if len(self.queue1) == 0:
             return None
         if len(self.queue1) == 1:
-            return self.queue1.pop(0)
-        else:
-            while len(self.queue1) > 1:
-                self.queue2.append(self.queue1.pop(0))
-            pop_element = self.queue1.pop(0)
-            while self.queue2:
-                self.queue1.append(self.queue2.pop(0))
-            return pop_element
+            return self.queue1.pop()
 
+        # 过程是这样的
+        # [] [1,2,3]
+        # [1,2] 3 []
+        # [] 3 [1,2]
+        while len(self.queue1) >= 2:
+            self.queue2.append(self.queue1.pop(0))
+        pop_element = self.queue1.pop()
 
+        while self.queue2:
+            self.queue1.append(self.queue2.pop(0))
+
+        return pop_element
 
     def top(self):
         """
@@ -59,7 +64,8 @@ class MyStack(object):
         Returns whether the stack is empty.
         :rtype: bool
         """
-        return  len(self.queue1) == 0 and len(self.queue2) == 0
+        return len(self.queue1) == 0
+
 
 """
 用两个队列实现一个栈的功能?要求给出算法和思路!

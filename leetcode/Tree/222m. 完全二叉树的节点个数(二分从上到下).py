@@ -14,21 +14,26 @@ class Solution(object):
         if not root:
             return 0
 
+        # 除最后一层以外的高度
         d = 0
         node = root
-        # root节点高度是0，我们首先先算出二叉树的高度
+
+        # 除最后一层以外的高度
         while node.left:
             node = node.left
             d += 1
 
         # 然后我们在最下面一层做一个二分查找
-        # 找到从左到右第一个不存在的node的下标
+        # l代表最后一层从左到右第一个不存在的node的下标
         l = 0
+
+        # r代表满二叉树下最后一层所拥有的节点数 - 1
         r = 2 ** d - 1
-        # 因为我们设置内部终止条件，所以只能使用 while循环的条件不满足来退出
+
         # 一般是用while 循环退出的话， l都会指向右边。r会指向左边，所以退出时l指向的是不存在的第一位
         while l <= r:
             mid = (l + r) // 2
+            # 看在最后一层mid index上，有没有节点存在
             if self.exist(mid, d, root):
                 l = mid + 1
             else:
@@ -36,25 +41,22 @@ class Solution(object):
 
         return (2 ** d - 1) + l
 
-    def exist(self, index, depth, root):
+    def exist(self, targer, depth, root):
+        # 最下面一层的左边界和右边界
         l = 0
         r = 2 ** depth - 1
 
-        # 因为我们要从最上一层往下找,每次看index在整个区间的范围是左还是右
-        # 来决定接下来的路要怎么走
+        # 我们要把mid 移动到target的位置去
         for _ in range(depth):
             mid = (l + r) // 2
-            # index是外面的二分查找的中点,我们要看这个点存不存在
-            # 所以移动的趋势要按照这个点来移动
-            # 例如(4,5) (6)
-            # mid=1
-            # index = 0,1的话， right = mid
-            # index = 2的话， left = mid+1
-            if mid < index:
+
+            # 说明[0..mid..target],所以我们得把指针移动到mid以后
+            if mid < targer:
                 root = root.right
                 l = mid + 1
-            # 如上面的情况 index = mid的时候，其实还是在左边的
-            elif index <= mid:
+            # 说明target在[0..mid]之间，所以我们把r=mid就可
+            # 且因为我们最后只要知道target取不取得到就行了，所以我们只要保证不要出target的界就好了
+            elif targer <= mid:
                 root = root.left
                 r = mid
 

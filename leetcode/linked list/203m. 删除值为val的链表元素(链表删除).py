@@ -18,8 +18,10 @@ class Solution(object):
 
         while cur:
 
+            # 这样写的原因是，当cur时最后一位，且重复时，我们也可以把pre指向下一位
             if cur.val == val:
                 pre.next = cur.next
+            # 只有当cur的值安全了，pre才移动到cur上
             else:
                 pre = cur
 
