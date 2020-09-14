@@ -33,11 +33,11 @@ class Solution(object):
         for center in self.helper(n - 2):
             # 我们不能把0 放到最外圈
             if not first:
-                res.append('0' + centre + '0')
-            res.append('1' + centre + '1')
-            res.append('6' + centre + '9')
-            res.append('8' + centre + '8')
-            res.append('9' + centre + '6')
+                res.append('0' + center + '0')
+            res.append('1' + center + '1')
+            res.append('6' + center + '9')
+            res.append('8' + center + '8')
+            res.append('9' + center + '6')
         return res
 
 """
