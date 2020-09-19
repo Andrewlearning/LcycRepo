@@ -1,10 +1,7 @@
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
+"""
+给你一个二叉搜索树和其中的某一个结点，请你找出该结点在树 中顺序后继的节点。
+结点 p 的后继是值比 p.val 大的结点中键值最小的结点。
+"""
 import sys
 
 
@@ -15,7 +12,7 @@ class Solution(object):
         :type p: TreeNode
         :rtype: TreeNode
         """
-        # 情况1，p有右子树，我们要找到右子树的最左节点
+        # 情况1，p有右子树，我们要找到右子树的最左节点，那么这就是结果了
         if p.right:
             p = p.right
             # 当p.left == None时，说明已经遍历到最后了
@@ -23,6 +20,7 @@ class Solution(object):
                 p = p.left
             return p
 
+        # 情况2，假如说上面的情况满足不了，那么就用二叉树的中序遍历来做
         stack = []
         pre = -sys.maxsize
 
@@ -32,7 +30,7 @@ class Solution(object):
                 root = root.left
 
             # root 代表着pre节点的下一个节点
-            root = stack.pop()
+            root = stack.pop(-1)
 
             # 假如说pre 节点 == p.val, 那么我们就把pre节点的下一个节点root给返回
             if p.val == pre:

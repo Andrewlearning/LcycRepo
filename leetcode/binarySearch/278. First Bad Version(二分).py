@@ -25,9 +25,11 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        if n < 1:return 1
+        if n < 1:
+            return 1
 
-        left , right = 1, n
+        left = 1
+        right = n
 
         while left <= right:
 
@@ -37,7 +39,9 @@ class Solution(object):
             else:
                 right = mid - 1
 
-        if isBadVersion(left) == True: return left
+        # 出来的话，说明good version 是在left 和right 之间的
+        if isBadVersion(left) == True:
+            return left
         return right
 
 """

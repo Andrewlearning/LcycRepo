@@ -22,28 +22,20 @@ class Solution(object):
         """
         if not words:
             return None
-        
-        diff = sys.maxsize
+
+        minDiff = sys.maxsize
         p1 = -1
         p2 = -1
         i = 0
 
-        while i < len(words):
-            if words[i] == word1:
+        for i, word in enumerate(words):
+            if word == word1:
                 p1 = i
-                # 这个是用来检查word1,word2相等的情况
-                # 因为经历第一个相同单词后，p1,p2下标相等
-                # 但遇到第二个相同单词后，p1会率先更新，然后会更新diff
-                if p2 != -1:
-                    diff = min(diff, abs(p2 - p1))
-
-            if words[i] == word2:
+                if p1 != -1 and p2 != -1 and p1 != p2:
+                    minDiff = min(minDiff, abs(p2 - p1))
+            if word == word2:
                 p2 = i
-                # 这个是用来更新正常word1,word2不相等的情况
-                if p1 != -1 and p1 != p2:
-                    diff = min(diff, abs(p2 - p1))
+                if p1 != -1 and p2 != -1 and p1 != p2:
+                    minDiff = min(minDiff, abs(p2 - p1))
 
-            # 下标更新
-            i += 1
-        
-        return diff
+        return minDiff

@@ -12,19 +12,15 @@
 注意:
 你可以假设 word1 不等于 word2, 并且 word1 和 word2 都在列表里。
 """
-import sys
+import collections
 class WordDistance(object):
     def __init__(self, words):
         """
         :type words: List[str]
         """
-        self.dict = {}
-
-        for i,word in enumerate(words):
-            if word not in self.dict:
-                self.dict[word] = [i]
-            else:
-                self.dict[word].append(i)
+        self.hashmap = collections.defaultdict(list)
+        for i in range(len(words)):
+            self.hashmap[words[i]].append(i)
 
 
     def shortest(self, word1, word2):
@@ -33,22 +29,21 @@ class WordDistance(object):
         :type word2: str
         :rtype: int
         """
-        loc1 = self.dict[word1]
-        loc2 = self.dict[word2]
+        loc1 = self.hashmap[word1]
+        loc2 = self.hashmap[word2]
         p1 = 0
         p2 = 0
-        res = sys.maxsize
+        diff = float("inf")
 
         while p1 < len(loc1) and p2 < len(loc2):
-            diff = abs(loc1[p1] - loc2[p2])
+            diff = min(diff, abs(loc1[p1]-loc2[p2]))
             if loc1[p1] < loc2[p2]:
                 p1 += 1
             else:
                 p2 += 1
-            if diff < res:
-                res = diff
 
-        return res
+
+        return diff
 
 
 # 链接：https://leetcode-cn.com/problems/shortest-word-distance-ii/solution/zui-duan-dan-ci-ju-chi-ii-by-leetcode/
