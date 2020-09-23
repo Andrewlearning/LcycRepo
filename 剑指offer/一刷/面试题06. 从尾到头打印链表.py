@@ -9,7 +9,7 @@ class ListNode:
         self.next = None
 
 
-# Definition for singly-linked list.
+# Definition for singly-LinkedList.
 # class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x

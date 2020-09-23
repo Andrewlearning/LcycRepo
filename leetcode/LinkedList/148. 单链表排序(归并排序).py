@@ -11,7 +11,7 @@
 输出: -1->0->3->4->5
 
 """
-# Definition for singly-linked list.
+# Definition for singly-LinkedList.
 class ListNode(object):
     def __init__(self, x):
         self.val = x

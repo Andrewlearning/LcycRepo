@@ -1,6 +1,6 @@
 """
 
-Given a linked list, swap every two adjacent nodes
+Given a LinkedList, swap every two adjacent nodes
 and return its head.
 
 You may not modify the values in the list's nodes,
@@ -15,7 +15,7 @@ class ListNode(object):
         self.next = None
 
 
-# Definition for singly-linked list.
+# Definition for singly-LinkedList.
 # class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x

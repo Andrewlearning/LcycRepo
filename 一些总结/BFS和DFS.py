@@ -53,7 +53,7 @@ def BFS(graph , s):
 
 
 """
-DFS and BFS:深度优先
+DFS&BFS:深度优先
 探索规则是探索 与当前node有联系的一个节点
   / c - g
 a - d

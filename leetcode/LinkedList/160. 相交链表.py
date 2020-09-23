@@ -1,7 +1,7 @@
 """
 输入两个链表，找出它们的第一个公共结点。
 """
-# Definition for singly-linked list.
+# Definition for singly-LinkedList.
 # class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x

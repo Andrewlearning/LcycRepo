@@ -1,5 +1,5 @@
 """
- Init a singly linked list [1,2,3].
+ Init a singly LinkedList [1,2,3].
  getRandom() should return either 1, 2, or 3 randomly.
 Each element should have equal probability of returning. solution.getRandom();
 以相同的概率返回回链表里的任意一个node
@@ -11,7 +11,7 @@ class Solution(object):
 
     def __init__(self, head):
         """
-        @param head The linked list's head.
+        @param head The LinkedList's head.
         Note that the head is guaranteed to be not null, so it contains at least one node.
         :type head: ListNode
         """

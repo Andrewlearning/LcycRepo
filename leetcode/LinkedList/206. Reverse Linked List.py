@@ -1,6 +1,6 @@
 """
 反转链表
-Reverse a singly linked list.
+Reverse a singly LinkedList.
 
 Example:
 
