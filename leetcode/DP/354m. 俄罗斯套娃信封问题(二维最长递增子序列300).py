@@ -17,17 +17,20 @@ class Solution(object):
         :type envelopes: List[List[int]]
         :rtype: int
         """
-        if not envelopes or len(envelopes) == 0:return 0
+        if not envelopes or len(envelopes) == 0:
+            return 0
 
-        res,length = 0, len(envelopes)
+        res = 0
+        length = len(envelopes)
         envelopes.sort(key = lambda x:x[0])
-        dp = [1]*length
+        dp = [1] * length
 
         for i in range(length):
             for j in range(i):
+                # 看之前哪个信封比当前信封小，那么我们就可以构成一个最长子串了
                 if envelopes[i][0] > envelopes[j][0] and envelopes[i][1] > envelopes[j][1]:
                     dp[i] = max(dp[j] + 1, dp[i])
-            res = max(res,dp[i])
+            res = max(res, dp[i])
         return res
 
 

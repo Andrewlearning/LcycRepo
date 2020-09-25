@@ -13,7 +13,8 @@ class Solution(object):
         :rtype: List[int]
         """
         res = []
-        if not root: return res
+        if not root:
+            return res
 
         stack = [root]
 
