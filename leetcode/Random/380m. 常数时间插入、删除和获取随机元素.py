@@ -1,5 +1,11 @@
 """
 380. Insert Delete GetRandom O(1)
+设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
+
+insert(val)：当元素 val 不存在时，向集合中插入该项。
+remove(val)：元素 val 存在时，从集合中移除该项。
+getRandom：随机返回现有集合中的一项。每个元素应该有相同的概率被返回。
+
 使这三个方法的时间复杂度都是O(1)
 """
 from random import randint
@@ -9,7 +15,14 @@ class RandomizedSet(object):
         """
         Initialize your data structure here.
         """
+        # hashmap插入，删除都是O(1), 但是无法做到随机查找元素
+        # arraylist插入，删除头尾节点都是O(1), 但是删除中间元素是O(n)
+        # 所以这题我们要借助
+        # hashmap的插入删除的O(1), 还要借用list可以完成的随机查找元素
+
+        # key:元素  value:该元素下标
         self.hashmap = {}
+        # 把每个在hashmap存在的元素都加进来，用于做随机处理
         self.nums = []
 
     def insert(self, val):
@@ -18,11 +31,13 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
+        # 假如不在数据结构内，那么要把元素加进去
         if val not in self.hashmap:
             self.nums.append(val)
             self.hashmap[val] = len(self.nums)-1
             return True
 
+        # 假如在里面，return False
         return False
 
 
@@ -41,9 +56,12 @@ class RandomizedSet(object):
 
             self.hashmap[last_value],self.nums[val_index] = val_index,last_value
             # 把多余的last_value 给pop()掉，因为它已经附值在val之前的index上了
+            self.nums.pop()
+
             # 把hashmap 中把 val给去掉
-            self.nums.pop(),self.hashmap.pop(val,0)
+            del self.hashmap[val]
             return True
+
         return False
 
 

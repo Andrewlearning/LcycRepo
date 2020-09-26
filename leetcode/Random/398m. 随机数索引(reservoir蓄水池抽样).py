@@ -9,7 +9,8 @@ solution.pick(3);
 // pick(1) should return 0. Since in the array only nums[0] is equal to 1.
 solution.pick(1);
 """
-from random import random
+
+import random
 class Solution(object):
 
     def __init__(self, nums):
@@ -24,14 +25,17 @@ class Solution(object):
         :rtype: int
         """
         count = 0
-        index = 0
+        res = 0
         for i in range(len(self.nums)):
+            # target 对应的数只有一个的话，return 0
+            # target 对应的数有多个的话，我们要使他们的target index返回的概率都是相同的(1 / count)
             if self.nums[i] == target:
                 count += 1
 
-                if random() <= 1.0 / count:
-                    index = i
-        return index
+                # 只要取出的值 在0- 1/count以内，我们就可以当做以1/count的概率取到这个元素
+                if random.random() <= 1.0 / count:
+                    res = i
+        return res
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(nums)

@@ -4,39 +4,26 @@
 Each element should have equal probability of returning. solution.getRandom();
 以相同的概率返回回链表里的任意一个node
 """
-from random import random
-
-
-class Solution(object):
+import random
+class Solution:
 
     def __init__(self, head):
-        """
-        @param head The LinkedList's head.
-        Note that the head is guaranteed to be not null, so it contains at least one node.
-        :type head: ListNode
-        """
         self.head = head
 
     def getRandom(self):
-        """
-        Returns a random node's value.
-        :rtype: int
-        """
-        res = self.head.val
-        cur = self.head.next
-        count = 2
-
-        while cur != None:
-            if random() <= 1.0 / count:
-                res = cur.val
-
+        count = 0
+        reserve = 0
+        cur = self.head
+        while cur:
             count += 1
-            cur = cur.next
-        return res
+            rand = random.randint(1, count)
 
-# Your Solution object will be instantiated and called as such:
-# obj = Solution(head)
-# param_1 = obj.getRandom()
+            # 当我们满足第n个元素，有1/n的概率被选中时，这时候才满足每个节点被选的概率是一样的
+            if rand == count:
+                # 然后我们一开始1的被选概率是100%，所以能确保答案是正确的
+                reserve = cur.val
+            cur = cur.next
+        return reserve
 
 """
 答案：
