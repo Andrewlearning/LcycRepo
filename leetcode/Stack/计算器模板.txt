@@ -1,0 +1,17 @@
+
+        ( )   +    -   *   \   ^
+优先级         1    1   2   2   3
+
+
+数字分一个栈
+符号分一个栈
+
+数字： 压入栈中.压入后要计算一下
+(:    压入栈中
+):    把()之间的都算完
++-*\^:   +-*\^: while 栈顶优先级 >= 当前符号的优先级
+            那说明要先算栈里面的
+        否则，或上面运算完后，把当前运算符压入栈中
+
+
+计算器最终版本：https://leetcode-cn.com/problems/basic-calculator-iii/solution/shuang-zhan-fa-tong-yi-jie-jue-ji-ben-ji-suan-qi-s/

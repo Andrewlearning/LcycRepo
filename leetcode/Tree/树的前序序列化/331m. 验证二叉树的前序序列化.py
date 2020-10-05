@@ -30,22 +30,22 @@ class Solution(object):
         return self.p == len(self.s)
 
     def helper(self):
+        # 因为遇到 # 没有及时停止，说明我们遍历错误
         if self.p == len(self.s):
             return False
 
-        # base case,假如说遍历到#节点，说明一边已经遍历完了，要去另一边的节点了
+        # base case,假如说遍历到#节点，说明一边已经遍历完了，没问题，要去另一边的节点了
         # #,4 假如说p在#，那么p要前进两位才能到下一位
         if self.s[self.p] == "#":
             self.p += 2
             return True
 
-        # 4, 假如说p在4，那么p要++
+        # 45, 假如说p在45，那么要持续让p要++，直到不是这个数字为止
         while self.s[self.p] != ",":
-            print(self.p)
             self.p += 1
         self.p += 1
 
-        # 一个遍历左子树，一个遍历右子树
+        # 一个遍历左子树，一个遍历右子树，当两边都遍历完没问题，说明可以构成
         return self.helper() and self.helper()
 
 # https://www.acwing.com/video/1723/

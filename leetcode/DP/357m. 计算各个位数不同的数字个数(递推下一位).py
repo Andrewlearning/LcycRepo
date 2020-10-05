@@ -33,7 +33,7 @@ class Solution(object):
             # n = 4, 99876 6 = 10-4
             dp[i] = dp[i - 1] * (10 - i)
 
-        # 加的1是0
+        # 加的1是数字0这种可能性
         return sum(dp) + 1
 
 # https://www.acwing.com/video/1734/

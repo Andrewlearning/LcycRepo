@@ -12,31 +12,30 @@ class ListNode(object):
 
 class Solution(object):
     def plusOne(self, head):
-        maybe = ListNode(0)
-        notNone = maybe
-        maybe.next = head
+        dummy = ListNode(0)
+        notNine = dummy
+        dummy.next = head
 
-        #把notnine 指针定位到最后一个非9数，0-1(notnine)-9-9
+        #把 notNine 指针定位到最后一个非9数，0-1-9-1(notnine)-9-9
         cur = head
         while cur:
             if cur.val != 9:
                 notNine = cur
             cur = cur.next
 
-        #把notnine后面的9清空，0-1-0-0
+        #把notnine后面的9清空，0-1-9-1(notnine)-9-9  -> 0-1-9-1(notnine)-0-0
         cur = notNine.next
         while cur:
             cur.val = 0
             cur = cur.next
 
-        # 0-9-9-9
-        if notNine == maybe:
-            maybe.val += 1
-            return maybe
 
-        #0-1-9-9
+        # 0(dummy)-9-9-9
+        # 说明原链表一开始就是9， 我们要进位
+        # 1-2-3(notNine)
+        # 又或者是这种情况
         notNine.val += 1
-        return head
+        return dummy if dummy == notNine else dummy.next
 
 """
 Time: O(n), Space: O(1)
