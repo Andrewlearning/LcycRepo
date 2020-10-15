@@ -22,5 +22,15 @@ class Solution(object):
         """
         return int(n**0.5)
 
+"""
+第18个灯泡会在1,18,2,9,3,6轮翻转。
+第36个灯泡会在1,36,2,18,3,12,4,9,6轮翻转。
 
+规律显而易见，只有在轮数是该位置因数的时候才会执行翻转操作。
+
+于是我们回答了那个问题：只要找到该位置的所有因数个数，我们就知道该位置翻转了多少次。
+
+更进一步的，除了完全平方数，因数都是成对出现的，这意味着实际起到翻转作用(0->1)的，只有
+完全平方数而已。
+"""
 # https://leetcode-cn.com/problems/bulb-switcher/solution/ru-guo-bu-shi-mo-ni-guo-cheng-bu-neng-tong-guo-shu/

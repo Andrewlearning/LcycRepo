@@ -21,7 +21,7 @@ class Solution(object):
         state = []
         for word in words:
             cur = 0
-            # 一个数字有32位bit,我们可以用数字来记录26个字母，出现了那个
+            # 一个数字有32位bit,我们可以用数字来记录26个字母，出现了哪个
             for char in word:
                 cur |= 1 << (ord(char) - ord("a"))
             state.append(cur)

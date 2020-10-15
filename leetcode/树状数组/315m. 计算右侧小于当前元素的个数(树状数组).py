@@ -10,12 +10,11 @@
 6 的右侧有 1 个更小的元素 (1)
 1 的右侧有 0 个更小的元素
 """
-
-import collections
 class FenwickTree(object):
     def __init__(self, n):
-        # 从1开始记录，等于是每一位记录着前缀和
-        self.prefixSum = [0] * (n + 1)
+        # 树状数组所有数都是从1开始
+        # 从1开始记录，等于是每一个数字出现了多少次
+        self.prefixSum = [0] * (n)
 
     def update(self, i, delta):
         while i < len(self.prefixSum):
@@ -43,48 +42,30 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        # 把每个元素去重并且排序一遍
-        sorted_nums = sorted(list(set(nums)))
+        # 因为数据规模是 -1*10000 ~ 10000, 所以总共有20001个数，又因为数状数组只能从1开始，所以我们把下标0不用
+        tr = FenwickTree(20002)
+        res = [0] * len(nums)
 
-        # 把每个元素大大小转换成rank, 例如1,2,3 则
-        # 1：0， 2：1， 3：2
-        rank_nums = collections.defaultdict(int)
-        rank = 0
-        for num in sorted_nums:
-            rank_nums[num] = rank
-            rank += 1
+        # 我们从后往前数，是因为每数一个数，都要在他的位置上+1
+        # 从后往前的话，保证了左边的数，不会被计算在内
+        for i in range(len(nums)-1, -1, -1):
+            # 当前数，下标0不用，所以+10001
+            x = nums[i] + 10001
+            # 统计比当前数小的数出现了几次
+            res[i] = tr.query(x - 1)
+            # 更新当前数的出现次数
+            tr.update(x, 1)
 
-        # 因为我们要求每个
-        tree = FenwickTree(len(sorted_nums))
+        return res
 
-        # 把数组进行倒叙，因为我们需要知道 在这个元素之后，比当前元素小的个数
-        # 倒叙过来以后，就变成，比当前元素小，且在这个元素之前的个数
-        # 然后我们就可以利用数组数组的前缀和性质去求
-        nums = nums[::-1]
-
-        res = []
-
-        for i in range(len(nums)):
-            # 首先我们把当前元素nums[i] 排序后的的前缀和求一遍，表示得到比这个元素小，且在这个元素之前的个数
-            res.append(tree.query(rank_nums[nums[i]] + 1 - 1))
-            # 把树当中的rank数组，更新
-            tree.update(rank_nums[nums[i]] + 1, 1)
-
-        # 因为我们是倒着求得，所以最后还要把结果给反过来
-        return res[::-1]
 
 
 
 
 
 """
-https://www.youtube.com/watch?v=2SVLYsq5W8M&t=156s
-input = [7,1,3,2,9,2,1]
-sorted_nums = [1,2,3,7,9]
-reverse =       [1,2,9,2,3,1,7]
-ranks(大小排名)= [1,2,5,2,3,1,4]
-res          =  [0,1,2,1,3,0,5]
-res[::-1]    =  [5,0,3,1,2,1,0]
+看什么是树状数组https://leetcode-cn.com/problems/count-of-smaller-numbers-after-self/solution/shu-zhuang-shu-zu-by-liweiwei1419/
+代码https://www.acwing.com/video/1703/
 """
 
 
