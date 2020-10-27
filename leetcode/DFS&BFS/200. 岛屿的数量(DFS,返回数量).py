@@ -31,6 +31,7 @@ class Solution(object):
         if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] == "0":
             return
 
+        # 去完一个岛，就把一个岛给沉默掉，等于是做了一个记忆化的操作，防止再次遍历回来
         grid[i][j] = "0"
 
         self.helper(grid, i + 1, j)

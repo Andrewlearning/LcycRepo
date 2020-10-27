@@ -1,3 +1,4 @@
+# coding=utf-8
 class Solution(object):
     def findLadders(self, beginWord, endWord, wordList):
             """
@@ -68,16 +69,16 @@ class Solution(object):
 
 
         # 127原题， 通过替换单词的每一个字母，来寻找可以替换的下一个单词
-        def get_next_words(self, word, wordList):
-            new_level_words = []
+    def get_next_words(self, word, wordList):
+        new_level_words = []
 
-            for i in range(len(word)):
-                for c in 'abcdefghijklmnopqrstuvwxyz':
-                    next_word = word[:i] + c + word[i + 1:]
-                    if next_word != word and next_word in wordList:
-                        new_level_words.append(next_word)
+        for i in range(len(word)):
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                next_word = word[:i] + c + word[i + 1:]
+                if next_word != word and next_word in wordList:
+                    new_level_words.append(next_word)
 
-            return new_level_words
+        return new_level_words
 
 """
 https://www.bilibili.com/video/BV1yt411Y7gH?from=search&seid=6362656343066926492

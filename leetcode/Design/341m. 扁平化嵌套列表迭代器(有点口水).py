@@ -29,10 +29,12 @@ class NestedIterator(object):
         for value in nestedList:
             self.helper(value)
 
-    # 一个dfs,先把便利到的结果存在res里面
+    #
     def helper(self, integer):
+        # 假如当前元素是数字，那么把数字加进res里去
         if integer.isInteger():
             self.res.append(integer.getInteger())
+        # 假如当前元素不是数字，那说明是一个【】，那么遍历里面的东西,继续判断里面的元素是数字还是[]
         else:
             for value in integer.getList():
                 self.helper(value)
