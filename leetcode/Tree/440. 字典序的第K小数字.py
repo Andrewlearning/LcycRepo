@@ -17,7 +17,7 @@ class Solution(object):
             # 若没超过,说明k在 第一前缀和第二前缀的中间
             # 那么我们就进入下一层寻找 例如 10 11之间还有可能有下一层
             else:
-                cur = cur * 10
+                cur *= 10
                 # 因为进入下一层只需要移动一次
                 k -= 1
         return cur
@@ -32,8 +32,8 @@ class Solution(object):
             # 我们探查到的数已经远远超出了N的范围了，这是不可能的，所以我们最大能探查的n
             # 之所以是n+1, 因为a最多能到n, b要比a至少后一位，所以是b+1
             gap += min(n + 1, b) - a
-            a = a * 10
-            b = b * 10
+            a *= 10
+            b *= 10
 
         return gap
 

@@ -41,9 +41,33 @@ class Solution(object):
         nums[i], nums[j] = nums[j], nums[i]
 
 """
+https://www.acwing.com/video/1843/
 Time: O(n), Space: O(1)
 答案：
 本题与41，442，448，268是用的同一套模版， 模版放在448那里
 
 """
 
+class Solution(object):
+    def findDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        res = []
+        for num in nums:
+            # 因为数字是1---n
+            #    下标是0---n-1
+            # 我们要让数字对应上下标，当前num所应该放在数组的对应位置
+            cur_index = abs(num) - 1
+
+            # 把数组对应位置的元素变为负数
+            nums[cur_index] *= -1
+
+            # 假如说对应位置的数字是正数，说明被多个相同数字对应了，说明当前num是重复数字
+            if nums[cur_index] > 0:
+                # 把当前num加进res
+                res.append(abs(num))
+
+        return res

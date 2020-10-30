@@ -30,6 +30,9 @@ class Solution(object):
 
 
         wordList = set(wordList)
+
+        # 记录去过的路径
+        # 因为这样能避免重复访问，重复访问就意味着这条路径 >= 先前访问的路径
         visited = set()
 
         while queue:
@@ -50,9 +53,7 @@ class Solution(object):
                         if newWord not in visited and newWord in wordList:
                             queue.append([newWord, dist + 1])
 
-                            # 第一问和第二问的区别在这里，在第一问中，我们只要使用过了这个单词
-                            # 就把它从wordList中剔除，因为这样能避免重复访问，重复访问就意味着这条路径 >= 先前访问的路径
-                            # 我们只要最短的
+                            # 记录当前node
                             visited.add(newWord)
         return 0
 

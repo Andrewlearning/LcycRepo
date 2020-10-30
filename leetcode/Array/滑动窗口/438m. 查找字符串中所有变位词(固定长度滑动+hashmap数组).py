@@ -11,12 +11,6 @@ s: "cbaebabacd" p: "abc"
 """
 
 class Solution(object):
-    def equals(self, sc, pc):
-        for i in range(len(sc)):
-            if sc[i] != pc[i]:
-                return False
-        return True
-
     def findAnagrams(self, s, p):
         """
         :type s: str
@@ -35,19 +29,19 @@ class Solution(object):
             sc[ord(s[i]) - ord("a")] += 1
             pc[ord(p[i]) - ord("a")] += 1
 
-        if self.equals(sc, pc):
+        if sc == pc:
             res.append(0)
 
-        # 然后我们继续比较，我们为了方便把P的长度先弄出来
-        # 接下来就是有点滑动窗口的感觉了，在sc的表上操作
-        # 把新进入窗口的元素记录在hashmap(i)
-        # 把离开窗口的元素记录移除 hashmap[i-pLen]
         pLen = len(p)
         for i in range(pLen, len(s)):
+            # 右指针+= 1
             sc[ord(s[i]) - ord("a")] += 1
+
+            # 左指针-= 1
             sc[ord(s[i - pLen]) - ord("a")] -= 1
 
-            if self.equals(sc, pc):
+            # 假如两个哈希表对的上，则append左指针的位置
+            if sc == pc:
                 res.append(i - pLen + 1)
         return res
 
