@@ -13,10 +13,13 @@ Output: 5->4->3->2->1->NULL
      cur
 
 """
+
+
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
+
 
 class Solution(object):
     def reverseList(self, head):
@@ -43,10 +46,10 @@ class Solution(object):
 
         return pre
 
+
 if __name__ == "__main__":
     solution = Solution()
     solution.reverseList()
-
 
 """
 答案：
@@ -64,4 +67,3 @@ if __name__ == "__main__":
 因为在class这种情况下，右边的值会产生改变，所以保险起见先把必须完成的写了
 不太推荐这种写法
 """
-

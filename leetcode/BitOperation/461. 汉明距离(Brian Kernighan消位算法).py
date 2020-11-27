@@ -16,16 +16,15 @@ class Solution(object):
         :type y: int
         :rtype: int
         """
-        new = x ^ y
         count = 0
-        while new != 0:
-            count += 1
-            new &= (new - 1)
+        # 相同位位0，不相同位为1
+        new = x ^ y
+        while new:
+            # 统计有多少个不相同位，1 & 1 = 1，不相同位得到1
+            count += new & 1
+            new >>= 1
         return count
 
 """
 time:O(n) space:O(1)
-答案：
-1.首先先通过异或^ 找出x,y中不一样的数的位置（不一样的数那一位为1）
-2.然后利用 new &= (new - 1) 能消除二进制位上最后面的一个1，重复操作以及计数，就能得到最后的答案
 """

@@ -26,12 +26,16 @@ class Solution(object):
         res = 0
 
         while right < len(s):
+            # 每次窗口右边的元素都让他进来
             hashmap[s[right]] += 1
 
+            # 当新加进来的元素出现重复的时候，我们缓慢把左指针向右移动
+            # 直到没有重复为止
             while hashmap[s[right]] > 1:
                 hashmap[s[left]] -= 1
                 left += 1
 
+            # 每次计算窗口的最大值
             res = max(res, right - left + 1)
 
             right += 1
