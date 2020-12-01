@@ -9,6 +9,8 @@ Explanation:
 4   (0 1 0 0)
        ↑   ↑
 """
+
+
 class Solution(object):
     def hammingDistance(self, x, y):
         """
@@ -24,6 +26,7 @@ class Solution(object):
             count += new & 1
             new >>= 1
         return count
+
 
 """
 time:O(n) space:O(1)

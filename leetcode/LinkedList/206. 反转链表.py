@@ -13,8 +13,6 @@ Output: 5->4->3->2->1->NULL
      cur
 
 """
-
-
 class ListNode(object):
     def __init__(self, x):
         self.val = x
