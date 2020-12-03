@@ -2,6 +2,7 @@ https://www.youtube.com/watch?v=GCwjy2UKPBM&list=PLyIjPezcZJNNcmV2N3ZSypT00t7o2o
 XOR-异或 ^
 相同的为0 不相同的为1， 也可以理解为二进制的不进位加法
 
+位运算取反: “~”按位取反1变0，0变1
 
 特点：
 x^ 0 = x

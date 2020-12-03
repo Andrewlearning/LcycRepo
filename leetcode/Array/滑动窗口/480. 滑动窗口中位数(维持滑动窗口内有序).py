@@ -38,5 +38,4 @@ class Solution(object):
 https://www.youtube.com/watch?v=kDS6ScZwNnI
 本题有点滑动窗口的最大值的感觉， 但是我们这里维持的滑动窗口，是一个排序好的滑动窗口
 所以除了 正常的添加元素和删除元素以外，我们还有维持窗口的有序性
-
 """
