@@ -1,7 +1,7 @@
 class UF:
-    parent = {}
-
     def __init__(self, equations):
+        self.parent = {}
+
         # 这里跟以往有点不一样，我们把两个元素互相指对方为父亲节点，构成 a == b的效果
         # 因为 a == b , b == c的话，我们要使 a,b,c都是联通的才行
         for eq in equations:

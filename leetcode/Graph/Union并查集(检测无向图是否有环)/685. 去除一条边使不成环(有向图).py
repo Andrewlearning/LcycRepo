@@ -1,21 +1,23 @@
 # coding:utf-8
 class UnionFind(object):
     def __init__(self, n):
-        self.pre = range(n)
+        self.parent = {}
+        for i in range(n):
+            self.parent[i] = i
 
     def find(self, x):
-        if x != self.pre[x]:
-            self.pre[x] = self.find(self.pre[x])
-        return self.pre[x]
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
 
     def union(self, x1, x2):
         root1 = self.find(x1)
         root2 = self.find(x2)
-        # x1,x2不在一个联通分路，则返回false
+        # 要合并，retunr false
         if root1 != root2:
-            self.pre[root2] = root1
+            self.parent[root2] = root1
             return False
-        # x1,x2不在一个联通分路，则返回True
+        # 父亲一样，不合并，return True
         return True
 
 class Solution(object):

@@ -32,7 +32,7 @@ class Solution(object):
             if self.nums[i] == target:
                 count += 1
 
-                # 只要取出的值 在0- 1/count以内，我们就可以当做以1/count的概率取到这个元素
+                # 只要取出的值 在0 ~   1/count以内，我们就可以当做以1/count的概率取到这个元素
                 if random.random() <= 1.0 / count:
                     res = i
         return res

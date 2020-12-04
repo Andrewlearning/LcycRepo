@@ -1,8 +1,8 @@
 class UF:
-    parent = {}
-    cnt = 0
-
     def __init__(self, M):
+        self.parent = {}
+        self.cnt = 0
+
         # 我们要理解，为什么这里self.parent只构造到n位
         # 因为这是本题的特性，因为例如本题的3*3 矩阵，其实这只有3个人
         n = len(M)

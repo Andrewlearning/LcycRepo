@@ -30,6 +30,7 @@ class UF:
 
     def find(self, x):
         # find前我们先对x来进行一个初始化，自己指向自己
+        # 因为本题不是数字指数字，所以初始化过程与别的略有不同
         self.parent.setdefault(x, x)
         if x != self.parent[x]:
             self.parent[x] = self.find(self.parent[x])
@@ -58,6 +59,7 @@ class Solution(object):
 
         uf = UF()
 
+        # 初始化uf
         for pair in pairs:
             uf.union(pair[0], pair[1])
 
