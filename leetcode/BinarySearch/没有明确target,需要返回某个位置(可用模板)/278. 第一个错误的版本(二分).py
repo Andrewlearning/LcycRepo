@@ -39,14 +39,11 @@ class Solution(object):
             else:
                 right = mid - 1
 
-        # 出来的话，说明good version 是在left 和right 之间的
-        if isBadVersion(left) == True:
-            return left
-        return right
+        return left
 
 """
+# 这题等同于，寻找target的左边界
 https://www.youtube.com/watch?v=8_2YbUniCMo
 time O(logn) space O(1)
-就是用二分查找来做的，根据题意很容易理解为什么要用二分查找
-1.
+
 """

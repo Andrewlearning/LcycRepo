@@ -28,19 +28,24 @@ class Solution(object):
         """
         return self.helper(n, 2)
 
+    # 需要写成递归的原因是，我们可能还要对因子进行进一步的分解
     def helper(self, n, start):
         res = []
 
-        i = start
 
-        while i * i <= n:
+        # 为什么是 sqrt(num) + 1, 是因为我们要考虑到6*6=36这种情况
+        # 所以要给sqrt(36) + 1, 留空间
+        # 然后假如说i再大的话，就会出现重复的情况，例如 3 * 4 和 4 * 3
+        for i in range(start, int(sqrt(n)) + 1):
             if n % i == 0:
-                res.append([n / i, i])
-                for part in self.helper(n / i, i):
+                res.append([n/i, i])
+
+                # n/i是较大数，所以我们尝试看能不能对n/i进行进一步的分解
+                # helper()的return 也是[[]], 所以在这里我们把n/i的分解拿到后，还要再append上i，才能加到res
+                for part in self.helper(n/i, i):
                     part.append(i)
                     res.append(part)
 
-            i += 1
 
         return res
 

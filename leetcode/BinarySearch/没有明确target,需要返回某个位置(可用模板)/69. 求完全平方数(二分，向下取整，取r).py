@@ -46,3 +46,33 @@ Time: O(log(n)), Space: O(1)
 https://algocasts.io/episodes/Z5mzEJWd
 此题与leetcode367基本一样
 """
+
+# 左闭右开的写法
+class Solution(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        # 本题的 目标是，找到一个mid使得 mid**2 == target
+        # 左闭右开的写法
+        l = 0
+        r = x + 1
+
+        while l < r:
+            mid = (l+r)//2
+
+            if mid**2 == x:
+                return mid
+
+            # 说明要把mid变小
+            elif mid**2 > x:
+                r = mid - 1
+
+            # 说明要把mid变大
+            elif mid**2 < x:
+                l = mid + 1
+
+
+        # 假如说没找到答案，退出循环的时候一定是l = r,且是向上取整的，所以要-1
+        return l - 1

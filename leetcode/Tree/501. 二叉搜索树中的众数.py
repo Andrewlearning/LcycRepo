@@ -2,6 +2,8 @@
 给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。
 假如说有多个众数，则要把他们都求出来
 """
+
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -29,7 +31,7 @@ class Solution(object):
 
         self.helper(node.left)
 
-        if self.pre != None:
+        if self.pre is None:
             if self.pre == node.val:
                 self.count += 1
             else:
@@ -39,7 +41,7 @@ class Solution(object):
         if self.count > self.max:
             self.max = self.count
 
-            #注意有新的众数进来的时候，要把上一个众数给清除掉
+            # 注意有新的众数进来的时候，要把上一个众数给清除掉
             self.res = []
             self.res.append(node.val)
 
@@ -50,6 +52,7 @@ class Solution(object):
         self.pre = node.val
 
         self.helper(node.right)
+
 
 """
 https://www.youtube.com/watch?v=1FJDyBSfEbo

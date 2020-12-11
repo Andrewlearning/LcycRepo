@@ -28,7 +28,7 @@ class Solution(object):
             if nums[mid] > nums[r]:
                 l = mid + 1
             # 说明小区间在mid,或是mid左边，我们要[l,mid]
-            if nums[mid] < nums[r]:
+            elif nums[mid] < nums[r]:
                 r = mid
 
         # l,r都可以

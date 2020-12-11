@@ -27,11 +27,11 @@ class Solution(object):
         # 存放还没找到下一个最大数的元素
         stack = []
 
-        # 存放nums2每个元素所对应的下一个最大数
+        # 存放nums2每个元素: 下一个更大数
         hashmap = {}
 
         for i in range(len(nums2)):
-            # nums2[i] 是下一个更大数时，nums2都可以满足的元素pop出
+            # nums2[i] 是下一个更大数时，把nums2都可以满足的元素pop出
             while len(stack) != 0 and stack[-1] < nums2[i]:
                 hashmap[stack.pop()] = nums2[i]
 
