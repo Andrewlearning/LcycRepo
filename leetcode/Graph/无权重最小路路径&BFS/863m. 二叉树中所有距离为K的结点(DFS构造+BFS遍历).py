@@ -12,16 +12,17 @@
 
 import collections
 class Solution(object):
-    def distanceK(self, root, target, K):
-        def dfs(node, par=None):
-            if node:
-                node.par = par
-                dfs(node.left, node)
-                dfs(node.right, node)
+    def dfs(self, node, par=None):
+        if node:
+            # 记录当前node的父亲节点
+            node.par = par
+            self.dfs(node.left, node)
+            self.dfs(node.right, node)
 
+    def distanceK(self, root, target, K):
         # 先利用dfs构造一个无向图,使每个节点不但能和left,right相连
         # 还可以跟父节点相连
-        dfs(root)
+        self.dfs(root)
 
         queue = collections.deque([(target, 0)])
         visited = {target}

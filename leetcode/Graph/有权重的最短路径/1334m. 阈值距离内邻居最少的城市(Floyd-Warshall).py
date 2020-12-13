@@ -22,6 +22,7 @@ class Solution(object):
             return 0
 
         # 初始化：最开始任意两点的距离都设置为最大值
+        # edges_map记录两个节点之间的最小距离
         edges_map = [[10001 for _ in range(n)] for _ in range(n)]
 
         # 注意：这里是无向图
@@ -30,8 +31,11 @@ class Solution(object):
             edges_map[j][i] = dist
 
         # 计数任意两个点的最短距离
+        # 该层循环为i->j路径的各个中间跳节点
         for k in range(n):
+            # 该层循环为i->j路径的各个i节点
             for i in range(n):
+                # 该层循环为i->j路径的各个j节点
                 for j in range(n):
                     edges_map[i][j] = min(edges_map[i][j],
                                           edges_map[i][k] + edges_map[k][j])

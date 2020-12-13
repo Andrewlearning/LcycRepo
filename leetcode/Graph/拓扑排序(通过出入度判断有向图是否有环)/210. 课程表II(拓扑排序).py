@@ -3,12 +3,13 @@
 只要返回其中一个即可。如果无法上完所有课程，则返回一个空数组。
 
 这题与207的区别只在于，需要记录被遍历过没有循环的节点，并返回出来
-假如说有循环节点，那么就返回【】
+假如说有循环节点，那么就返回[]
 """
 class Solution(object):
     def hasCycle(self, graph, visited, checked, v):
         # visited被访问过了，说明有环，返回True
-        if visited[v]: return True
+        if visited[v]:
+            return True
         visited[v] = True
 
         # 判断v路径下的所有节点是否有环
@@ -85,9 +86,12 @@ class Solution(object):
             pre = queue.pop(0)
             count += 1
             res.append(pre)
+
+            # 当前课程上过了，所有对应的下一个课程入度都-1
             for next in graph[pre]:
                 indegree[next] -= 1
 
+                # 假如下一个课程的入度为0，则加进queue
                 if indegree[next] == 0:
                     queue.append(next)
 
