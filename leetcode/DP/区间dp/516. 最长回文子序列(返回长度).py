@@ -1,3 +1,24 @@
+"""
+给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。
+
+示例 1:
+输入:
+
+"bbbab"
+输出:
+4
+
+一个可能的最长回文子序列为 "bbbb"。
+
+示例 2:
+输入:
+
+"cbbd"
+输出:
+
+2
+一个可能的最长回文子序列为 "bb"。
+"""
 class Solution(object):
     def longestPalindromeSubseq(self, s):
         """
@@ -8,7 +29,7 @@ class Solution(object):
         l = len(s)
 
         #在子数组 array[i..j] 中，我们要求的子序列（最长回文子序列）的长度为 dp[i][j]
-        dp = [[0 for j in range(l)] for i in range(l)]
+        dp = [[0] * l for i in range(l)]
 
         # 每个字符自己都是一个回文子串
         for i in range(l):

@@ -10,7 +10,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        # sum的值:当前下标
         prefixSum = {0: -1}
+
+        # 这题的的sum, 当遇到0的时候+1，遇到1的时候-1
         Sum = 0
         maxSubLen = 0
 
@@ -20,6 +23,8 @@ class Solution(object):
             else:
                 Sum -= 1
 
+            # 当sum重新回落到一个之前字典里有的key时，说明
+            #  从prefixSum[Sum] ~ i 碰到了一串具有相同数量的 0，1 数列
             if Sum not in prefixSum:
                 prefixSum[Sum] = i
             else:
