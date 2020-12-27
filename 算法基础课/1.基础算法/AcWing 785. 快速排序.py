@@ -1,4 +1,4 @@
-def quick_sort(nums, l, r):
+def quickSort(nums, l, r):
     if l >= r:
         return
 
@@ -25,17 +25,15 @@ def quick_sort(nums, l, r):
             nums[i], nums[j] = nums[j], nums[i]
 
     # 记住这个模板
-    # [l, i-1, i, r]
     # [l, j, j+1, r]
-    quick_sort(nums, l, j)
-    quick_sort(nums, j+1, r)
+    quickSort(nums, l, j)
+    quickSort(nums, j+1, r)
 
-if __name__ == '__main__':
-    n = input()
-    list_str = input()
-    nums = list(map(int, list_str.split(" ")))
-    quick_sort(nums, 0, len(nums) - 1)
-    print(" ".join(map(str,nums)))
+if __name__ == "__main__":
+    n = int(input())
+    nums = map(int, input().split(" "))
 
+    quickSort(nums, 0, n-1)
+    print(" ".join(map(str, nums)))
 
 # https://www.acwing.com/activity/content/code/content/41595/

@@ -1,31 +1,6 @@
-package main
-
-func main() {
-	test1()
-}
-
-func test1() {
-	println(1 == 1)
-
-	//stack := []int{9,9,9,9,9}
-	//
-	//for i, val := range stack {
-	//	println(i, val)
-	//}
-
-	ss := "aaa"
-	hashmap := map[byte]byte{}
-
-	for i := range ss {
-		x := ss[i]
-		hashmap[x] = x
-	}
+package Hashmap
 
 
-}
-
-
-// 一个很好的教学模板
 func groupAnagrams(strs []string) [][]string {
 
 	hashmap := map[[26]int][]string{}

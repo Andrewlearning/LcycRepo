@@ -26,11 +26,6 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        # base case
-        # 假如说没节点或者只剩下一个节点的话，那么不用进行反转
-        if head == None or head.next == None:
-            return head
-
         # 每一轮我们都要指定一个tail节点，它的位置在head走k步后
         tail = head
 

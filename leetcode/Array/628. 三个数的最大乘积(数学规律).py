@@ -34,6 +34,7 @@ class Solution(object):
                 max2 = no
             elif no <= max2 and no > max1:
                 max1 = no
+                
         return max(max1*max2*max3, min1*min2*max3)
 
 """
