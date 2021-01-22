@@ -1,8 +1,15 @@
 package main
 
+import (
+	"fmt"
+	"strconv"
+)
+
 func main() {
-	test1()
+	//test1()
+	test2()
 }
+
 
 func test1() {
 	println(1 == 1)
@@ -20,7 +27,32 @@ func test1() {
 		x := ss[i]
 		hashmap[x] = x
 	}
+}
 
+func test2() {
+
+	hashmap := map[string]string {
+		"2" : "abc",
+	}
+
+	for i := 3; i < 10; i++ {
+		curKey := strconv.Itoa(i)
+		//var curValue string
+		runeCurKey := []rune(curKey) - 1
+		preKey := string(runeCurKey)
+
+		for j, value  := range hashmap[preKey] {
+			fmt.Println(j)
+			fmt.Println(value)
+		}
+
+	}
+
+
+	fmt.Println(string('A'+ 32))
+	fmt.Println('a')
+	ru := 'a' + 1
+	fmt.Println(string(ru))
 
 }
 

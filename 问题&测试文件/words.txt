@@ -1,23 +1,30 @@
-intact 
-remark 
-persistent connect 
-periodically 
-intermittent
-retrieve 
-encapsulate 
-interpret
-intentionally
-vague
-indeed
-shorten
-envolope
-elapses
-burden
-simultaneous
-subsequent 
-residing on
-interleaved
-carriage
-carriage return
-line feed
-self-explanatory
+crude calculation 
+whereas
+neglect
+costly proposition
+nevertheless
+negligible 
+through
+though
+thought
+geographically
+thereby
+stale
+housed
+within a given context
+mnemonic
+consist
+rigid 
+hierarchical structure 
+reconcile
+aliase
+among
+replicated
+cononical
+upon
+take over
+consequently
+scatter
+but is nevertheless
+critically important
+ricochet

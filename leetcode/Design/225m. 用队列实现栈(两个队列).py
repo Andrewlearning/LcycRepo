@@ -15,10 +15,11 @@ class MyStack(object):
         """
         Initialize your data structure here.
         """
-        self.queue1 = []
+        # 每次只留一个最早来的元素在里面，用来pop
+        self.out = []
 
-        # 中转站
-        self.queue2 = []
+        # 用来把非最早来的元素给滤出来，最后再给回self.out
+        self.temp = []
 
     # 元素全放到queue1里
     def push(self, x):
@@ -27,28 +28,28 @@ class MyStack(object):
         :type x: int
         :rtype: None
         """
-        self.queue1.append(x)
+        self.out.append(x)
 
     def pop(self):
         """
         Removes the element on top of the stack and returns that element.
         :rtype: int
         """
-        if len(self.queue1) == 0:
+        if len(self.out) == 0:
             return None
-        if len(self.queue1) == 1:
-            return self.queue1.pop()
+        if len(self.out) == 1:
+            return self.out.pop()
 
         # 过程是这样的
         # [] [1,2,3]
         # [1,2] 3 []
         # [] 3 [1,2]
-        while len(self.queue1) >= 2:
-            self.queue2.append(self.queue1.pop(0))
-        pop_element = self.queue1.pop()
+        while len(self.out) >= 2:
+            self.temp.append(self.out.pop(0))
+        pop_element = self.out.pop()
 
-        while self.queue2:
-            self.queue1.append(self.queue2.pop(0))
+        while self.temp:
+            self.out.append(self.temp.pop(0))
 
         return pop_element
 
@@ -57,14 +58,14 @@ class MyStack(object):
         Get the top element.
         :rtype: int
         """
-        return self.queue1[-1]
+        return self.out[-1]
 
     def empty(self):
         """
         Returns whether the stack is empty.
         :rtype: bool
         """
-        return len(self.queue1) == 0
+        return len(self.out) == 0
 
 
 """
