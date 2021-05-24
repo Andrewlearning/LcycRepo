@@ -15,14 +15,17 @@ class Solution:
         :rtype: int
         """
         count = 0
+        mod = int(10e8 + 7)
         if N < 0:
             return count
+
         # 当前所在位置已经出界了, 说明这算一条路，return 1
         if i < 0 or i >= m or j < 0 or j >= n:
             return 1
+
         # 没出界，则继续进行向四个方向递归
         for di, dj in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
-            count = (count + self.findPaths(m, n, N - 1, di, dj)) % (10 ** 9 + 7)
+            count = (count + self.findPaths(m, n, N - 1, di, dj)) % mod
 
         return count
 

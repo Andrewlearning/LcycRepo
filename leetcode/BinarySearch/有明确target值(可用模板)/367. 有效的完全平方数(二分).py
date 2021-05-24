@@ -14,42 +14,24 @@
 输入：14
 输出：False
 """
-
 class Solution(object):
     def isPerfectSquare(self, x):
         """
         :type num: int
         :rtype: bool
         """
+        l = 0
+        r = x
 
-        class Solution(object):
-            def isPerfectSquare(self, x):
-                """
-                :type num: int
-                :rtype: bool
-                """
-                # 本题的 目标是，找到一个mid使得 mid**2 == target
-                l = 0
-                r = x
+        # 我们使用求右边界的模板来进行查找
+        # 如果找得到, 那么无论l,r的平方都是x
+        # 如果找不到, 那么l ** 2 != x
+        while l < r:
+            mid = (l + r + 1) // 2
 
-                while l <= r:
-                    mid = (l + r) // 2
+            if mid ** 2 <= x:
+                l = mid
+            else:
+                r = mid - 1
 
-                    # 找得到return True
-                    if mid ** 2 == x:
-                        return True
-
-                    # 说明要把mid变小
-                    elif mid ** 2 > x:
-                        r = mid - 1
-
-                    # 说明要把mid变大
-                    elif mid ** 2 < x:
-                        l = mid + 1
-
-                # 找不到，return False
-                return False
-
-"""
-https://algocasts.io/episodes/Z5mzEJWd
-"""
+        return l**2 == x

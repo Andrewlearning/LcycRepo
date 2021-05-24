@@ -17,6 +17,7 @@
 Solution solution = new Solution([1]);
 solution.pickIndex(); // 返回 0，因为数组中只有一个元素，所以唯一的选择是返回下标 0。
 """
+import random
 class Solution:
 
     def __init__(self, A):
@@ -26,20 +27,20 @@ class Solution:
             self.pre.append(self.pre[-1] + A[i])
 
     def pickIndex(self):
-        rd = int(random.random() * self.pre[-1])
+        # TODO为什么是从1开始
+        rd = random.randint(1, self.pre[-1])
 
         l, r = 0, len(self.pre) - 1
-        # 插入最左模板
+        # 二分要找的是，大于等于rd的第一个位置,
         while l < r:
             mid = (l + r) // 2
-            if self.pre[mid] > rd:
-                # mid 是一个备胎
+            if self.pre[mid] >= rd:
                 r = mid
             else:
-                # mid + 1 是一个备胎
                 l = mid + 1
-        # 由于 l 和 r 相等，因此返回谁都无所谓。那我就返回 l ，刚好和 最左模板的右对应
+
+
         return l
 
-# 链接：https://leetcode-cn.com/problems/random-pick-with-weight/solution/li-kou-jia-jia-er-fen-bisect_left-528-an-thn9/
+#code；https://www.acwing.com/activity/content/code/content/601273/
 # https://www.acwing.com/video/1951/

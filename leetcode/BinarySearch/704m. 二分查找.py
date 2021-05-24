@@ -16,20 +16,20 @@
 # [ )模式的二分查找
 class Solution(object):
     def search(self, nums, target):
-        res = -1
 
+        return self.findLeft(nums, target)
+
+    # 直接套用34题的模板
+    def findLeft(self, nums, target):
         l = 0
-        r = len(nums)
+        r = len(nums) - 1
 
         while l < r:
             mid = (l + r) // 2
-            if nums[mid] == target:
-                return mid
-            # 取到新的区间[l,mid)
-            elif nums[mid] > target:
+
+            if nums[mid] >= target:
                 r = mid
-            # 取到新的区间[mid+1,r)
             else:
                 l = mid + 1
 
-        return res
+        return l if nums[l] == target else -1

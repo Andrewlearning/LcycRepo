@@ -20,30 +20,27 @@ def isBadVersion(version):
     pass
 
 class Solution(object):
-    def firstBadVersion(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        if n < 1:
-            return 1
+    class Solution(object):
+        def firstBadVersion(self, n):
+            """
+            :type n: int
+            :rtype: int
+            """
+            l = 1
+            r = n
 
-        left = 1
-        right = n
+            while l < r:
+                mid = (l + r) // 2
+                # [...b mid b b b]
+                # 一个符合条件区间的左边界
+                if isBadVersion(mid):
+                    r = mid
+                else:
+                    l = mid + 1
 
-        while left <= right:
-
-            mid = (left + right) //2
-            if isBadVersion(mid) is False:
-                left = mid + 1
-            else:
-                right = mid - 1
-
-        return left
+            return l
 
 """
 # 这题等同于，寻找target的左边界
-https://www.youtube.com/watch?v=8_2YbUniCMo
 time O(logn) space O(1)
-
 """

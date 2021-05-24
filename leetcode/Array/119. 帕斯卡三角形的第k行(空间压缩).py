@@ -37,6 +37,6 @@ https://algocasts.io/episodes/D1mR10Wz
 我们这题则更追求一种空间上的压缩
 
  1 
- 1 1
+ 1    1
  j-1  j  1
 """

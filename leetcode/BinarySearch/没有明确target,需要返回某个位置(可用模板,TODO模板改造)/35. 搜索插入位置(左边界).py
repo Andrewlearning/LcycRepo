@@ -15,25 +15,24 @@ class Solution(object):
         if not nums and len(nums) == 0:
             return 0
 
-        # 左闭右闭区间
         l = 0
-        r = len(nums) - 1
+        r = len(nums)  # 因为可以插在len(nums)的那个位置上，所以这里要保留
 
-        while l <= r:
+        while l < r:
             mid = (l + r) // 2
 
-            if target > nums[mid]:
-                l = mid + 1
-            elif target < nums[mid]:
-                r = mid - 1
+            # [l,target,mid] [mid+1, r]
+            if nums[mid] >= target:
+                r = mid
             else:
-                return mid
+                l = mid + 1
 
         return l
 """
+https://www.acwing.com/video/1358/
 [1,3,5,6] target = 4
-2.无target时，我们能返回非target的左界，[right]->3
-3.无target时，我们能返回非target的右界，[left]->5
+我们要找4的插入位置，就是要找, >= target区间的左边界
+所以就是按照findleft的写法去写
 
 答案：
 time: ologn

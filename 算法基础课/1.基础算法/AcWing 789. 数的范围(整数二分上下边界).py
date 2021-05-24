@@ -5,11 +5,11 @@ def binarySearch(array, target):
     # 左边界
     while l < r:
         mid = (l + r) // 2
-        # [l, mid] [mid+1, r]
-        if array[mid] < target:
-            l = mid + 1
-        else:
+        # [l, target, mid] [mid+1, r]
+        if array[mid] >= target:
             r = mid
+        else:
+            l = mid + 1
 
     if array[l] != target:
         return ["-1", "-1"]
@@ -19,7 +19,7 @@ def binarySearch(array, target):
     # 右边界
     while l < r:
         mid = (l + r + 1) // 2
-        # [l, mid-1] [mid, r]
+        # [l, mid-1] [mid, target, r]
         if array[mid] <= target:
             l = mid
         else:

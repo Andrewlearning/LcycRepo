@@ -22,7 +22,7 @@ class Solution(object):
         :rtype: int
         """
 
-        # 初始化dp数组， dp[text1用了几个字符][text2用了几个字符]
+        # 初始化dp数组， dp[text1用了几个字符][text2用了几个字符]时最长公共子序列是多少
         dp = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)]
 
         # 我们不用定义初始状态，因为dp[0][0]两个空字符串没有公共序列

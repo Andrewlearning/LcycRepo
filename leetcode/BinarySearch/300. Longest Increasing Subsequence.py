@@ -1,5 +1,5 @@
 """
-Given an unsorted array of integers, find the length of longest increasing subsequence.
+Given an unsorted nums of integers, find the length of longest increasing subsequence.
 
 Example:
 
@@ -31,6 +31,7 @@ class Solution(object):
 
         return res
 
+
 """
 时间复杂度O(N^2) 空间复杂O（N），新开了一个list,比较垃圾
 答案：
@@ -44,6 +45,7 @@ class Solution(object):
 6.回到1，因为j总是在i后扫描，当列表元素只为1的时候，它做不到扫描，得不出判断，所以我们得在一开始预设值
 """
 
+
 class Solution(object):
     """
     这个search Insert为35题的答案,但是这里需要改造一下
@@ -51,35 +53,41 @@ class Solution(object):
     但我们需要的只是前面那一小段有数字的，例[1,2,4,0,0,0]
     只需要到[1,2,4],所以变量length的作用就在这里
     """
-    def searchInsert(self, array,length, target):
-        left = 0
-        right = length - 1
 
-        while left <= right:
-            mid = (left + right) // 2
+    def searchInsert(self, nums, length, target):
+        l = 0
+        r = length
 
-            if array[mid] == target:
-                return mid
-            elif array[mid] < target:
-                left = mid + 1
+        while l < r:
+            mid = (l + r) // 2
+
+            if nums[mid] >= target:
+                r = mid
             else:
-                right = mid - 1
-        return left
+                l = mid + 1
 
-    def lengthOfLISBinarySearch(self, res,nums):
+        return l
+
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
         if nums is None:
             return []
 
         n = len(nums)
-        res = [0]*n
+        res = [0] * n
         reslen = 0
 
         for x in nums:
-            i = self.searchInsert(res,reslen, x)
+            i = self.searchInsert(res, reslen, x)
+            # 更新结果子串
             res[i] = x
             if i == reslen:
                 reslen += 1
         return reslen
+
 
 """
 时间复杂度O(NlongN) 空间复杂O（N），新开了一个list,二分查找是logN，比较强
@@ -95,7 +103,3 @@ case 1,8,4,9...
 2.新遍历到的数字（9）,可以插入的位置为len(res),[1,4]x,所以能增加res的长度，于是我们把9加进[1,4]->[1,4,9]
 
 """
-
-
-
-

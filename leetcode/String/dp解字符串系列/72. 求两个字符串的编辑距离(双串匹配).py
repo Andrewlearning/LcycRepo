@@ -27,15 +27,17 @@ class Solution(object):
         m = len(word1)
         n = len(word2)
 
-        dp = [[0 for j in range(n+1)] for i in range(m+1)]
+        # dp[i][j] i表示word1的1-i的片段，j表示word2的1-j的片段，合在一起的意思就是
+        # word1的1-i的片段 和 word2的1-j的片段，把他们变成相同的字符串最少需要多少步操作
+        dp = [[0] * (n+1) for i in range(m+1)]
 
-        # 边界值，假如说 "" , "abcd" , 那么dp要进行初始化设定
+        # 边界值，假如说 "" , "abcd" , 那么dp要进行初始化设定, 最极端情况下要更改多少次
         for i in range(m+1):
             dp[i][0] = i
         for j in range(n+1):
             dp[0][j] = j
 
-        # 检测出"a",""这种情况
+        # 检测出"a",""这种情况，直接返回结果
         if n == 0 or m == 0:
             return dp[m][n]
 
@@ -48,18 +50,26 @@ class Solution(object):
         return dp[m][n]
 
 """
-https://www.youtube.com/watch?v=CikSnHInOJQ&list=PLyIjPezcZJNNcmV2N3ZSypT00t7o2oSS-&index=52
-https://www.youtube.com/watch?v=Q4i_rqON2-E
+https://www.acwing.com/video/334/
 答案：
-1.dp[i][j] i表示word1的0-i的片段，j表示word2的0-j的片段，合在一起的意思就是
-word1的0-i的片段 和 word2的0-j的片段，把他们变成相同的字符串需要多少步操作
+1.dp[i][j] i表示word1的1-i的片段，j表示word2的1-j的片段，合在一起的意思就是
+word1的1-i的片段 和 word2的1-j的片段，把他们变成相同的字符串最少需要多少步操作
+
 2.假如说，word1的第i位 和word2的第j位相等，那么就说明在这个index上不用操作
 dp[i][j] = dp[i-1][j-1]
-3.当i,j位不相等时，我们有三种操作，delect,insert,replace
-  其实delect 和 insert 分的不是特别清楚，一个是[i-1][j],一个是[i][j-1]
-  replace,把i换成与j相同的字母，然后同时消去这两个字母，所以[i][j] = [i-1][j-1] + 1
-  然后我们取这三个操作的最小值（其实就是尝试这三个操作哪个花费最少），用个min
 
+3.当i,j位不相等时，我们有三种操作，delect,insert,replace, 这三种操作所针对的都是i字符串
+3.1 delect,表示删除第i位能保证两个字符串相等，
+那么前提就是[1,i-1] == [1,j], 所以进行的操作数是[i-1][j] + 1
+
+3.2 insert,表示要在第i位后面添加一个字母，才能保证两个字符串相等
+那么前提就是[1,i] == [1,j-1], 因为要让[i+1] == [j]嘛，所以操作数是[i][j-1] + 1
+
+3.3 replace,表示要把第i位字母，替换成别的字母，才能保证两字符串相等
+那么现在就说明[i] != [j]所以才要换，那更换成功的基础是，[1,i-1] == [1,j-1]，
+要不然换了也没用，所以这里的操作 [i-1][j-1] + 0/1, 有可能为0的情况是[i] 有可能等于 [j]
+
+  
 4.注意我们先得把递归的基础值给设定好，利用两个for循环（假如一个单词是""，另一个单词是x）
 5.把两个单词的所有情况都遍历一遍，推出最后的dp[m][n]
 
