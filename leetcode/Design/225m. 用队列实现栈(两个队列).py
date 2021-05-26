@@ -40,7 +40,7 @@ class MyStack(object):
         if len(self.out) == 1:
             return self.out.pop()
 
-        # 过程是这样的
+        # 过程是这样的, 把out队列里前面的元素都装进temp里面去，然后再剩下的最后一个元素pop掉
         # [] [1,2,3]
         # [1,2] 3 []
         # [] 3 [1,2]
@@ -48,8 +48,8 @@ class MyStack(object):
             self.temp.append(self.out.pop(0))
         pop_element = self.out.pop()
 
-        while self.temp:
-            self.out.append(self.temp.pop(0))
+        
+        self.out, self.temp = self.temp, self.out
 
         return pop_element
 

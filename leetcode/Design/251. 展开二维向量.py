@@ -17,42 +17,39 @@ class Vector2D(object):
         """
         :type v: List[List[int]]
         """
-        self.element = v
-        # x 表示在第几个ceil
-        self.x = 0
+        self.nums = v
+        # i 表示在第几个ceil
+        self.i = 0
 
-        # y 表示在ceil里的第几个元素
-        self.y = 0
+        # j 表示在ceil里的第几个元素
+        self.j = 0
+
+    # case1: i没到还在范围内，且j已经到了这个ceil的最后一个元素时, 移动到下一个ceil
+    # case2: 当[i][j] 指向是一个空的列表的时候，能跳过，直接跳到有元素的地方
+    def toNextMeaningfulValue(self):
+        while self.i < len(self.nums) and self.j == len(self.nums[self.i]):
+            self.i += 1
+            self.j = 0
 
     def next(self):
         """
         :rtype: int
         """
-        # x没到还在范围内，且y已经到了这个ceil的最后一个元素时
-        # 我们要移动到下一个ceil
-        while self.x < len(self.element) and self.y == len(self.element[self.x]):
-            self.x += 1
-            self.y = 0
-
+        self.toNextMeaningfulValue()
         # 若没有在一个cell的最后一个位置，那么将直接读取当前位置的值，并把y指针向后移动
-        res = self.element[self.x][self.y]
+        res = self.nums[self.i][self.j]
         # 移动到下一个元素
-        self.y += 1
+        self.j += 1
         return res
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        # x没到还在范围内，且y已经到了这个ceil的最后一个元素时
-        # 我们要移动到下一个ceil
-        while self.x < len(self.element) and self.y == len(self.element[self.x]):
-            self.x += 1
-            self.y = 0
+        self.toNextMeaningfulValue()
 
-        # 因为假如说 [[null],[null]]这种情况，self.x一直++
-        # 所以假如说没有下一个值，self.x总会++到 等于len(self.element)
-        return self.x < len(self.element)
+        # 假如[i]越界了，说明已经没有下一个值了，所以说明没有下一个元素了
+        return self.i < len(self.nums)
 
 # Your Vector2D object will be instantiated and called as such:
 # obj = Vector2D(v)

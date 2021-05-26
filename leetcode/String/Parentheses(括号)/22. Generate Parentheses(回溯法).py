@@ -21,17 +21,17 @@ class Solution(object):
         if n is None:
             return []
         self.res = []
-        self.helper(0,0,n,"")
+        self.helper(0, 0, n, "")
         return self.res
 
-    def helper(self,left,right,n,string):
+    def helper(self, left, right, n, string):
         if left == n and right == n:
             self.res.append(string)
             return
         if left < n:
-            self.helper(left + 1, right , n , string + "(")
+            self.helper(left + 1, right, n, string + "(")
         if right < n and right < left:
-            self.helper(left , right + 1, n , string + ")")
+            self.helper(left, right + 1, n, string + ")")
 
 
 """
@@ -48,4 +48,3 @@ https://www.youtube.com/watch?v=xtDjDTFk-Cw&list=PLyIjPezcZJNNcmV2N3ZSypT00t7o2o
 就是    right < left .因为假如说右括号数量比左括号多，这个字符串就肯定是废了
 
 """
-
