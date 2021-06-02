@@ -8,7 +8,8 @@ class Solution(object):
         :type x: int
         :rtype: bool
         """
-        if x < 0: return False
+        if x < 0:
+            return False
 
         temp = x
         res = 0

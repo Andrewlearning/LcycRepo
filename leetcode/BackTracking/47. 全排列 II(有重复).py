@@ -27,7 +27,6 @@ class Solution(object):
         nums.sort()
 
         # 这属于一个比较通用的解法，因为在全排序2会碰到有相同元素的情况
-        # 在那个时候就不太适合用一个 set去储存元素了
         self.visited = [False] * len(nums)
         self.helper(nums, [])
 
@@ -41,7 +40,7 @@ class Solution(object):
             self.res.append(temp[:])
 
         for i in range(len(nums)):
-            # 假如说当前这个元素已经用过了，我们跳过
+            # 假如说当前这个元素已经用过了，我们跳过
             if self.visited[i] == True:
                 continue
 

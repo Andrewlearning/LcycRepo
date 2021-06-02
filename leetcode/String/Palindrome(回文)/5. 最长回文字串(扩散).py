@@ -1,12 +1,11 @@
-
 class Solution(object):
-    def expend(self ,s ,left ,right):
-        while left >= 0 and right < len(s) and s[left] == s[right]:
-            left -= 1
-            right += 1
-
-        # 返回回文串长度
-        return (right - 1) - (left + 1) + 1
+    def expend(self, s, l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > self.maxLen:
+                self.maxLen = r - l + 1
+                self.res = s[l:r + 1]
+            l -= 1
+            r += 1
 
     def longestPalindrome(self, s):
         """
@@ -16,27 +15,21 @@ class Solution(object):
         if s is None or len(s) == 0:
             return ""
 
-        start = 0
-        maxLen = 0
+        self.maxLen = 0
+        self.res = 0
 
         for i in range(len(s)):
             len1 = self.expend(s, i, i)
             len2 = self.expend(s, i, i + 1)
-            temp = max(len1 ,len2)
 
-            if temp > maxLen:
-                # 得到回文串的开头下标
-                start = i - (temp - 1)//2
-                maxLen = temp
+        return self.res
 
-
-        return s[start: start + maxLen]
 
 """
 https://algocasts.io/episodes/VBpLqWD8
 Time: O(n^2), Space: O(1)
 答案：
-1.本体的解体关键函数是 expend函数，他的作用是，给定两个index,会一直对比，看 nums[left] ==? nums[right]
+1.本体的解体关键函数是 expend函数，他的作用是，给定两个index,会一直对比，看 nums[l] ==? nums[r]
  一直向外扩散
 
 2.所以在主函数里面，我们定下了两个len,分别调用这个函数，之所以这样调用，是

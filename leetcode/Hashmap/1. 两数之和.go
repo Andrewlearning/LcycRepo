@@ -3,7 +3,7 @@ package Hashmap
 
 func twoSum(nums []int, target int) []int {
 
-	// 建立一个hashmap
+	// go语言建立一个hashmap
 	hashmap := map[int]int{}
 
 	for i, key := range nums {
@@ -20,3 +20,4 @@ func twoSum(nums []int, target int) []int {
 	}
 	return nil
 }
+

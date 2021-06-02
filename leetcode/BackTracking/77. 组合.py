@@ -1,7 +1,7 @@
 """
 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
 示例:
-输入: n = 4, k = 2
+输入:n = 4, k = 2
 输出:
 [
   [2,4],
@@ -12,6 +12,8 @@
   [1,4],
 ]
 """
+
+
 class Solution(object):
     def combine(self, n, k):
         """
@@ -35,6 +37,8 @@ class Solution(object):
 
         for i in range(index, n + 1):
             self.helper(n, k, i + 1, temp + [i])
+
+
 """
 https://www.youtube.com/watch?v=mlmpQB_yJfc
 """

@@ -1,13 +1,15 @@
 """
-给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+给定一个无重复元素的数组candidates和一个目标数target
+找出candidates中所有可以使数字和为target的组合。
+candidates中的数字可以无限制重复被选取。
+* candidates是有序的
 
-candidates 中的数字可以无限制重复被选取。
 
 说明：
 
-所有数字（包括 target）都是正整数。
-解集不能包含重复的组合。 
-示例 1:
+所有数字（包括target）都是正整数。
+解集不能包含重复的组合。
+示例1:
 
 输入: candidates = [2,3,6,7], target = 7,
 所求解集为:
@@ -16,6 +18,8 @@ candidates 中的数字可以无限制重复被选取。
   [2,2,3]
 ]
 """
+
+
 class Solution(object):
     def combinationSum(self, candidates, target):
         """
@@ -24,7 +28,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         if not candidates:
-                return []
+            return []
 
         self.res = []
         self.helper(candidates, target, 0, [])
@@ -32,14 +36,15 @@ class Solution(object):
 
     def helper(self, candidates, target, idx, temp):
         if target < 0:
-                return
+            return
 
         if target == 0:
-                self.res.append(temp[:])
+            self.res.append(temp[:])
 
         # candidates 中的数字可以无限制重复被选取, 所以这里的的idx不用变成range(idx+1, ..)
         for i in range(idx, len(candidates)):
             self.helper(candidates, target - candidates[i], i, temp + [candidates[i]])
+
 
 """
 https://www.youtube.com/watch?v=zIY2BWdsbFs
