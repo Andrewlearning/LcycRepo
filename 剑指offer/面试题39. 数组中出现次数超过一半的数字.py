@@ -1,23 +1,31 @@
 import collections
 
-class Solution:
-    def MoreThanHalfNum_Solution(self, numbers):
-        # write code here
-        count = collections.Counter(nums)
-        return max(count.keys(), key = count.get)
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return
 
+        count = 1
+        res = nums[0]
 
+        for i in range(1, len(nums)):
+            if count == 0:
+                res = nums[i]
+                count = 1
+                continue
 
-if __name__ == "__main__":
-    solution = Solution()
-    solution.MoreThanHalfNum_Solution([1,1,1,2,3])
+            if res == nums[i]:
+                count += 1
+            else:
+                count -= 1
 
-
-
-
+        return res
 
 """
 对应leetcode169
-
 
 """
