@@ -32,7 +32,7 @@ class Solution(object):
         required = Counter(t)
 
         while right < len(s):
-            # 当s[r]是我们需要的字母
+            # 当s[r]是我们需要的字母时
             if s[right] in required and required[s[right]] > 0:
                 requiredCnt -= 1
             required[s[right]] -= 1
@@ -40,7 +40,7 @@ class Solution(object):
             #  当我们已经找完所需要的字母，记录长度，并试图缩小范围
             while requiredCnt == 0:
 
-                # 记录长度
+                # 持续更新最小长度
                 if right - left + 1 < length:
                     start = left
                     length = right - left + 1
@@ -52,10 +52,10 @@ class Solution(object):
                         requiredCnt += 1
 
                 # 假如缩小范围失败，退出循环
-                # 假如缩小范围成功，进入下一轮循环
+                # 假如缩小范围成功，进入下一轮循环，进一步缩小长度
                 left += 1
 
-            # 移动右指针
+            # 每次向右移动右指针一次
             right += 1
 
         return "" if length == len(s) + 1 else s[start:start + length]

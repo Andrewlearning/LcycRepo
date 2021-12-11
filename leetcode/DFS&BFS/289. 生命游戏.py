@@ -53,7 +53,7 @@ class Solution(object):
             if 0 <= newi < len(board) and 0 <= newj < len(board[0]) and (board[newi][newj] == 1 or board[newi][newj] == 2):
                 res += 1
 
-            return res
+        return res
 
 
 """
