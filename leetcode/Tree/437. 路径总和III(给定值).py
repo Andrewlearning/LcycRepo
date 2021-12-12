@@ -49,6 +49,7 @@ class Solution(object):
         return self.helper(root, target) + self.pathSum(root.left, target) + self.pathSum(root.right, target)
 
     def helper(self, root, target):
+        # 因为树的节点有可能是负数，所有不能加上 target < 0, 则退出循环的情况
         if not root:
             return 0
 

@@ -35,15 +35,15 @@ class Solution(object):
         return self.res
 
     def helper(self, candidates, target, idx, temp):
-        if target < 0:
+        if idx >= len(candidates) or sum(temp) > target:
             return
 
-        if target == 0:
+        if sum(temp) == target:
             self.res.append(temp[:])
 
         # candidates 中的数字可以无限制重复被选取, 所以这里的的idx不用变成range(idx+1, ..)
         for i in range(idx, len(candidates)):
-            self.helper(candidates, target - candidates[i], i, temp + [candidates[i]])
+            self.helper(candidates, target, i, temp + [candidates[i]])
 
 
 """

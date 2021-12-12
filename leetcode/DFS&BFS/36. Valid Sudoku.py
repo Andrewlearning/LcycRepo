@@ -8,33 +8,30 @@ class Solution(object):
             return
         return self.solve(board)
 
-
     def solve(self, board):
         for i in range(len(board)):
             for j in range(len(board[0])):
                 if board[i][j] == ".":
                     continue
                 else:
-                    if self.isvalid(board,i,j,board[i][j]):
+                    if self.isvalid(board, i, j, board[i][j]):
                         continue
                     return False
         return True
 
     def isvalid(self, board, row, col, c):
         for i in range(9):
-            if  board[i][col] == c and i != row:return False
-            if  board[row][i] == c and i != col:return False
-            #[1,2,3]
-            #[4,5,6]
-            #[7,8,9]
-            if (3 * (row // 3) + i // 3) == row and  3 * (col // 3) + i % 3 == col:
+            if board[i][col] == c and i != row: return False
+            if board[row][i] == c and i != col: return False
+            # [1,2,3]
+            # [4,5,6]
+            # [7,8,9]
+            if (3 * (row // 3) + i // 3) == row and 3 * (col // 3) + i % 3 == col:
                 continue
             else:
-                if board[3*(row//3)+i//3][3*(col//3)+i%3] == c:
+                if board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] == c:
                     return False
         return True
-
-
 
 
 """
