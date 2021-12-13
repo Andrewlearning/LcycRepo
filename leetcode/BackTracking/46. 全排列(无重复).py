@@ -29,26 +29,26 @@ class Solution(object):
         # 这属于一个比较通用的解法，因为在全排序2会碰到有相同元素的情况
         # 在那个时候就不太适合用一个 set去储存元素了
         self.visited = [False] * len(nums)
-        self.helper(nums, -1, [])
+        self.helper(nums, [])
 
         return self.res
 
-    def helper(self, nums, idx, temp):
+    def helper(self, nums, temp):
         if len(temp) > len(nums):
             return
 
         if len(temp) == len(nums):
             self.res.append(temp[:])
+            return
 
         for i in range(len(nums)):
 
             # 假如当前下标还没被访问过, 那我们则进去
             if self.visited[i] == False:
                 self.visited[i] = True
-                self.helper(nums, i, temp + [nums[i]])
+                self.helper(nums, temp + [nums[i]])
                 self.visited[i] = False
 
-        return
 
 """
 https://www.youtube.com/watch?v=zIY2BWdsbFs

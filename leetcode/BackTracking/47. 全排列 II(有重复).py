@@ -1,4 +1,3 @@
-# coding=utf-8
 """
 给定一个可包含重复数字的序列，返回所有不重复的全排列。
 
@@ -38,6 +37,7 @@ class Solution(object):
 
         if len(temp) == len(nums):
             self.res.append(temp[:])
+            return
 
         for i in range(len(nums)):
             # 假如说当前这个元素已经用过了，我们跳过
@@ -52,8 +52,6 @@ class Solution(object):
             self.visited[i] = True
             self.helper(nums, temp + [nums[i]])
             self.visited[i] = False
-
-        return
 
 """
 相比于permutation, 唯一的区别就是多了一个去重的处理

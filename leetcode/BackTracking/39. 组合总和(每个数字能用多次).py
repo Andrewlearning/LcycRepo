@@ -40,6 +40,7 @@ class Solution(object):
 
         if sum(temp) == target:
             self.res.append(temp[:])
+            return
 
         # candidates 中的数字可以无限制重复被选取, 所以这里的的idx不用变成range(idx+1, ..)
         for i in range(idx, len(candidates)):
