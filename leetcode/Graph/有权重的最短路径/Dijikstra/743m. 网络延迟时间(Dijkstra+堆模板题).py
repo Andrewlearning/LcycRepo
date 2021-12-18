@@ -6,7 +6,7 @@
 现在，从某个节点K发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回-1 。
 """
 
-import heapq
+import heaheap
 import collections
 
 
@@ -23,20 +23,22 @@ class Solution(object):
         for f, to, weight in times:
             graph[f].append((to, weight))
 
-        # pq 记录 从起始节点start 到当前节点 cur 的最短距离
+        # heap 记录 从起始节点start 到当前节点 cur 的最短距离
         # （start到当前节点最短距离，当前节点)。一开始初始化从最初起点出发，到自己节点的距离为0
-        # 把距离放在前面是因为heapq是根据第一个元素进行排序的
-        pq = [(0, k)]
-        #  从目标起点start出发到哪个节点: 最短距离。记录从初始节点到其他所有节点的最短距离
+        # 把距离放在前面是因为heaheap是根据第一个元素进行排序的
+        heap = [(0, k)]
+
+        # 从目标起点start出发到哪个节点: 最短距离。记录从初始节点到其他所有节点的最短距离
+        # 初始化时都把距离设成正无穷
         dist = {k: 0}
         for to in range(1, n + 1):
             if to != k:
                 dist[to] = float('inf')
 
-        while pq:
+        while heap:
             # 推出堆里从出发点到当前节点路径最短的点
             # 因为当这个from点更新完所有的相邻点后，则不再遍历这个节点了
-            d1, cur = heapq.heappop(pq)
+            d1, cur = heapq.heappop(heap)
 
             # 从当前节点，遍历当前节点所能到达的所有节点
             for to, d2 in graph[cur]:
@@ -45,7 +47,7 @@ class Solution(object):
                 # 起到剪枝的效果，如果没有的话也可以运行成功，但会超时
                 if d1 + d2 < dist[to]:
                     dist[to] = d1 + time
-                    heapq.heappush(pq, (d1 + d2, to))
+                    heapq.heappush(heap, (d1 + d2, to))
 
         # 看看能不能遍历完整个图，遍历不完的话说明不能使所有节点收到信号
         # 假如能遍历完的话，看到最远的节点需要多少时间，那就是需要多久才能使所有节点都收到信号

@@ -29,7 +29,7 @@ class Solution(object):
             graph[f].append((to, weight))
 
         # (从起点到cur的花销，cur节点，从起点到cur节点的当前路径选择的转机次数)
-        pq = [(0, src, 0)]
+        heap = [(0, src, 0)]
 
         # key: cur节点
         # value: (从起点到cur节点的花销， 从起点到cur节点的当前路径选择的转机次数)
@@ -38,8 +38,8 @@ class Solution(object):
             if to != src:
                 dist[to] = (float('inf'), float('inf'))
 
-        while pq:
-            d1, cur, times = heapq.heappop(pq)
+        while heap:
+            d1, cur, times = heapq.heappop(heap)
 
             # 假如已经遍历到了目标节点，且转机次数没有超过限制，则返回结果
             if cur == dst and times <= k + 1:
@@ -52,11 +52,11 @@ class Solution(object):
                 if d1 + d2 >= dist[to][0] and times + 1 >= dist[to][1]:
                     continue
                 dist[to] = (d1 + d2, times + 1)
-                heapq.heappush(pq, (d1 + d2, to, times + 1))
+                heapq.heappush(heap, (d1 + d2, to, times + 1))
 
         return -1
 
 """
-本题相当于在743的基础上，加了一个转接距离这样一个限制，将这个限制假如进pq 和 dist中再加以判断就好
+本题相当于在743的基础上，加了一个转接距离这样一个限制，将这个限制假如进heap 和 dist中再加以判断就好
 https://leetcode.com/problems/cheapest-flights-within-k-stops/discuss/1477629/Python-DFS-and-Dijkstra-solutions-(beats-96)
 """
