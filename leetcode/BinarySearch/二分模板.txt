@@ -1,2 +1,46 @@
 二分全套模板
 https://github.com/yuzhoujr/leetcode/issues/8
+
+acwing二分左右边界模板
+https://www.acwing.com/blog/content/346/
+https://www.acwing.com/blog/content/31/
+
+
+二分模板
+1.假设目标值在闭区间[l, r]中
+2.循环必须是l < r
+3.if判断条件看是不是不满足条件， 然后修改上下界
+4.若elif后是r = mid - 1，则前面mid 语句要加1
+5.出循环一定是l == r，说明找到了目标值，所以l和r用哪个都可以
+
+左边界
+找满足某个条件的最小值
+当我们将区间[l, r]划分成[l, mid]和[mid + 1, r]时，
+其更新操作是r = mid或者l = mid + 1;，计算mid时不需要加1
+
+int bsearch_1(int l, int r)
+{
+    while (l < r)
+    {
+        int mid = l + r >> 1;
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    return l;
+}
+
+右边界
+找满足某个条件的最大值
+当我们将区间[l, r]划分成[l, mid - 1]和[mid, r]时，
+其更新操作是r = mid - 1或者l = mid;，此时为了防止死循环，计算mid时需要加1。
+
+int bsearch_2(int l, int r)
+{
+    while (l < r)
+    {
+        int mid = l + r + 1 >> 1;
+        if (check(mid)) l = mid;
+        else r = mid - 1;
+    }
+    return l;
+}
