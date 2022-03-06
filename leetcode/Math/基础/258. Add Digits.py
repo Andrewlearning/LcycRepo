@@ -14,8 +14,9 @@ class Solution(object):
         :type num: int
         :rtype: int
         """
-        if not num or num < 0:return 0
-        res = 0
+        if not num or num < 0:
+            return 0
+
         while num >= 10:
             temp = 0
             while num > 0:

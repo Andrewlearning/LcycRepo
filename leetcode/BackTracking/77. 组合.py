@@ -28,15 +28,16 @@ class Solution(object):
         self.helper(n, [], 1, k)
         return self.res
 
-    def helper(self, n, k, index, temp):
+    def helper(self, n, temp, index, k):
         if len(temp) > k:
             return
 
         if len(temp) == k:
             self.res.append(temp[:])
+            return
 
         for i in range(index, n + 1):
-            self.helper(n, k, i + 1, temp + [i])
+            self.helper(n, temp + [i], i + 1, k)
 
 
 """

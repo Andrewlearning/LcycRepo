@@ -48,11 +48,12 @@ class Solution(object):
         return self.res
 
     def helper(self, candidates, target, cur, temp):
-        if target < 0:
+        if sum(temp) > target:
             return
 
-        if target == 0:
+        if sum(temp) == target:
             self.res.append(temp[:])
+            return
 
         for i in range(cur, len(candidates)):
             # 一个for循环，意味着一层递归
@@ -63,7 +64,7 @@ class Solution(object):
                 continue
 
             temp.append(candidates[i])
-            self.helper(candidates, target - candidates[i], i + 1, temp)
+            self.helper(candidates, target, i + 1, temp)
             temp.pop()
 
 """

@@ -17,7 +17,7 @@ class Solution(object):
         :rtype: ListNode
         """
         if not head or not head.next:
-            return
+            return head
 
         odd = head
         even = head.next
