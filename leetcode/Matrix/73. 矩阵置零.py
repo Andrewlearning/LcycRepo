@@ -18,19 +18,21 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: None Do not return anything, modify matrix in-place instead.
         """
-        m = len(matrix)
-        n = len(matrix[0])
+        lrow = len(matrix)
+        lcol = len(matrix[0])
 
-        rows = [0] * m
-        cols = [0] * n
+        rows = [0] * lrow
+        cols = [0] * lcol
 
-        for i in range(m):
-            for j in range(n):
+        for i in range(lrow):
+            for j in range(lcol):
+                # 因为某一个位置为0，那么那个位置的行和列都为0，所以把该行和列都标为1
                 if matrix[i][j] == 0:
                     rows[i] = cols[j] = 1
 
-        for i in range(m):
-            for j in range(n):
+        for i in range(lrow):
+            for j in range(lcol):
+                # 假如碰到被标记的行和列，就把matrix改为0
                 if rows[i] == 1 or cols[j] == 1:
                     matrix[i][j] = 0
         return matrix

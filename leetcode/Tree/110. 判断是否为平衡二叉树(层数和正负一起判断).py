@@ -4,10 +4,9 @@
 平衡二叉树（Balanced Binary Tree）它是一棵空树或它的左右两个子树的高度差的绝对值不超过1,
 意味着其中一边可以是缺一个node的。这题的做法是要计算每个node的高度差
 再换而言之，就是求每一个node的深度
-第一种做法，从上开始往下（先判断主树，再判断子树）。看高度是否满足子树的需求
 """
-class Solution:
-    def IsBalanced_Solution(self, root):
+class Solution(object):
+    def isBalanced(self, root):
         if not root:
             return True
 
@@ -17,12 +16,12 @@ class Solution:
         if not root:
             return 0
 
-        #看左子树的子树是不是平衡二叉树
+        #看左子树的子树是不是平衡二叉树，假如不是的话，提前中断函数
         left = self.helper(root.left)
         if left == -1:
             return -1
 
-        #看右子树的子树是不是平衡二叉树
+        #看右子树的子树是不是平衡二叉树，假如不是的话，提前中断函数
         right = self.helper(root.right)
         if right == -1:
             return -1
@@ -33,7 +32,7 @@ class Solution:
             # 假如不平衡，则返回-1
             return -1
 
-        #说明左右子树本身是平衡二叉树，返回root+子树的最大高度
+        # 说明左右子树本身是平衡二叉树，返回root+子树的最大高度
         return 1 + max(left,right)
 
 
