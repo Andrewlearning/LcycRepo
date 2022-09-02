@@ -1,5 +1,6 @@
 """
-给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
+给定一个包含n + 1 个整数的数组nums，其数字都在 1 到 n之间（包括 1 和 n），
+可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
 
 示例 1:
 
@@ -69,3 +70,35 @@ class Solution2(object):
 
 链接：https://leetcode.cn/problems/find-the-duplicate-number/solution/287xun-zhao-zhong-fu-shu-by-kirsche/
 """
+
+"""
+当然，这题也可以用贪心做法来做, 具体可以参考41题
+主要是找到下标与数字的关系，我们这里的对应关系是下标0->1 , 下标1->2
+然后通过贪心算法，不断地进行重试，直到尝试到当前下标的数是满足我们的匹配需求为止
+"""
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        for i in range(n):
+            # 我们希望 下标0->1, 下标1->2 ...
+            # 既是希望 i = nums[i] - 1
+            # 既是说我们希望 i 上的这个数 放在nums[i] - 1 这个位置上
+            # 所以当 nums[i] != nums[nums[i] - 1]，表明没有满足下标和数的对应关系
+
+            # 什么数，应该放在位置i呢？
+            # 1. 满足条件的数 nums[i] = nums[nums[i] - 1]
+            # 2. 没有 不可能通过交换使合理的数，所以这里就不用写了
+            while nums[i] != nums[nums[i] - 1]:
+                self.swap(nums, i, nums[i] - 1)
+
+        for i in range(n):
+            if nums[i] != i + 1:
+                return nums[i]
+
+    def swap(self, nums, i, j):
+        nums[i], nums[j] = nums[j], nums[i]
+

@@ -28,12 +28,12 @@ class Solution(object):
             # 我们希望下标0 -> 1、下标1 -> 2 ..
             # 既是说我们希望 index上的这个数 放在nums[index] - 1这个位置上
             # 所以当 nums[index] != nums[nums[index-1]]，表明没有满足下标和数的对应关系
+
+            # 什么数，应该放在位置i呢？
+            # 1. 满足条件的数 nums[i] = nums[nums[i] - 1]
+            # 2. 不可能通过交换使合理的数，例如不在要求范围内的数，无论放在哪里都不满足，所以直接跳过，就放在这了
             while 1 <= nums[i] <= n and nums[i] != nums[nums[i] - 1]:
-                # 我们希望下标0 -> 1、下标1 -> 2 ..
-                # 所以我们希望把nums[i]这个数，放到nums[i] - 1这个下标上
-                # 所以这里交换 i 和 nums[i] - 1
-                # [3,4,-1,1] i=0, nums[i]-1=2, 所以我们要把i上的数，放到i=2上去 -> [-1,4,3,1]
-                # 但是换完后，nums[i] - 1这个下标的数肯定被放置正确了, 但是新被换到i的这个数，我们还不知道有没有被放对，所以要使用while循环继续放
+                # 一直循环，直到找到当前位置的满足下标和下标对应的数的映射为止
                 self.swap(nums, i, nums[i] - 1)
 
         for i in range(n):
@@ -47,10 +47,22 @@ class Solution(object):
         nums[i], nums[j] = nums[j], nums[i]
 
 """
-Time: O(n), Space: O(1)
+Time: O(n^2)最差结果while循环要把整个数组翻一遍才能找出来, Space: O(1)
 https://leetcode.cn/problems/first-missing-positive/solution/tong-pai-xu-python-dai-ma-by-liweiwei1419/
 答案：
-本题与41，268是用的同一套模版
+本题与41，268是用的同一套模版，287， 448也可用
 
-此题可以和268题对照来看
+一个test case看懂这个题
+p:0, nums[i] - 1:3, p:[[4 3 1 2]]
+a:0, nums[i] - 1:1, p:[[2 3 1 4]]
+--------------
+p:0, nums[i] - 1:1, p:[[2 3 1 4]]
+a:0, nums[i] - 1:2, p:[[3 2 1 4]]
+--------------
+p:0, nums[i] - 1:2, p:[[3 2 1 4]]
+a:0, nums[i] - 1:0, p:[[1 2 3 4]]
+可以看出，这道题的原理就是贪心，例如看下标0,他的本质就是不断交换数字
+直到当前 下标，要不满足 nums[i] = nums[nums[i] - 1]，要不就完全不满足退出循环
+所以当这样尝试过每个数之后，只有没放对位置的数是特殊的
+--------------
 """

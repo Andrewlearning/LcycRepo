@@ -24,7 +24,10 @@ class Solution(object):
             # 既是希望 i = nums[i]
             # 既是说我们希望 i上的这个数 放在nums[i] 这个位置上
             # 所以当 nums[i] != nums[nums[i]]，表明没有满足下标和数的对应关系
-            # 因为序列中有可能出现n , nums[n]会报out of range，所以我们要过滤掉这个条件
+
+            # 什么数，应该放在位置i呢？
+            # 1. 满足条件的数 nums[i] = nums[nums[i]]
+            # 2. 不可能通过交换使合理的数，例如这里的n，无论放在哪里都不满足，所以直接跳过，就放在这了
             while nums[i] < n and nums[i] != nums[nums[i]]:
                 self.swap(nums, i, nums[i])
 
@@ -38,4 +41,5 @@ class Solution(object):
     def swap(self, nums, i, j):
         nums[i], nums[j] = nums[j], nums[i]
 
-# 本题与41，268是用的同一套模版
+# 本题与41，268是用的同一套模版， 287， 448也可用
+# 本题原理参见41
