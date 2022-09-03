@@ -12,34 +12,41 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
         """
-        if not intervals or len(intervals) == 0: return []
+        if not intervals or len(intervals) == 0:
+            return []
 
         intervals.sort(key = lambda x: x[0])
-        merge = []
-        for interval in intervals:
-            #    []  or  [1,3] [4,5]
-            if not merge or merge[-1][-1] < interval[0]:
-                merge.append(interval)
+        # intervals.sort()也行，默认是按第一个元素排序的
 
-            # 当区间可以合并的时候， 我们要把merge里面的最后一个字母
-            # 改变一下 [1,3] [2,4]
+        res = []
+        # 先记录第一个区间的左右断点
+        l = intervals[0][0]
+        r = intervals[0][1]
+
+        for i in range(1, len(intervals)):
+            #  情况2.2，两个区间没有交集
+            if r < intervals[i][0]:
+                # 记录当前区间
+                res.append([l, r])
+                # 切换到下一个区间
+                l = intervals[i][0]
+                r = intervals[i][1]
+            # 情况2.1，两个区间有交集
             else:
-                merge[-1][-1] = max(merge[-1][-1],interval[-1])
+                # 更新当前区间的右端点
+                r = max(r,intervals[i][1])
 
-        return merge
+        # 保存最后一个区间
+        res.append([l,r])
+        return res
 
 """
-https://leetcode.com/problems/merge-intervals/solution/
+https://www.acwing.com/video/1393/
 Time complexity : O(nlogn)
 Space complexity : O(1) (or O(n))
 答案：
 此题思路不难
-1.首先我们得先把intervals按照第一个元素的大小排序好（从小到大）
-2.然后我们遍历intervals，里面有三种情况
-2.1 第一种是merge[[1,3]],interval[4,5] 
-    那么interval最小元素已经大于merge的最右边了，所以不能融合，只能添加
-2.2 第二种是merge[],所以无论第一个interval是啥，直接append
-2.3 第三种是merge[[1,3]],interval[2,4]
-    这时候我们看出来了merge最右边大于interval的最左边，所以可以融合
-    这时我们要确定融合后的右边界，就是max(merge:3,interval:4)
+1. 按照左端点排序
+2.1 如果上一个区间和下一个区间有交集，则更新上一个区间的右端点
+2.2 如果上一个区间和下一个区间无交集，则保存当前区间
 """
