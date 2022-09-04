@@ -23,7 +23,7 @@ class Solution(object):
 
         # 中间有交集部分
         if k < len(old):
-            # 更新交集区间的左端点
+            # 先更新交集区间的左端点，这个只需要更新一次
             new[0] = min(old[k][0], new[0])
 
             # 持续更新区间的右端点

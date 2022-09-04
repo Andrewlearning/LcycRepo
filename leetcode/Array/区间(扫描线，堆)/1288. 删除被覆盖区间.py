@@ -1,6 +1,6 @@
 """
 给你一个区间列表，请你删除列表中被其他区间所覆盖的区间。
-只有当 c <= a 且 b <= d 时，我们才认为区间 [a,b) 被区间 [c,d) 覆盖。
+只有当c <= a且b <= d时，我们才认为区间[a,b) 被区间[c,d) 覆盖。
 在完成所有删除操作后，请你返回列表中剩余区间的数目。
 
 示例：
@@ -19,8 +19,6 @@ class Solution(object):
 
         if not intervals and len(intervals) == 0:
             return 0
-
-        res = 0
 
         # 头按从小到大排， 尾从大到小排
         intervals.sort(key=lambda x: (x[0], -x[1]))

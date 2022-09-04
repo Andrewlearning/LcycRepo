@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 给出开会时间，问一个人能不能同时参加所有会议（就是会议之间不能有交集）
 Example 1:
@@ -17,9 +18,27 @@ class Solution(object):
         """
         intervals.sort(key=lambda x: x[0])
         for i in range(1,len(intervals)):
-            if intervals[i][0] < intervals[i-1][-1]:
+            # 后一个区间和前一个区间有交集，则一个人不可能参加所有回忆
+            if intervals[i-1][1] >= intervals[i][0]:
                 return False
         return True
+
+if __name__ == '__main__':
+    s = Solution()
+    testList = [
+        [[0, 30], [5, 10], [15, 20]],
+        [[7, 10], [2, 4]]
+    ]
+    resList = [
+        False,
+        True
+    ]
+    for i in range(len(testList)):
+        res = s.meetingRooms(testList[i])
+        if res == resList[i]:
+            print("test case " + str(i) + " success")
+        else:
+            print("test case " + str(i) + " false")
 
 """
 Time:O(nlogn), Space:O(1)

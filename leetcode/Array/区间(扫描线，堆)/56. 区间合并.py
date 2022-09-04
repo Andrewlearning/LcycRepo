@@ -20,24 +20,22 @@ class Solution(object):
 
         res = []
         # 先记录第一个区间的左右断点
-        l = intervals[0][0]
-        r = intervals[0][1]
+        cur = intervals[0]
 
         for i in range(1, len(intervals)):
             #  情况2.2，两个区间没有交集
-            if r < intervals[i][0]:
+            if cur[1] < intervals[i][0]:
                 # 记录当前区间
-                res.append([l, r])
+                res.append(cur)
                 # 切换到下一个区间
-                l = intervals[i][0]
-                r = intervals[i][1]
+                cur = intervals[i]
             # 情况2.1，两个区间有交集
             else:
                 # 更新当前区间的右端点
-                r = max(r,intervals[i][1])
+                cur[1] = max(cur[1], intervals[i][1])
 
         # 保存最后一个区间
-        res.append([l,r])
+        res.append(cur)
         return res
 
 """
@@ -48,5 +46,5 @@ Space complexity : O(1) (or O(n))
 此题思路不难
 1. 按照左端点排序
 2.1 如果上一个区间和下一个区间有交集，则更新上一个区间的右端点
-2.2 如果上一个区间和下一个区间无交集，则保存当前区间
+2.2 如果上一个区间和下一个区间无交集，则保存当前区间，并把l,r却换到下一个区间继续查找
 """

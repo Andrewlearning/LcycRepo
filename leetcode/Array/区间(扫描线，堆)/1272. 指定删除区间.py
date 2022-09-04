@@ -1,7 +1,8 @@
 """
-给你一个 有序的 不相交区间列表 intervals 和一个要删除的区间 toBeRemoved， intervals 中的每一个区间 intervals[i] = [a, b] 都表示满足 a <= x < b 的所有实数  x 的集合。
-我们将 intervals 中任意区间与 toBeRemoved 有交集的部分都删除。
-返回删除所有交集区间后， intervals 剩余部分的 有序 列表。
+给你一个有序的不相交区间列表 intervals 和一个要删除的区间 toBeRemoved
+intervals中的每一个区间intervals[i] = [a, b)都表示满足a <= x < b 的所有实数 x的集合。
+我们将intervals 中任意区间与toBeRemoved 有交集的部分都删除。
+返回删除所有交集区间后，intervals剩余部分的有序列表。
 
 示例 1：
 输入：intervals = [[0,2],[3,4],[5,7]], toBeRemoved = [1,6]
@@ -35,3 +36,4 @@ class Solution(object):
 
         return res
 
+# https://www.youtube.com/watch?v=ihf8JjQdta0 22:06

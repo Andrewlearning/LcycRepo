@@ -1,9 +1,9 @@
 """
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+Given an array of meeting time intervals consisting of start and end times[[s1,e1],[s2,e2],...](si< ei), find the minimum number of conference rooms required.
 
 For example
-Given [[0, 30],[5, 10],[15, 20]],
-return 2.
+Given[[0, 30],[5, 10],[15, 20]],
+return2.
 
 给出事件所需要占用的事件，问我们最少需要用多少个会议室。[0，30]需要用一个
 [[5,10],[15,20]]需要用一个
