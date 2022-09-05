@@ -4,7 +4,7 @@
 注意:
 
 可以认为区间的终点总是大于它的起点。
-区间 [1,2] 和 [2,3] 的边界相互“接触”，但没有相互重叠。
+区间 [1,2] 和 [2,3] 的边界相互“接触”，但没有相互重叠, 这种情况不算有交集。
 示例 1:
 
 输入: [ [1,2], [2,3], [3,4], [1,3] ]
@@ -41,6 +41,7 @@ class Solution(object):
         cur = intervals[0]
 
         for i in range(1, len(intervals)):
+            # 尽可能选择没有重叠的区间，那么没有被选的区间就说明他们导致了重叠
             # 当发现两个区间不重叠的时候，disconnect += 1, 更新cur
             if cur[1] <= intervals[i][0]:
                 disconnect += 1
@@ -57,16 +58,7 @@ class Solution(object):
 那答案显然变成：总区间个数 - 不重叠区间个数
 
 这题一个难点，为什么要 按照end的大小来排序: 因为我们每次找出的都是当前最小的end, 然后再把end 前的清除
-
-正确的思路其实很简单，可以分为以下三步：
-1.从区间集合 intvs 中选择一个区间 x，这个 x 是在当前  &&& 所有区间中结束最早的（end 最小) &&&&
-2.把所有与 x 区间相交的区间从区间集合 intvs 中删除。
-3.重复步骤 1 和 2，直到 intvs 为空为止。之前选出的那些 x 就是最大不相交子集。
-
-把这个思路实现成算法的话，可以按每个区间的 end 数值升序排序，因为这样处理之后实现步骤 1 和步骤 2 都方便很多:
-
-作者：labuladong
-链接：https://leetcode-cn.com/problems/non-overlapping-intervals/solution/tan-xin-suan-fa-zhi-qu-jian-diao-du-wen-ti-by-labu/
+贪心证明思路: https://www.acwing.com/video/1835/
 
 
 
