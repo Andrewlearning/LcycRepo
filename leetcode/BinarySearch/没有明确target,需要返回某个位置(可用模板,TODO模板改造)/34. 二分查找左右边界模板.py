@@ -37,11 +37,11 @@ class Solution(object):
         while l < r:
             mid = (l + r + 1) // 2
 
-            # [l, target) [mid, r]
-            if nums[mid] > target:
-                r = mid - 1
-            else:
+            # [l, mid-1] [mid, target, r]
+            if nums[mid] <= target:
                 l = mid
+            else:
+                r = mid - 1
 
         # 这里最后收敛到l,r都是指向同样的位置
         return r if nums[r] == target else -1
@@ -52,7 +52,7 @@ https://www.acwing.com/video/1357/
 记忆秘诀:
 1. l, r是固定的
 2. while l < r也是固定的
-3. 带=(>=, <=)号的，都不会+1或-1
-4. 找左边界，在l上进行特殊处理
-5. 找右边界，在r上进行特殊处理
+3. 带>=, <=号的，都不会+1或-1
+4. 找左边界，r不-1
+5. 找右边界，l不+1
 """
