@@ -17,12 +17,14 @@ class Solution(object):
         res = []
         points = []
         # 我们想让最高的左端点被优先遍历到，因为这样便于我们记录答案
-        # 对于设置正负，我们是为了区分出左端点和右端点
+        # 对于设置正负，我们是为了区分出左端点和右端点，以及在边界情况下怎么区分
         for l, r, h in buildings:
             points.append((l, -h))
             points.append((r, h))
 
-        # 按照点的x坐标进行 小->大 排序，按照左端点高度 高 -> 矮排序，按照相同x坐标 左端点 -> 右端点排序
+        # 按照点的x坐标进行 小->大 排序
+        # 左端点高度 高 -> 矮排序，按照相同x坐标 左端点 -> 右端点排序
+        # 右端点高度 矮 -> 高排序
         points.sort()
 
         # 当前扫描线所停留位置的所有建筑最大高度，设定一个默认高度为0, 0用于当垂线只有建筑右端点的情况
@@ -37,7 +39,7 @@ class Solution(object):
                 # h<0, 说明遍历到左节点了，记录当前建筑的高度
                 lineHeights.add(h)
             else:
-                # h>0, 说明遍历到右节点了，删除当前建筑的高度, 因为对于建筑的右端点不记录高度，默认他们高度为0
+                # h>0, 说明遍历到右节点了，删除当前建筑的高度
                 lineHeights.remove(-h)
 
             # 加入或删除后，在当前扫描线垂线中所有建筑物的最高高度
@@ -59,6 +61,9 @@ Time: O(nlogn), Space: O(n)
 
 思路有参考acwing
 https://www.acwing.com/activity/content/problem/content/2599/
+
+acwing文字讲解，我们如何对高度进行排序处理，三种情况
+https://www.acwing.com/solution/content/4607/
 
 代码来源
 https://leetcode.cn/problems/the-skyline-problem/solution/python-yi-ci-bian-li-suo-you-fa-sheng-ji-1sht/

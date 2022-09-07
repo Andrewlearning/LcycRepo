@@ -34,6 +34,8 @@ class Solution(object):
                 if interval[1] > toBeRemoved[1]:
                     res.append([toBeRemoved[1], interval[1]])
 
+                # 假如被删除方完全被 toBeRemoved包裹，那么这个会被完全删除，不计入答案中
+
         return res
 
 # https://www.youtube.com/watch?v=ihf8JjQdta0 22:06
