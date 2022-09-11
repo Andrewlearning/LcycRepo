@@ -23,7 +23,6 @@ class Solution(object):
         l = 0
         r = x
 
-        # 我们使用求右边界的模板来进行查找
         # 如果找得到, 那么无论l,r的平方都是x
         # 如果找不到, 那么l ** 2 != x
         while l < r:
@@ -35,3 +34,5 @@ class Solution(object):
                 r = mid - 1
 
         return l**2 == x
+
+# 这题无论使用左模板还是右模板都可以成功，因为有一个明确的答案值

@@ -14,6 +14,7 @@ class Solution(object):
         return [left, right]
 
     def findLeft(self, nums, target):
+        # 这个取值范围，主要是看想返回数的下标的范围，关系应该是[l,r)
         l = 0
         r = len(nums) - 1
 
@@ -53,6 +54,6 @@ https://www.acwing.com/video/1357/
 1. l, r是固定的
 2. while l < r也是固定的
 3. 带>=, <=号的，都不会+1或-1
-4. 找左边界，r不-1
-5. 找右边界，l不+1
+4. 找左边界，l+1
+5. 找右边界，r-1
 """

@@ -24,27 +24,32 @@ class Solution(object):
         :rtype: int
         """
         nums.sort()
-        # 左闭右闭区间
+        # 最小的距离对
         l = 0
-        # 最远距离
+        # 最大的距离对
         r = nums[-1] - nums[0]
 
-        while l <= r:
+        while l < r:
             mid = (l + r) / 2
-            if self.possible(mid, nums) < k:
-                l = mid + 1
+            if self.possible(mid, nums) >= k:
+                r = mid
             else:
-                r = mid - 1
+                l = mid + 1
 
         return l
 
-    def possible(self, guess, nums):
-        # 找出比guess小的个数
-        count = left = 0
-        for right, x in enumerate(nums):
-            while x - nums[left] > guess:
-                left += 1
-            count += right - left
+    def possible(self, mid, nums):
+        # 找出<=mid的对的个数
+        count = 0
+        l = 0
+
+        # 这种遍历方法，其实能把所有的距离对都遍历出来
+        for r in range(len(nums)):
+            # 说明l太小了，得让l增加一下
+            while nums[r] - nums[l] > mid:
+                l += 1
+            count += r - l
+
         return count
 
 #  https://leetcode-cn.com/problems/find-k-th-smallest-pair-distance/solution/hei-ming-dan-zhong-de-sui-ji-shu-by-leetcode/
