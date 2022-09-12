@@ -21,41 +21,54 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        if not nums or len(nums) == 0:
+        if len(nums) == 0:
             return -1
 
+        n = len(nums)
         l = 0
-        r = len(nums) - 1
+        r = n - 1
 
-        while l <= r:
+        # 找到上升区间和下降区间的分解点
+        while l < r:
+            mid = (l + r + 1) // 2
+            # 我们要找到，满足这个条件的最右点，所以是找右边界
+            if nums[mid] >= nums[0]:
+                l = mid
+            else:
+                r = mid - 1
 
-            mid = (l + r) // 2
+        # 当退出循环时，我们就已经找到一个上升区间的最后一个元素
+        # 然后我们要判断target再哪个区间，再来决定在哪个区间进行二分
 
-            if target == nums[mid]:
-                return mid
-            # 说明mid在左边的递增区间
-            elif nums[l] <= nums[mid]:
-                # 假如说target在这个范围内,缩小的范围到[l,mid)
-                if nums[l] <= target <= nums[mid]:
-                    r = mid - 1
-                # 假如说target不在这个范围内,我们把范围定位到(mid,r]
-                else:
-                    l = mid + 1
+        # target在上升区间, l = 0, r = 上升区间最后一个元素
+        if target >= nums[0]:
+            l = 0
+        # target在下降区间, l = 上升区间最后一个元素 + 1, r = n - 1
+        else:
+            l = r + 1
+            r = n - 1
 
-            # 说明mid在右边的递增区间
-            elif nums[l] > nums[mid]:
-                # 假如说target在这个范围内,缩小的范围到(mid,r]
-                if nums[mid] <= target <= nums[r]:
-                    l = mid + 1
-                # 假如说target在不在这个范围内,缩小的范围到[l,mid)
-                else:
-                    r = mid - 1
-        return -1
 
+        # 这里只是单纯为了找到target, 用左区间模板和右区间模板都没啥所谓
+        while l < r:
+            mid = (l + r + 1) // 2
+            if nums[mid] <= target:
+                l = mid
+            else:
+                r = mid - 1
+
+        # 为什么这里用r, 因为在假如输入数组只有一个元素的l=r+1会导致越界
+        # 所以这里用r
+        if nums[r] == target:
+            return r
+        else:
+            return -1
 
 """
-https://algocasts.io/episodes/6emEOjpV
-time O(logn) space O(1)
+https://www.acwing.com/video/1356/
+1. 通过二分找到上升区间最后一个节点
+2. 判断target在哪个区间
+3. 通过二分找target的下标
 """
 
 
