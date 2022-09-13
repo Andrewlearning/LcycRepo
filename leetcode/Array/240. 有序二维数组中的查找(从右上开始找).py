@@ -1,42 +1,35 @@
 """
 这一题有说，上一行的所有值比下一行的所有值小
 """
-class Solution:
-    # array 二维列表
-    def Find(self, target, array):
+class Solution(object):
+    def searchMatrix(self, array, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
         if not array or len(array) == 0:
             return False
 
-        row = len(array)
-        col = len(array[0])
-        top = row -1
-        right = 0
+        lr = len(array)
+        lc = len(array[0])
+        top = 0
+        right = lc-1
 
-        while top > -1 and right < col:
+        while top < lr and right > -1:
             if target > array[top][right]:
-                right += 1
+                top += 1
             elif target < array[top][right]:
-                top -= 1
+                right -= 1
             else:
                 return True
         return False
 
-
-
 if __name__ == "__main__":
     solution = Solution()
-    print(solution.Find(7, [[1,2,8,9],[2,4,9,12],[4,7,10,13],[6,8,11,15]] ))
-
-
+    print(solution.searchMatrix([[1,2,8,9],[2,4,9,12],[4,7,10,13],[6,8,11,15]],7))
 
 """
-我的做法是，分别做两次二分查找，先竖再横，但是测试条件定的比较宽泛，例如第二行的最后一个比第三行的第一个要大
-[[1,2,8,9],
- [2,4,9,12],
- [4,7,10,13],
- [6,8,11,15]]
-
-
 答案：
 * 矩阵是有序的，从左下角来看，向上数字递减，向右数字递增，
 * 因此从左下角开始查找，当要查找数字比左下角数字大时。右移
@@ -63,27 +56,3 @@ if __name__ == "__main__":
 
 根据这个原理，我们也可以从右上角往左下角进行查找。
 """
-class Solution(object):
-    def searchMatrix(self, array, target):
-        """
-        :type matrix: List[List[int]]
-        :type target: int
-        :rtype: bool
-        """
-        if not array or len(array) == 0:
-            return False
-
-        row = len(array)
-        col = len(array[0])
-        top = 0
-        right = col-1
-
-        while top < row and right > -1:
-            if target > array[top][right]:
-                top += 1
-            elif target < array[top][right]:
-                right -= 1
-            else:
-                return True
-
-        return False
