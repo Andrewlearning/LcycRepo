@@ -22,22 +22,19 @@ class Solution(object):
         return False
 
     def binarySearchForLeft(self, nums, target):
-
         l = 0
         r = len(nums) - 1
-        index = -1
 
-        while l <= r:
+        while l < r:
             mid = (l + r) // 2
-            if nums[mid] < target:
-                l = mid + 1
+            if nums[mid] >= target:
+                r = mid
             else:
-                r = mid - 1
+                l = mid + 1
 
-            if nums[mid] == target:
-                index = mid
-
-        return index
+        if nums[l] == target:
+            return l
+        return -1
 
 """
 Time O(logn), Space O(1)

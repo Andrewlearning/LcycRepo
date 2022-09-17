@@ -35,5 +35,6 @@ class Solution(object):
         return res
 
 """
+文字可以看这个: https://leetcode.cn/problems/longest-increasing-subsequence/solution/dong-tai-gui-hua-er-fen-cha-zhao-tan-xin-suan-fa-p/
 https://www.youtube.com/watch?v=bQ6Y4WQjZVY&list=PLyIjPezcZJNNcmV2N3ZSypT00t7o2oSS-&index=50
 """

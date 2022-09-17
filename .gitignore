@@ -1,5 +1,5 @@
 venv
 leetcode/*/__init__.py
-/__init__.py
+**/__init__.py
 .DS_Store
 .idea
