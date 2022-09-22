@@ -53,7 +53,7 @@ class Solution(object):
 
 
 """
-时间复杂度O(NlongN) 空间复杂O（N），新开了一个list,二分查找是logN，比较强
+时间复杂度O(NlongN) 空间复杂O（N），新开了一个list, 二分查找是logN，比较强
 答案：
 这里的设计其实很巧妙，每次从nums取一个数出来，看它能在q
 里放在什么位置，但都是按照从小往大的顺序（满足要求）
