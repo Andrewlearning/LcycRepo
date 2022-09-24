@@ -45,6 +45,6 @@ class Solution(object):
         return dp[-1][-1]
 
 """
-https://algocasts.io/episodes/LPmwE7pq
+https://www.acwing.com/activity/content/problem/content/2450/
 Time: O(n1*n2), Space: O(n1*n2)
 """

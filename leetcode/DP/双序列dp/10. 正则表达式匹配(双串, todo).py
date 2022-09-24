@@ -10,7 +10,7 @@ class Solution(object):
 
         # 构造两个长度为 ls+1, lp+1的dp数组
         # 表示 从都不选， 到全都选的所有可能
-        dp = [[False for j in range(lp + 1)] for i in range(ls + 1)]
+        dp = [[False] * (lp + 1) for i in range(ls + 1)]
         dp[0][0] = True
 
         # 一个说明,dp[i] 指的是 p[i-1]这个位置

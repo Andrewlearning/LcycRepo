@@ -19,6 +19,47 @@
 2
 一个可能的最长回文子序列为 "bb"。
 """
+# 使用LCS来做
+class Solution(object):
+    def longestPalindromeSubseq(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        r = s[::-1]
+        return self.lcs(s, r)
+
+    def lcs(self, s, r):
+        ls = len(s)
+        lr = len(r)
+
+        dp = [[0] * (lr + 1) for _ in range(ls + 1)]
+
+        for i in range(1, ls + 1):
+            for j in range(1, lr + 1):
+                if s[i - 1] == r[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+        return dp[-1][-1]
+
+"""
+古城算法 https://www.youtube.com/watch?v=xUineN8ZqsI&list=PLbaIOC0vpjNW9f04lmGAwVC-856a6y5gw&index=4
+24:00
+
+这题的目的，是从s中挑出一个回文子序列，并且这个回文子序列最长
+所以我们只要把s反过来(r), 看s和r的最长公共子序列有多长，那么那个就是答案
+使用LCS来解决这个题
+
+s = "bbbab"
+r = "babbb"
+
+可以看到，正向和reverse的最长共同子序列是"bbbb"
+"""
+
+
+
 class Solution(object):
     def longestPalindromeSubseq(self, s):
         """
