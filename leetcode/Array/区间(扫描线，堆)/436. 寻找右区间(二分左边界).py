@@ -1,3 +1,18 @@
+"""
+给你一个区间数组 intervals ，其中intervals[i] = [starti, endi] ，且每个starti 都不同 。
+
+区间 i 的 右侧区间定义: 存在区间j ，并满足 startj >= endi ，且 startj 最小化 。
+
+返回一个由每个区间 i 的 右侧区间 在intervals 中对应下标组成的数组。
+如果某个区间 i 不存在对应的 右侧区间 ，则下标 i 处的值设为 -1 。
+
+输入：intervals = [[3,4],[2,3],[1,2]]
+输出：[-1,0,1]
+解释：对于 [3,4] ，没有满足条件的“右侧”区间。
+对于 [2,3] ，区间[3,4]具有最小的“右”起点;
+对于 [1,2] ，区间[2,3]具有最小的“右”起点。
+"""
+
 class Solution:
     def findRightInterval(self, intervals):
         n = len(intervals)
@@ -19,7 +34,8 @@ class Solution:
             l = 0
             r = n - 1
             # 因为我们想要找到离当前intervel最近的合法右区间，34题模板
-            # 所以我们用往左边界查找的方法来进行查找，这样能找到最近的
+            # 所以我们用往左边界查找的方法来进行查找
+            # 这样能找到: 存在区间j ，并满足 startj >= endi ，且startj最小
             while l < r:
                 mid = (l + r) // 2
                 if targetRight <= intervals[mid][0]:

@@ -10,7 +10,9 @@
 
 
 示例 1：
-输入：slots1 = [[10,50],[60,120],[140,210]], slots2 = [[0,15],[60,70]], duration = 8
+输入：
+slots1 = [[10,50],[60,120],[140,210]],
+slots2 = [[0,15],[60,70]], duration = 8
 输出：[60,68]
 """
 
@@ -35,6 +37,12 @@ class Solution(object):
         while p1 < n1 and p2 < n2:
 
             # 限定有交集时间的最小值
+            # |-------------(|)
+            #      (|)-------------|
+            # 或
+            # |-----(|)
+            #           (|)---|
+            #两种情况
             intersectStart = max(slots1[p1][0], slots2[p2][0])
             intersectEnd = min(slots1[p1][1], slots2[p2][1])
 

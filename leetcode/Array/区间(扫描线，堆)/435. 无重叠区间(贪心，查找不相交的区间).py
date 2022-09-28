@@ -20,32 +20,32 @@
 
 
 class Solution(object):
-    def eraseOverlapIntervals(self, intervals):
+    def eraseOverlapIntervals(self, nums):
         """
-        :type intervals: List[List[int]]
+        :type nums: List[List[int]]
         :rtype: int
         """
-        if not intervals and len(intervals) == 0:
+        if not nums and len(nums) == 0:
             return 0
 
         # 按照区间的结束来进行从小到大排序
-        intervals.sort(key=lambda x: x[1])
+        nums.sort(key=lambda x: x[1])
 
         # 所有的区间的数量
-        lenIntervals = len(intervals)
+        lenIntervals = len(nums)
 
         # 不重叠区间的数量
         disconnect = 1
 
         # 第一个区间
-        cur = intervals[0]
+        cur = nums[0]
 
-        for i in range(1, len(intervals)):
+        for i in range(1, len(nums)):
             # 尽可能选择没有重叠的区间，那么没有被选的区间就说明他们导致了重叠
             # 当发现两个区间不重叠的时候，disconnect += 1, 更新cur
-            if cur[1] <= intervals[i][0]:
+            if cur[1] <= nums[i][0]:
                 disconnect += 1
-                cur = intervals[i]
+                cur = nums[i]
 
 
         # 所有区间 - 不重叠区间 = 重叠区间的数量

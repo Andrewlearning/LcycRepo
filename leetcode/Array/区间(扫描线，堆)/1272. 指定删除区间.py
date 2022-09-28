@@ -5,7 +5,9 @@ intervals中的每一个区间intervals[i] = [a, b)都表示满足a <= x < b 的
 返回删除所有交集区间后，intervals剩余部分的有序列表。
 
 示例 1：
-输入：intervals = [[0,2],[3,4],[5,7]], toBeRemoved = [1,6]
+输入：
+intervals = [[0,2],[3,4],[5,7]],
+toBeRemoved = [1,6]
 输出：[[0,1],[6,7]]
 """
 class Solution(object):
@@ -26,15 +28,16 @@ class Solution(object):
             # 两个区间有重叠部分
             else:
                 # 注意这里，头跟头比，尾和尾比
-                # interval的左边比remove的左边长，[interval  )[remove]
+                # interval的左边比remove的左边长，留下[interval[0] ~ remove_head]
                 if interval[0] < toBeRemoved[0]:
                     res.append([interval[0], toBeRemoved[0]])
 
-                # interval的右边比remove的右边长， [remove]( interval]
+                # interval的右边比remove的右边长，留下[remove_tail ~ intervel[1]]
                 if interval[1] > toBeRemoved[1]:
                     res.append([toBeRemoved[1], interval[1]])
 
                 # 假如被删除方完全被 toBeRemoved包裹，那么这个会被完全删除，不计入答案中
+                # 最终答案应该是 [start, remove_head] .. [remove_tail, other] .. [others]
 
         return res
 
