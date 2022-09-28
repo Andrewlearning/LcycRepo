@@ -31,8 +31,10 @@ class Solution(object):
             # mid, 是我们设定区间和的最大值
             mid = (l + r) // 2
 
-            # 我们希望分组的数量 <= k的最大值，既是右边界(为啥是这样处理呢？为什么不是找左边界呢)
-            # 假如说我们分配的区间数量，<= 题目要求的数量，说明我们每个区间分配的和分多了
+            # 这里我们是对每个分组和最大值进行二分
+            # 我们希望得到的答案是在能刚好分成k组的情况下，每组和 <= mid, 且mid最小
+            # 即是在分组和能刚好分成k组情况下 的 左区间
+            # 假如说我们分组数量 <= K -> 说明我们每个分组的和 >= 最理想情况下的分组和
             # 那么我们要把下一次分配的最大值 缩小一下， r = mid
             if self.countGroup(nums, mid) <= k:
                 r = mid
@@ -48,19 +50,19 @@ class Solution(object):
         count = 0
 
         # 当前区间的和
-        sub_sum = 0
+        sub = 0
 
         for num in nums:
-            sub_sum += num
+            sub += num
 
             # 和超过mid的话，那么nums[i]则不算进上一个区间内，它将单独将作为一个新区间重新开始
-            if sub_sum > mid:
+            if sub > mid:
                 # 那么我们该找下一个区间了，区间数+1
                 count += 1
-                sub_sum = num
+                sub = num
 
         # 处理最后一个分组
-        if sub_sum > 0:
+        if sub > 0:
             count += 1
 
         return count

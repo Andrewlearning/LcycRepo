@@ -1,3 +1,6 @@
+"""
+只有一个peek, 要求找出这一个peek
+"""
 class Solution(object):
     def findPeakElement(self, nums):
         """

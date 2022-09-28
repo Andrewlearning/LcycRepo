@@ -5,14 +5,14 @@ class Solution(object):
         :rtype: str
         """
 
-        l = len(s)
+        n = len(s)
         maxLen = 0
         start = 0
 
-        dp = [[False for j in range(l)] for i in range(l)]
+        dp = [[False] * n for i in range(n)]
 
-        for i in range(l - 1, -1, -1):
-            for j in range(i, l, 1):
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n, 1):
                 #初始化出现奇数的情况， 例如 bab
                 if i == j:
                     dp[i][j] = True
@@ -30,8 +30,7 @@ class Solution(object):
                     maxLen = j - i + 1
                     start = i
 
-        return s[start: start + maxLen
-]
+        return s[start: start + maxLen]
 
 """
 Time: O(n^2), Space: O(n^2)

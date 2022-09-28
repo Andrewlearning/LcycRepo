@@ -1,5 +1,5 @@
 """
-Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+Given a 2D binary m filled with 0's and 1's, find the largest square containing only 1's and return its area.
 
 Example:
 
@@ -13,24 +13,27 @@ Input:
 Output: 4
 """
 class Solution(object):
-    def maximalSquare(self, matrix):
+    def maximalSquare(self, m):
         """
-        :type matrix: List[List[str]]
+        :type m: List[List[str]]
         :rtype: int
         """
-        if not matrix or len(matrix) == 0 or not matrix[0] or len(matrix) == 0:
+        if not m or len(m) == 0 or not m[0] or len(m) == 0:
             return 0
 
-        row = len(matrix)
-        col = len(matrix[0])
+        lr = len(m)
+        lc = len(m[0])
         # dp的创建，要比原矩阵 长宽要大1，方便 i-1,j-1这种判断
-        dp = [[0] * (col + 1) for i in range(row + 1)]
+        # dp[i][j]表示以m[i-1][j-1]作为正方形的右下角，所能形成最大正方形的边长长度
+        dp = [[0] * (lc + 1) for i in range(lr + 1)]
+
+        # 正方形的最大边长
         res = 0
 
-        for i in range(1, row + 1):
-            for j in range(1, col + 1):
+        for i in range(1, lr + 1):
+            for j in range(1, lc + 1):
                 # 我们注意，每次开始计算，都是从正方形的右下角开始计算的
-                if matrix[i - 1][j - 1] == "1":
+                if m[i - 1][j - 1] == "1":
 
                     # 因为这个dp的赋值是从左上到右下赋值的，所以我们可以通过这样的递推式去进行赋值
                     dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
