@@ -32,7 +32,7 @@ class Solution(object):
         heap = [(0, src, 0)]
 
         # key: cur节点
-        # value: (从起点到cur节点的花销， 从起点到cur节点的当前路径选择的转机次数)
+        # value: (从起点到cur节点的最小花销， 从起点到cur节点的当前路径选择的转机次数)
         dist = {src: (0, 0)}
         for to in range(n):
             if to != src:
@@ -41,8 +41,9 @@ class Solution(object):
         while heap:
             d1, cur, times = heapq.heappop(heap)
 
-            # 假如已经遍历到了目标节点，且转机次数没有超过限制，则返回结果
-            if cur == dst and times <= k + 1:
+            # 假如已经遍历到了目标节点，且在中转城市次数没有超过限制，则返回结果
+            # 为什么times-1, 例如 a->b->c, 其实只在b中转了一次，但是当我们到达c的时候，times=2
+            if cur == dst and times - 1 <= k:
                 return d1
 
 

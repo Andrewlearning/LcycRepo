@@ -6,10 +6,8 @@
 现在，从某个节点K发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回-1 。
 """
 
-import heaheap
-import collections
-
-
+import heapq
+from collections import defaultdict 
 class Solution(object):
     def networkDelayTime(self, times, n, k):
         """
@@ -19,16 +17,16 @@ class Solution(object):
         :rtype: int
         """
         # 初始化图，记录Key是每个点，value是可以到哪些目标点，以及到这些目标点的距离距离
-        graph = collections.defaultdict(list)
+        graph = defaultdict(list)
         for f, to, weight in times:
             graph[f].append((to, weight))
 
-        # heap 记录 从起始节点start 到当前节点 cur 的最短距离
-        # （start到当前节点最短距离，当前节点)。一开始初始化从最初起点出发，到自己节点的距离为0
-        # 把距离放在前面是因为heaheap是根据第一个元素进行排序的
+        # （开始节点 到 x节点最短距离，x节点)。一开始初始化从最初起点出发，到自己节点的距离为0
+        # 把距离放在前面是因为heap是根据第一个元素进行排序的
         heap = [(0, k)]
 
-        # 从目标起点start出发到哪个节点: 最短距离。记录从初始节点到其他所有节点的最短距离
+        # 从 起点k出发到其他节点: 最短距离。记录从初始节点到其他所有节点的最短距离
+        # {k:0} 从起点k到k节点的最短距离是0
         # 初始化时都把距离设成正无穷
         dist = {k: 0}
         for to in range(1, n + 1):
@@ -36,7 +34,7 @@ class Solution(object):
                 dist[to] = float('inf')
 
         while heap:
-            # 推出堆里从出发点到当前节点路径最短的点
+            # pop出 从出发点到当前节点路径最短的点
             # 因为当这个from点更新完所有的相邻点后，则不再遍历这个节点了
             d1, cur = heapq.heappop(heap)
 
@@ -46,7 +44,7 @@ class Solution(object):
                 # 那么更新 从起始节点到cur的下一个节点距离的最短路径值
                 # 起到剪枝的效果，如果没有的话也可以运行成功，但会超时
                 if d1 + d2 < dist[to]:
-                    dist[to] = d1 + time
+                    dist[to] = d1 + d2
                     heapq.heappush(heap, (d1 + d2, to))
 
         # 看看能不能遍历完整个图，遍历不完的话说明不能使所有节点收到信号

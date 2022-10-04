@@ -24,3 +24,6 @@ https://zhuanlan.zhihu.com/p/56024487
 
 在算法中，每次都选择没有前置课的操作叫做，选取入度为 0 的结点加入拓扑队列
 由于选过的课就算完成了前置，所以选择过后还要删除当前点和与之相关的所有边。
+
+# 古城算法:
+https://www.youtube.com/watch?v=B5hxqxBL2d0

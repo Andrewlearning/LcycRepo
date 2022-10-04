@@ -15,4 +15,4 @@
 - 每个点都加进集合需要循环n次，每个点进入集合又要对不在集合的点距离进行更新，内层又要循环n次。开始将map全部初始化为INF（一个很大的数），这样松弛的时候比较轻松
 
 ### source
-- 图的基础算法(五) -- Dijkstra 精讲 https://www.bilibili.com/video/BV1K44y1v7wp
+- 古城算法 图的基础算法(五) -- Dijkstra 精讲 https://www.bilibili.com/video/BV1K44y1v7wp
