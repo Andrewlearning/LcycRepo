@@ -1,6 +1,6 @@
 """
 给你一个由 n 个节点（下标从 0 开始）组成的无向加权图，该图由一个描述边的列表组成
-，其中 edges[i] = [a, b] 表示连接节点 a 和 b 的一条无向边，且该边遍历成功的概率为 succProb[i] 。
+，其中 edges[i] = [a, b] 表示连接节点 a 和 b 的一条无向边，且该边遍历成功的概率为 w[i] 。
 
 指定两个节点分别作为起点 start 和终点 end ，请你找出从起点到终点成功概率最大的路径，并返回其成功概率。
 
@@ -8,34 +8,32 @@
 """
 
 class Solution(object):
-    def maxProbability(self, n, edges, succProb, start, end):
+    def maxProbability(self, n, edges, w, start, end):
         """
         :type n: int
         :type edges: List[List[int]]
-        :type succProb: List[float]
+        :type w: List[float]
         :type start: int
         :type end: int
         :rtype: float
         """
-        graph = collections.defaultdict(list)
+        from collections import defaultdict
+        import heapq
+        graph = defaultdict(list)
         for i in range(len(edges)):
-            f = edges[i][0]
-            to = edges[i][1]
-            weight = succProb[i]
-            graph[f].append((to, weight))
-            graph[to].append((f, weight))
+            f, to = edges[i]
+            # 由于是无向图，所以两条边都要加
+            graph[f].append([to, w[i]])
+            graph[to].append([f, w[i]])
 
         # 因为我们要找概率最大的一条路线，所以得使用最大堆
         heap = [(-1.0, start)]
 
         # 从起点去其他点的最大可能性是多少
         # 初始化为最大可能性都为0，后面进行更新
-        dist = {}
-        for to in range(n):
-            dist[to] = 0.0
-
+        res = defaultdict(float)
         # 从起点到起点的可能性为1
-        dist[start] = 1.0
+        res[start] = 1.0
 
         while heap:
 
@@ -43,9 +41,9 @@ class Solution(object):
             d1, cur = heapq.heappop(heap)
             d1 *= -1.0
 
-            # 假如我们已经知道一条路径的可能性比当前路径大
+            # 假如我们已经记录一条路径的可能性比当前路径大
             # 那么则忽略这条路径
-            if dist[cur] > d1:
+            if res[cur] > d1:
                 continue
 
             # 查看当前节点相邻的所有节点
@@ -54,9 +52,9 @@ class Solution(object):
                 newd = d1 * d2
                 # 当前概率乘积 > 我们之前记录的从start -> to的最大概率乘积
                 # 说明这条新路可以走
-                if newd > dist[to]:
+                if newd > res[to]:
                     # 更新从start -> to的最大概率乘积
-                    dist[to] = newd
+                    res[to] = newd
                     heapq.heappush(heap, (-1.0 * newd, to))
 
-        return dist[end]
+        return res[end]

@@ -21,43 +21,40 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-
+        import heapq
+        from collections import defaultdict
         # key: 出发节点
         # value: (到达节点，花销)
-        graph = collections.defaultdict(list)
-        for f, to, weight in flights:
-            graph[f].append((to, weight))
+        graph = defaultdict(list)
+        for f, to, price in flights:
+            graph[f].append((to, price))
 
-        # (从起点到cur的花销，cur节点，从起点到cur节点的当前路径选择的转机次数)
-        heap = [(0, src, 0)]
+        # (从起点到cur的花销，cur节点，总共有多少次转机次数)
+        heap = [(0, src, k + 1)]
 
-        # key: cur节点
-        # value: (从起点到cur节点的最小花销， 从起点到cur节点的当前路径选择的转机次数)
-        dist = {src: (0, 0)}
-        for to in range(n):
-            if to != src:
-                dist[to] = (float('inf'), float('inf'))
-
+        # cur节点，从起点到cur的最多还剩转机次数
+        res = {}
         while heap:
-            d1, cur, times = heapq.heappop(heap)
+            d1, cur, steps = heapq.heappop(heap)
+            # 记录当前节点，以及走到当前节点的步数
+            res[cur] = steps
 
-            # 假如已经遍历到了目标节点，且在中转城市次数没有超过限制，则返回结果
-            # 为什么times-1, 例如 a->b->c, 其实只在b中转了一次，但是当我们到达c的时候，times=2
-            if cur == dst and times - 1 <= k:
+            # 假如到达终点
+            if cur == dst:
                 return d1
 
-
-            for to, d2 in graph[cur]:
-                # 只有当同时满足 新花销>=原最少花销 且 新转机次数>=原最小花销的转机次数
-                # 才能跳过循环
-                if d1 + d2 >= dist[to][0] and times + 1 >= dist[to][1]:
-                    continue
-                dist[to] = (d1 + d2, times + 1)
-                heapq.heappush(heap, (d1 + d2, to, times + 1))
+            # 假如还可以继续转机
+            if steps > 0:
+                for to, d2 in graph[cur]:
+                    # 假如目的地我们没去过，我们需要探索
+                    # 假如目的地我们去过，但我们有更优的方案到达这个目的地(转机次数更少)，那么我们需要继续探索
+                    # 我们希望，每次push进heap中的，都是局部最佳的答案
+                    if to not in res or steps > res[to]:
+                        heapq.heappush(heap, (d1 + d2, to, steps - 1))
 
         return -1
 
 """
-本题相当于在743的基础上，加了一个转接距离这样一个限制，将这个限制假如进heap 和 dist中再加以判断就好
-https://leetcode.com/problems/cheapest-flights-within-k-stops/discuss/1477629/Python-DFS-and-Dijkstra-solutions-(beats-96)
+本题相当于在743的基础上，加了一个中转站点的限制
+https://www.youtube.com/watch?v=y_wHjstds4o
 """
