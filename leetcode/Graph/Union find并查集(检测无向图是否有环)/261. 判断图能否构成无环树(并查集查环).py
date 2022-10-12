@@ -10,27 +10,26 @@
 输入: n = 5, 边列表 edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
 输出: false
 """
-# 用这种写法比较好
 class UF:
     def __init__(self, n):
-        # 首先有多少个节点，那么就创建一个有多少个key-value对的字典
-        # 节点值 ：父亲
-        # 初始化是，每个节点的福清都是自己
         self.parent = {}
+        self.cnt = 0
         for i in range(n):
             self.parent[i] = i
+            self.cnt += 1
 
-    # union是，我们把两个节点的最父亲节点找到
-    # 然后把其中一个节点的父亲指向另一个节点的父亲
-    # 使得两个子树都有同样的父亲
-    def union(self, a, b):
-        self.parent[self.find(b)] = self.find(a)
+    # 本题在这有特殊的判断逻辑
+    def union(self, x, y):
+        fx = self.find(x)
+        fy = self.find(y)
+        # 假如我们输入的两个节点是属于同一个父亲，那么他们相连会形成环，不满足题目条件
+        if fx == fy:
+            return False
+        self.parent[fx] = self.find(fy)
+        self.cnt -= 1
+        return True
 
-    # 最父亲节点的特征是：他的父亲也是自己
-    # 所以我们要找到一个节点的最父亲节点，那么就是当 自己 != 父亲时
-    # 父亲 = 父亲的父亲，这样一直找下去
-    # 最后父亲节点就是最父亲节点
-    # 同时这个函数，可以帮助一个节点直接连接上他的最父亲节点
+    # path compression写法
     def find(self, x):
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
@@ -44,27 +43,23 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: bool
         """
-        # 如果边不等于顶点数减一， 则存在环
-        if len(edges) != n - 1:
-            return False
-
         # 构造uf
         uf = UF(n)
 
-        # 把每个子节点都指向他的父亲节点
+        # 把所有的节点都union起来
+        # 假如有节点在union之前，就已经归属于同一个父节点下了，说明这样一连会形成环，无法够成树
         for edge in edges:
-            uf.union(edge[0], edge[1])
+            if uf.union(edge[0], edge[1]) is False:
+                return False
 
-        # 我们把每个节点都指向他的最父亲节点
-        for i in range(n):
-            uf.find(i)
-
-        res = set(uf.parent.values())
-
-        # 最后看最父亲节点是不是只有一个
-        return len(res) == 1
+        # 最后看最父亲节点是不是只有一个，只有一个则说明不会成环，可以构成树
+        return uf.cnt == 1
 """
-https://leetcode-cn.com/problems/graph-valid-tree/solution/shi-yong-bing-cha-ji-jie-jue-xing-shu-bu-duo-by-yi/
+Tree vs Graph
+A tree is a special undirected graph. It satisfies two properties
+- It is connected
+- It has no cycle.
 
 261，323这两题可以放在一起看
+https://blog.csdn.net/hgq522/article/details/121690420
 """

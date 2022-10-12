@@ -1,52 +1,75 @@
-https://www.youtube.com/watch?v=YKE4Vd1ysPI
+### Union find 介绍
+ref: https://www.youtube.com/watch?v=YKE4Vd1ysPI
 这种数据结构的作用是检测一个图有没有环， 假如说有环，那么并查集里不只有一个最顶节点
 
 例如我们存在一个图
-
+```
 0----1----2---5
      |    |
-     4
-
+     4    6
+```
 中心思想上是， 把能通过链接来访问到的各种点，放到一个集合里面去
-例如（0，1，2，4，5）从任意一个点出发都能到达集合内的任意另一个点
+例如（0，1，2，4，5，6）从任意一个点出发都能到达集合内的任意另一个点
 
-那么假如说集合里的任意两个元素中间再相连，则会产生(环)
-我们能使用这个规律，解决684问题
+那么假如说集合里的任意两个元素中间再相连，例如[4,6]，则会产生环
+我们能使用这个规律，解决261/684问题
 
-
-
-
-https://www.youtube.com/watch?v=EhouVyjgas8&t=1s
-解决的是不交集的合并和查询问题：
 Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。
 Union：将两个子集合并成同一个集合。
 
+```
 a<---b<--c<--d
 e<---f<--g
+```
 我们可以想象，每个集合分配好以后存在一个老大，在这里一个是a,一个是e
 
 
-union 有两种方法
-我们一般使用两种优化方法：
-1.union by rank:
-    合并时将元素所在深度小的集合合并到元素所在深度大的集合
-    例如一棵高度为2的树，和一个高度为3的树，那么高度为2的树就要融合到高度为3的树上去
-
-    作用是：(比较好，使树的高度没这么高)，降低find的次数
-
-2.路径压缩
-    在哪里：一般使在find函数里面编写
-    作用是：把每个节点都指向它的最父节点，那么能使这个树的深度最低, 使find的时间复杂度下降成O(1)
+### Union find 的两种优化方法
+我们一般使用两种优化方法
+1. 路径压缩 `Path compression`，一般面试只写这种就好了
+   - 在哪里：一般使在find函数里面编写
+   - 作用是：把每个节点都指向它的最父节点，那么能使这个树的深度最低, 使find的时间复杂度下降成O(1)
+2. union by rank
+    - 合并时将元素所在深度小的集合合并到元素所在深度大的集合
+      - 例如一棵高度为2的树，和一个高度为3的树，那么高度为2的树就要融合到高度为3的树上去
+    - 作用是：降低合并后树的高度，减少find的次数
 
 
-
-一个样板，547，990
-这个模版只做了路径压缩，但是没有做union by rank， 一般解题用这个就已经足够了
+## Union find的各种写法
+参考: 古城算法 https://www.youtube.com/watch?v=gBmwoxsL8lY
+### 朴素模板
+```
 class UF:
-
     def __init__(self, M):
         n = len(M)
-        self.parent = [i for i in range(n)]
+        self.parent = [i] * n
+
+    # 朴素做法
+    # 每次都根据一个节点一步步找它的父节点
+    def find(self, x):
+        if x.parent == x:
+            return x
+        else:
+            return self.find(x.parent)
+
+
+    def union(self, p, q):
+        proot = self.find(p)
+        qroot = self.find(q)
+
+        # 假如两个的根节点不想等，我们可以指认任意一个根节点是另一个根节点的父亲
+        self.parent[proot] = qroot
+```
+
+### Path compression 路径压缩模板
+例题: 547，990
+
+一般 解题/面试 用这个就已经足够了
+```
+class UF:
+    def __init__(self, M):
+        n = len(M)
+        self.parent = [i] * n
 
     # Time O(1)
     # 当一个node 不是指向自己的时候，那么它就要一直向上找，直到找到根节点
@@ -70,13 +93,14 @@ class UF:
 
         # 假如两个的根节点不想等，我们可以指认任意一个根节点是另一个根节点的父亲
         self.parent[proot] = qroot
+```
 
-
-路径压缩和union by rank都做了的版本：
+### 路径压缩和union by rank都做了的版本：
+```
 class UF:
     def __init__(self, n):
         self.parent = [i for i in range(n+1)]
-        self.rank = [0 for _ in range(n+1)]
+        self.rank = [1] * (n+1)
 
     def find(self, x):
         if self.parent[x] != x:
@@ -99,5 +123,5 @@ class UF:
         else:
             self.parent[proot] = qroot
             self.rank[proot] += 1
-
+```
 

@@ -1,8 +1,8 @@
 """
-在一个社交圈子当中，有 N 个人。每个人都有一个从 0 到 N-1 唯一的 id 编号。
+在一个社交圈子当中，有N个人。每个人都有一个从0 到N-1唯一的 id编号。
 
-我们有一份日志列表 logs，其中每条记录都包含一个非负整数的时间戳
-以及分属两个人的不同 id，logs[i] = [timestamp, id_A, id_B]。
+我们有一份日志列表logs，其中每条记录都包含一个非负整数的时间戳
+以及分属两个人的不同id，logs[i] = [timestamp, id_A, id_B]。
 
 每条日志标识出两个人成为好友的时间，友谊是相互的
 ：如果 A 和 B 是好友，那么 B 和 A 也是好友。
@@ -12,7 +12,7 @@
 
 返回圈子里所有人之间都熟识的最早时间。如果找不到最早时间，就返回 -1 。
 
- 
+
 示例：
 
 输入：logs = [[20190101,0,1],[20190104,3,4],[20190107,2,3],[20190211,1,5],[20190224,2,4],[20190301,0,3],[20190312,1,2],[20190322,4,5]], N = 6
@@ -30,23 +30,21 @@
 
 class UF:
     def __init__(self, N):
+        # amount表示 当前union里有几个元素，初始化都为1
         self.amount = [1] * N
         self.parent = [i for i in range(N)]
 
     def find(self, x):
-        while x != self.parent[x]:
-            x = self.parent[x]
-        return x
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
 
-
-    def union(self, p, q):
-        proot = self.find(p)
-        qroot = self.find(q)
-        if proot == qroot:
-            return
-
-        self.parent[proot] = qroot
-        self.amount[qroot] += self.amount[proot]
+    def union(self, x, y):
+        fx = self.find(x)
+        fy = self.find(y)
+        self.parent[fx] = fy
+        # 在union完后，往最终父亲方加上新合进来union的元素数量
+        self.amount[fy] += self.amount[fx]
 
 
 class Solution:

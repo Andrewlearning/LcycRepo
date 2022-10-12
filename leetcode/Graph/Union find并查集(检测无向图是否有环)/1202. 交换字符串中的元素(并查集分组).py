@@ -35,24 +35,27 @@ class Solution(object):
             uf.union(x, y)
 
         # 把同一个父亲的数的下标 都装到一个集合里去
+        # map的 key:父亲节点下标， value:子节点下标
         hashmap = collections.defaultdict(list)
         for key in uf.parent.keys():
-            # 这里因为是，有可能虽然是大家都属于同一组，但是不一定都是指向最上面的父亲
-            # 所以这里要再find一次
-            hashmap[uf.find(key)].append(key)
+            parent = uf.find(key)
+            hashmap[parent].append(key)
 
+        # 把字符串转为list, 方便后面修改
         res = list(s)
 
+        # 我们只替换那些在pairs里出现的元素
         for groupIndexSet in hashmap.values():
             # 把同一分组的下标转化成字母，然后进行排序
-            orderedLetter = sorted(res[i] for i in groupIndexSet)
+            orderedLetter = sorted([res[i] for i in groupIndexSet])
 
-            # 我们要让小字母，排在前面，所以Index也要sort，用来更新res
-            for i, letter in zip(sorted(groupIndexSet), orderedLetter):
-                res[i] = letter
+            # 我们要让小字母，排在前面
+            j = 0
+            for i in groupIndexSet:
+                res[i] = orderedLetter[j]
+                j += 1
 
         return "".join(res)
-
 
 class UF(object):
     def __init__(self, n):
@@ -61,20 +64,16 @@ class UF(object):
             self.parent[i] = i
 
     def find(self, x):
-        while x != self.parent[x]:
-            x = self.parent[x]
-        return x
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
 
     def union(self, x, y):
-        rootX = self.find(x)
-        rootY = self.find(y)
-        if rootX == rootY:
+        fx = self.find(x)
+        fy = self.find(y)
+        if fx == fy:
             return
-
-        # 进行路劲压缩，防止超时，是find时间复杂度降至O(1)
-        self.parent[rootY] = rootX
-        self.parent[x] = rootX
-        self.parent[y] = rootX
+        self.parent[fx] = fy
 
 
 # https://leetcode-cn.com/problems/smallest-string-with-swaps/solution/bing-cha-ji-python-by-fa-kuang-de-jie-zi/

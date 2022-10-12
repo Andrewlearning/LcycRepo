@@ -1,6 +1,6 @@
 """
 给定两个句子 words1, words2 （每个用字符串数组表示)
-和一个相似单词对的列表 pairs ，判断是否两个句子是相似的。
+和一个相似单词对的列表pairs，判断是否两个句子是相似的。
 
 例如，当相似单词对是
 pairs = [["great", "fine"], ["acting","drama"], ["skills","talent"]]的时候，
@@ -9,8 +9,8 @@ pairs = [["great", "fine"], ["acting","drama"], ["skills","talent"]]的时候，
         反正只要是两个单词能一一对上就好了
 
 相似关系是具有传递性的。
-例如，如果 "great" 和 "fine" 是相似的，"fine" 和 "good" 是相似的，所以"great" 和 "good" 是相似的。
-他们构成了 ["great","fine", "good"] 的一个联通分量
+例如，如果 "great" 和"fine" 是相似的，"fine" 和"good" 是相似的，所以"great" 和 "good" 是相似的。
+他们构成了 ["great","fine","good"] 的一个联通分量
 
 相似关系是具有对称性的。例如，"great" 和 "fine" 是相似的相当于 "fine" 和 "great" 是相似的。
 
@@ -28,22 +28,19 @@ class UF:
         # parent里面储存着所有 "正确" 的连通分量
         self.parent = {}
 
+    def initParent(self, x):
+        if x not in self.parent:
+            self.parent[x] = x
+
     def find(self, x):
-        # find前我们先对x来进行一个初始化，自己指向自己
-        # 因为本题不是数字指数字，所以初始化过程与别的略有不同
-        self.parent.setdefault(x, x)
         if x != self.parent[x]:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
-    def union(self, a, b):
-        aroot = self.find(a)
-        broot = self.find(b)
-
-        if aroot == broot:
-            return
-
-        self.parent[aroot] = broot
+    def union(self, x, y):
+        fx = self.find(x)
+        fy = self.find(y)
+        self.parent[fx] = fy
 
 
 class Solution(object):
@@ -59,12 +56,16 @@ class Solution(object):
 
         uf = UF()
 
-        # 初始化uf
-        for pair in pairs:
-            uf.union(pair[0], pair[1])
+        # 把pairs里的相似单词都union好，后面使用
+        for x, y in pairs:
+            uf.initParent(x)
+            uf.initParent(y)
+            uf.union(x, y)
 
-        for w1, w2 in zip(words1, words2):
+        for i in range(len(words1)):
             # 当两个单词相等的时候，我们不用对其检测
+            w1 = words1[i]
+            w2 = words2[i]
             if w1 == w2:
                 continue
 
