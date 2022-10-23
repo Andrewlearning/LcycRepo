@@ -14,13 +14,13 @@ trie.search("app");     // returns true
 写一个字典树
 """
 
-{"A":{"B":{}}}
+# {"A":{"B":{"#"}}}
 class Trie(object):
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.root = {}
+        self.trie = {}
 
     # 构建trie
     def insert(self, word):
@@ -29,12 +29,23 @@ class Trie(object):
         :type word: str
         :rtype: None
         """
-        node = self.root
+        node = self.trie
         for char in word:
             if char not in node:
                 node[char] = {}
             node = node[char]
-        node["#"] = "#"
+        """
+        当一个单词的所有字母都加进了self.root的话，则添加#表示终止符
+        word: AB
+        {
+            "A":{
+                    "B": {
+                        "#":{}
+                    }
+            }
+        }
+        """
+        node["#"] = {}
 
     # 完全搜索一个单词在不在trie里面
     def search(self, word):
@@ -43,11 +54,12 @@ class Trie(object):
         :type word: str
         :rtype: bool
         """
-        node = self.root
+        node = self.trie
         for char in word:
             if char not in node:
                 return False
             node = node[char]
+        # 假如最后一个节点只有一个"#":{}则表示当前已经是一个单词的最后一个字母了
         return "#" in node
 
     # 只搜索prefix在不在trie里面
@@ -57,7 +69,7 @@ class Trie(object):
         :type prefix: str
         :rtype: bool
         """
-        node = self.root
+        node = self.trie
         for char in prefix:
             if char not in node:
                 return False
@@ -69,7 +81,7 @@ class Trie(object):
 if __name__ == "__main__":
     solution = Trie()
     solution.insert("apple")
-    print(solution.root)
+    print(solution.trie)
 
     boo = {}
     new = boo

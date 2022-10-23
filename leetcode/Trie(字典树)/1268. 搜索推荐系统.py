@@ -1,12 +1,12 @@
 """
-给你一个产品数组 products 和一个字符串 searchWord ，products
+给你一个产品数组products和一个字符串searchWord，products
  数组中每个产品都是一个字符串。
 
-请你设计一个推荐系统，在依次输入单词 searchWord 的每一个字母后
-推荐 products 数组中前缀与 searchWord 相同的最多三个产品。
+请你设计一个推荐系统，在依次输入单词searchWord 的每一个字母后
+推荐products 数组中前缀与searchWord 相同的最多三个产品。
 如果前缀相同的可推荐产品超过三个，请按字典序返回最小的三个。
 
-请你以二维列表的形式，返回在输入 searchWord 每个字母后相应的推荐产品的列表。
+请你以二维列表的形式，返回在输入searchWord每个字母后相应的推荐产品的列表。
 
 
 输入：products = ["mobile","mouse","moneypot","monitor","mousepad"]
@@ -25,6 +25,7 @@
 class Trie:
     def __init__(self):
         self.child = {}
+        # 以当前为已走过的字母为前缀，且字典序排前三的单词列表
         self.words = []
 
 
@@ -39,22 +40,21 @@ class Solution:
         res = []
         cur = root
 
-        # 假如说当前这个字母已经不在字典树了，那么后续的字母即使在也没意义了
-        flag = False
+        # 假如说当前这个字母已经不在字典树了，那我们则直接把后面字母的匹配结果设为空
+        notInTrie = False
         for char in searchWord:
             # 当前char不存在，那么后续的单词存在也没意义了,因为往下输入肯定也不会找到任何一个单词
             # 遍历到下一个字母，直接append([]), 因为前缀已经对不上了
-            if flag or char not in cur.child:
+            if notInTrie or char not in cur.child:
                 res.append([])
-                flag = True
+                notInTrie = True
+            # 当前char存在，则把结果记录
             else:
                 cur = cur.child[char]
                 res.append(cur.words)
 
         return res
 
-
-    # 每一个单词，都是从root往下找
     def addWord(self, root, word):
         cur = root
         for char in word:

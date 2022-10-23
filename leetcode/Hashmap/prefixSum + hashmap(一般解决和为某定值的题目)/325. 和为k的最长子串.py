@@ -22,12 +22,17 @@ class Solution(object):
         for i in range(len(nums)):
             Sum += nums[i]
             if (Sum - k) in prefixSum.keys():
-                maxSubLen = maxSubLen(maxSubLen, i - prefixSum[Sum - k])
+                maxSubLen = max(maxSubLen, i - prefixSum[Sum - k])
 
             if Sum not in prefixSum.keys():
                 prefixSum[Sum] = i
 
         return maxSubLen
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.findMaxLen([1, -1, 5, -2, 3], 3))
+    print(s.findMaxLen([1, 2, 3], 4))
 
 """
 答案：

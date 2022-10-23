@@ -11,15 +11,19 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        # 假如说p,q的值小于root,说明这两个node在root的左子树
+        # 1.假如说p,q的值小于root,说明这两个node在root的左子树
         if root.val > p.val and root.val > q.val:
             return self.lowestCommonAncestor(root.left,p,q)
-        # 假如说p, q的值大于root, 说明这两个node在root的右子树
+        # 2.假如说p, q的值大于root, 说明这两个node在root的右子树
         if root.val < p.val and root.val < q.val:
             return self.lowestCommonAncestor(root.right,p,q)
+        # 3. 假如终于发现分叉了，说明最小公共节点就是这个root
         return root
 
 """
+Time: O(N), 有可能是单链表的树 
+space: O(N)， 递归栈的深度有可能是N
+
 答案：
 236的简化版，已知BST
 1.假如说p,q的值小于root,说明这两个node在root的左子树
