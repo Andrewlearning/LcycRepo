@@ -11,34 +11,31 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-
         if not root:
             return []
 
         res = []
 
-        # queue放当前需要遍历的层
         queue = [root]
 
-        # temp 放下一层应该遍历的节点
-        temp = []
-
         while queue:
-            val = [node.val for node in queue]
-            res.append(val)
+            # 本层需要遍历多少个元素
+            n = len(queue)
+            # 本层所遍历元素的值
+            level = []
 
-            for node in queue:
+            while n > 0:
+                node = queue.pop(0)
+                level.append(node.val)
                 if node.left:
-                    temp.append(node.left)
+                    queue.append(node.left)
                 if node.right:
-                    temp.append(node.right)
+                    queue.append(node.right)
+                n -= 1
 
-            queue = temp
-            temp = []
+            res.append(level)
 
         return res
 
 
-"""
-"""
 

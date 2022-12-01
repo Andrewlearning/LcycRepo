@@ -1,22 +1,21 @@
 """
-给定一个字符串 s ，找出 至多 包含 k 个不同字符的最长子串 T。
+给定一个字符串 s ，找出 至多 包含两个不同字符的最长子串 t ，并返回该子串的长度。
 
 示例 1:
-
-输入: s = "eceba", k = 2
+输入: "eceba"
 输出: 3
-解释: 则 T 为 "ece"，所以长度为 3。
+解释: t 是 "ece"，长度为3。
 
-s = "aa", k = 1
-output: 2
-解释: 则 T 为 "aa"，所以长度为 2。
+示例 2:
+输入: "ccaabbb"
+输出: 5
+解释: t 是 "aabbb"，长度为5。
+
 """
-
 class Solution(object):
-    def lengthOfLongestSubstringKDistinct(self, s, k):
+    def lengthOfLongestSubstringTwoDistinct(self, s):
         """
         :type s: str
-        :type k: int
         :rtype: int
         """
         if not s or len(s) == 0:
@@ -35,7 +34,7 @@ class Solution(object):
             window[s[i]] += 1
 
             # 假如窗口里的元素个数>2，说明满载了，需要减少
-            while len(window) > k:
+            while len(window) > 2:
                 window[s[l]] -= 1
                 if window[s[l]] == 0:
                     del window[s[l]]
@@ -47,17 +46,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     s = Solution()
-    print("test1:", s.lengthOfLongestSubstringKDistinct("eceba", 2) == 3)
-    print("test2:", s.lengthOfLongestSubstringKDistinct("aa", 1) == 2)
+    print("test1:", s.lengthOfLongestSubstringTwoDistinct("eceba") == 3)
+    print("test2:", s.lengthOfLongestSubstringTwoDistinct("ccaabbb") == 5)
 
 """
-基本复用3题，参考古城算法 https://www.youtube.com/watch?v=6pLYYfLkaKI 19:53
+时间复杂度：On 空间复杂度 O(1),因为window里不超过三个元素
+基本复用3题，参考古城算法 https://www.youtube.com/watch?v=6pLYYfLkaKI 15:53
 """
-
-
-
-
-
-
-
-

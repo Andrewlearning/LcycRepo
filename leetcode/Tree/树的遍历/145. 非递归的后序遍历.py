@@ -23,19 +23,18 @@ class Solution(object):
         stack = [root]
 
         while stack:
+            # root
             node = stack.pop(-1)
             res.append(node.val)
-            # left right root
-            # -> root right left
 
-            # 先进，后出，left先进，left后出
+            # 先进后出
             if node.left:
                 stack.append(node.left)
             if node.right:
                 stack.append(node.right)
 
-
-
+        # res       = root right left
+        # res[::-1] = left right root
         return res[::-1]
 
 """

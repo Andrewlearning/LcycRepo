@@ -33,25 +33,21 @@ class Solution(object):
         # 每次循环，我们以一个字母作为基准，遇到不同于char的字母，都要变成char
         for char in chars:
             l = 0
-            r = 0
-            # 当前窗口内，char的数量
-            cur_count = 0
-            while r < len(s):
+            # 当前滑动窗口内，当前char的数量
+            curCount = 0
+            for i in range(len(s)):
                 # 假如说右边界元素=char,说明在窗口内当前字母的出现次数+1
-                if s[r] == char:
-                    cur_count += 1
+                if s[i] == char:
+                    curCount += 1
 
-                # 窗口内的所有元素-当前元素的数量=我们需要变化的元素数量
-                # >k 的话，说明我们要缩小滑动窗口
-                while (r - l + 1 - cur_count) > k:
+                # 窗口内的所有元素-当前元素的数量 = 我们需要变化的元素数量
+                # 我们需要变化的元素数量 > k的话，说明我们要缩小滑动窗口
+                while (i - l + 1 - curCount) > k:
                     if s[l] == char:
-                        cur_count -= 1
+                        curCount -= 1
                     l += 1
 
-                res = max(res, r - l + 1)
-
-                # 右指针继续右移
-                r += 1
+                res = max(res, i - l + 1)
 
         return res
 

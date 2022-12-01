@@ -8,7 +8,7 @@ Output: "BANC"
 它包含 t 中所有的字符。如果找不到满足条件的子串，就返回空字符串。
 """
 
-from collections import Counter
+
 class Solution(object):
     def minWindow(self, s, t):
         """
@@ -16,56 +16,39 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        if not s or not t:
-            return ""
+        from collections import defaultdict
+        window = defaultdict(int)
+        ht = defaultdict(int)
+        for char in t:
+            ht[char] += 1
 
-        # l,r是滑动窗口的[l,r]
-        left, right = 0, 0
+        res = ""
+        # 滑动窗口内有效的字母个数，因为窗口内可能有些字母无效
+        cnt = 0
+        l = 0
 
-        # 最小子串开始的下标， 和子串的最小长度
-        start, length = 0, len(s) + 1
+        for i in range(len(s)):
+            # 往滑动窗口加入当前元素
+            window[s[i]] += 1
 
-        # 里面放着滑动窗口 还需要多少字母(数量)
-        requiredCnt = len(t)
+            # 假如加入当前元素后，当前元素在窗口内出现的次数没有超过要求的次数
+            if window[s[i]] <= ht[s[i]]:
+                cnt += 1
 
-        # 里面放着滑动窗口 还需要多少字母(种类)
-        required = Counter(t)
+            # 检查 s[l]是否多余，因为s[i]有可能等于s[l], 如果是，则移除s[l]
+            while l <= i and window[s[l]] > ht[s[l]]:
+                window[s[l]] -= 1
+                l += 1
 
-        while right < len(s):
-            # 当s[r]是我们需要的字母时
-            if s[right] in required and required[s[right]] > 0:
-                requiredCnt -= 1
-            required[s[right]] -= 1
+            # 检查当前窗口已经包含了 T 中所有字符，更新答案
+            if cnt == len(t):
+                if res == "" or i - l + 1 < len(res):
+                    res = s[l:i + 1]
 
-            #  当我们已经找完所需要的字母，记录长度，并试图缩小范围
-            while requiredCnt == 0:
-
-                # 持续更新最小长度
-                if right - left + 1 < length:
-                    start = left
-                    length = right - left + 1
-
-                # 缩小范围，移动滑动窗口的左边界
-                if s[left] in required:
-                    required[s[left]] += 1
-                    if required[s[left]] > 0:
-                        requiredCnt += 1
-
-                # 假如缩小范围失败，退出循环
-                # 假如缩小范围成功，进入下一轮循环，进一步缩小长度
-                left += 1
-
-            # 每次向右移动右指针一次
-            right += 1
-
-        return "" if length == len(s) + 1 else s[start:start + length]
+        return res
 
 """
-https://algocasts.io/episodes/6emEOnpV
- Time: O(n), Space: O(n)
- 写法：双指针 + hashmap
-答案：
-algocast用了一个256位的hashmap来创造map,但是我们可以用python 的collection.Counter 来产生一样的效果，就是有些代码需要改一下
+https://www.acwing.com/video/1419/
 """
 
 

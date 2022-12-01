@@ -21,27 +21,26 @@ class Solution(object):
             return 0
 
         # 我们采用的是[]的滑动窗口
-        left = 0
-        res = sys.maxsize
+        l = 0
+        res = float('inf')
 
         # 滑动窗口内的值
-        cur_sum = 0
+        curSum = 0
 
-        for right in range(len(nums)):
-
+        for i in range(len(nums)):
             # 每次循环都往滑动窗口里添加元素
-            cur_sum += nums[right]
+            curSum += nums[i]
 
             # 假如滑动窗口内的和 >= s了，说明我们可以缩小窗口了
             # 用while的原因是，有可能这个窗口可以缩小不止一次
             # 例如 [0,0,3,4] s = 7, 那么这个窗口就可以缩小两次
-            while cur_sum >= s:
-                res = min(res, right - left + 1)
-                cur_sum -= nums[left]
-                left += 1
+            while curSum >= s:
+                res = min(res, i - l + 1)
+                curSum -= nums[l]
+                l += 1
 
         # 假如res没有更新，说明没有满足 >= s的子数组，返回0
-        return 0 if res == sys.maxsize else res
+        return 0 if res == float('inf') else res
 
 """
 Time O(n) , space O(1)

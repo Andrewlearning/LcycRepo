@@ -19,13 +19,16 @@ class Solution(object):
         while cur or stack:
             #当还有左节点的时候，一直往深处遍历，一遍遍历一遍往stack里放
             #因为后放进去的先出来
+            # left
             while cur:
                 stack.append(cur)
                 cur = cur.left
 
+            # root
             cur = stack.pop(-1)
             res.append(cur.val)
 
+            # right
             cur = cur.right
 
         return res
