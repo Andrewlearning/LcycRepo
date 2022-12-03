@@ -40,9 +40,12 @@ class Solution(object):
 
 """
 Time O(n) space O(n)
-https://www.youtube.com/watch?v=Up8iyOrq-5Y
-古城算法: https://www.youtube.com/watch?v=UQJ5lLTeqlA 23：00
+古城算法: https://www.youtube.com/watch?v=10-xBLiytBA&t=95s 46：00
 
 自下而上返回节点信息
 每次返回的是[当前深度，最深的节点的最小公共祖先值]
+
+这个题结合了
+利用dfs来统计深度
+利用back recursion只选择最深节点的值
 """

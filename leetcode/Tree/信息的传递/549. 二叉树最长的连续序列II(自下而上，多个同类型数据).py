@@ -46,18 +46,24 @@ class Solution(object):
 
         if root.left:
             # 判断左子树处于连续递增序列中还是处于连续递减序列中
-            if root.left.val + 1 == root.val:  # 处于连续递增序列中
+            if root.left.val + 1 == root.val:  # root -> root.left 处于连续递增序列中
                 status[0] = left_status[0] + 1
-            elif root.left.val - 1 == root.val:  # 处于连续递减序列中
+            elif root.left.val - 1 == root.val:  # root -> root.left 处于连续递减序列中
                 status[1] = left_status[1] + 1
 
         if root.right:
             # 判断右子树处于连续递增序列中还是处于连续递减序列中
-            if root.right.val + 1 == root.val:  # 处于连续递增序列中
+            if root.right.val + 1 == root.val:  # root -> root.right 处于连续递增序列中
                 status[0] = max(right_status[0] + 1, status[0])
-            elif root.right.val - 1 == root.val:  # 处于连续递减序列中
+            elif root.right.val - 1 == root.val:  # root -> root.right 处于连续递减序列中
                 status[1] = max(right_status[1] + 1, status[1])
 
-        # 把从根节点递增和递减的长度加在一起，因为根节点计算了两次，所以需要-1
+        # 把从根节点开始的递增和递减的长度加在一起，因为根节点计算了两次，所以需要-1
         self.res = max(self.res, status[0] + status[1] - 1)
         return status
+
+"""
+古城算法: https://www.youtube.com/watch?v=10-xBLiytBA&t=95s 1:05:00
+
+每个节点记录两个状态，那就是从这节点开始作为递增序列的长度，和从这节点开始作为递减序列的长度
+"""
