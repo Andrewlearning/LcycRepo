@@ -26,7 +26,8 @@ class BSTIterator(object):
         :rtype: int
         """
         cur = self.stack.pop(-1)
-        # 我们记得用完每一个节点，都要把那个节点的右节点丢进去跑
+        # 我们记得用完每一个节点，都要把那个节点的右节点stack中，因为这样才能满足中序遍历的顺序
+        # left(已处理完的) root(当前节点cur) right(即将被放进stack中)
         if cur.right:
             self.pushStack(cur.right)
         return cur.val
@@ -44,6 +45,6 @@ class BSTIterator(object):
 # param_2 = obj.hasNext()
 
 """
-本题等于是把二叉搜索树的中序遍历给拆分了
-https://leetcode-cn.com/problems/binary-search-tree-iterator/solution/yong-zhan-mo-ni-zhong-xu-bian-li-guo-cheng-by-powc/
+24:00
+https://www.youtube.com/watch?v=DpkTu2tU87o&t=1007s
 """

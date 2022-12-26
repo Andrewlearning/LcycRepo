@@ -38,7 +38,7 @@ class Solution(object):
         self.helper(root, target)
         return self.res.val
 
-    # 遍历，记录
+    # 遍历所有节点，并记录最小的差值
     def helper(self, root, target):
         if not root:
             return

@@ -3,23 +3,23 @@
 
 请在不改变其结构的情况下，恢复这棵树。
 
-示例 1:
+示例1:
 
 输入: [1,3,null,null,2]
 
-   1
-  /
- 3
-  \
-   2
+  1
+ /
+3
+ \
+  2
 
 输出: [3,1,null,null,2]
 
-   3
-  /
- 1
-  \
-   2
+  3
+ /
+1
+ \
+  2
 
 """
 # Definition for a binary tree node.
@@ -37,7 +37,8 @@ class Solution(object):
         """
         stack = []
         # 本题必须得用node来直接进行操作，要不然值不能inplace修改
-        x = y = pred = None
+        x = y = pre = None
+        pre = TreeNode(float('-inf'))
 
         while stack or root:
             while root:
@@ -46,24 +47,24 @@ class Solution(object):
 
             root = stack.pop()
 
-            # 假如说有前继节点了，且产生了乱序
-            if pred and root.val < pred.val:
-                # 把第二组乱序的cur给y
-                y = root
-
-                # 我们把第一组乱序的pre给x
+            # 假如发现违反二叉树搜索树中序遍历的递增
+            if root.val < pre.val:
+                # 肯定是有一个大的节点被后面挪到了前面，才能实现一个节点比next大，那么这个节点就是x
                 if x is None:
-                    x = pred
+                    x = pre
+                    y = root
+                # 肯定是有一个小的节点被前面挪到了后面，才能实现一个节点比pre小，这个节点就是y
                 else:
-                    break
-            pred = root
+                    y = root
+            pre = root
             root = root.right
 
         # 最后把乱序的节点交换一下
         x.val, y.val = y.val, x.val
 
-# 我们要理解这个题的规则，一棵树的两个节点交换，肯定是一个节点大，一个节点小
+# 我们要理解这个题的规则，一棵树的两个节点交换，肯定是一个比当前所在位置的节点大，一个比当前所在位置的节点小
 # 那么违反规则的话，那就是 一个节点比pre小， 一个节点比next大
-# 因为BST是从小到大递增的话， 就肯定是有一个节点被后面挪到了前面，才能实现一个节点比next大，那么这个节点就是x
-# 一个节点比pre小，这个节点就是y
+# 因为BST是从小到大递增的话，
+# 就肯定是有一个大的节点被后面挪到了前面，才能实现一个节点比next大，那么这个节点就是x
+# 就肯定是有一个小的节点被前面挪到了后面，才能实现一个节点比pre小，这个节点就是y
 # 解法2的图 https://leetcode-cn.com/problems/recover-binary-search-tree/solution/san-chong-jie-fa-xiang-xi-tu-jie-99-hui-fu-er-cha-/
