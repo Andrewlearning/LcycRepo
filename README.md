@@ -1,2 +1,2 @@
 # Leetcoding
-Personal Algorithm practice also recording some personal thought about these problems  
+Personal Algorithm practice also recording some personal thought for these problems  
