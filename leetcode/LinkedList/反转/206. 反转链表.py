@@ -32,16 +32,17 @@ class Solution(object):
         cur = head
         pre, next = None, None
         while cur:
-            # 记录下一个节点，方便后续移动
+            # 记录下一个节点，方便cur向后移动
             next = cur.next
 
             # 真正改变指针方向的就只有这一步
             cur.next = pre
 
-            # 节点往下挪
+            # pre节点往后移动一格
             pre = cur
             cur = next
 
+        # 循环结束时，cur=None, pre移动到链表的最后一格
         return pre
 
 

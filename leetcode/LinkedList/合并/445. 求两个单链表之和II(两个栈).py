@@ -38,28 +38,28 @@ class Solution(object):
             l2 = l2.next
 
         carry = 0
-        cur_sum = 0
-        dummy = None
+        temp = 0
+        head = None
         while stack1 or stack2 or carry:
-            if stack1:
-                cur_sum += stack1.pop()
-            if stack2:
-                cur_sum += stack2.pop()
-
-            cur_sum += carry
+            temp += carry
             carry = 0
 
-            if cur_sum >= 10:
-                carry = cur_sum // 10
-                cur_sum %= 10
+            if stack1:
+                temp += stack1.pop()
+            if stack2:
+                temp += stack2.pop()
 
-            # 这里的连接是反着来连接 cur_node -> dummy
-            cur_node = ListNode(cur_sum)
-            cur_node.next = dummy
-            dummy = cur_node
-            cur_sum = 0
+            if temp >= 10:
+                carry = temp // 10
+                temp %= 10
 
-        return dummy
+            # 这里的连接是反着来连接 cur_node2 -> cur_node1(head) -> None
+            cur_node = ListNode(temp)
+            cur_node.next = head
+            head = cur_node
+            temp = 0
+
+        return head
 
 """
 https://leetcode.com/problems/add-two-numbers-ii/discuss/129192/clear-python-solution-using-stack

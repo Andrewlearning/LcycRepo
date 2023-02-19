@@ -57,38 +57,3 @@ Time: O(max(m, n)), Space: O(max(m, n))
 2.一些链表的操作，p.next = ListNode(sum)
 3.最后出来的时候，有可能是[5],[5],最后出来时carry = 1,所以我们还需要进一位
 """
-
-
-class Solution(object):
-    def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
-
-        if not l1: return l2
-        if not l2: return l1
-
-        # 小问题，add如何保留到下一次循环再加呢？
-        add = 0
-        head = res = ListNode(0)
-        while l1 or l2 or add:
-
-            sum = self.add
-            if l1:
-                sum += l1.val
-                l1 = l1.next
-            if l2:
-                sum += l2.val
-                l2 = l2.next
-
-            add = 0
-            if sum >= 10:
-                sum -= 10
-                add = 1
-
-            res.next = ListNode(sum)
-            res = res.next
-
-        return head.next

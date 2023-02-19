@@ -23,6 +23,7 @@ class Solution(object):
         for i in range(k):
             fast = fast.next
 
+        # 为啥这了是fast.next这个边界条件，一般是自己试出来比较清楚
         while fast.next:
             slow = slow.next
             fast = fast.next

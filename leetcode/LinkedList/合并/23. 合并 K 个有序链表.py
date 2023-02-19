@@ -4,7 +4,8 @@ class ListNode(object):
         self.val = x
         self.next = None
 
-from heapq import heapreplace,heapify,heappop
+
+from heapq import heapreplace, heappush, heappop
 class Solution(object):
     def mergeKLists(self, lists):
         """
@@ -13,20 +14,22 @@ class Solution(object):
         """
 
         res = cur = ListNode(0)
+        minHeap = []
+        for head in lists:
+            if head:
+                heappush(minHeap, (head.val, head))
 
-        min_heap = [(n.val,n) for n in lists if n]
-        heapify(min_heap)
-
-        while min_heap:
-            value, n = min_heap[0]
-            if n.next is None:
-                heappop(min_heap)
+        while minHeap:
+            value, node = minHeap[0]
+            if node.next is None:
+                heappop(minHeap)
             else:
-                heapreplace(min_heap,(n.next.val , n.next))
+                heapreplace(minHeap, (node.next.val, node.next))
 
-            cur.next = n
+            cur.next = node
             cur = cur.next
         return res.next
+
 
 """
  // Time: O(n*log(k)), Space: O(k)

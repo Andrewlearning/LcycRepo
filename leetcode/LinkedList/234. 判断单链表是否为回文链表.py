@@ -20,25 +20,27 @@ class Solution(object):
             length += 1
             check = check.next
 
-
+        # 反转前半段链表
         pre = None
         cur = head
         for _ in range(length // 2):
-            next = cur.next
+            temp = cur.next
 
             cur.next = pre
             pre = cur
-            cur = next
+            cur = temp
 
-        # 假如说链表长度为奇数， 那么我们的cur要往下走一步
+        # 假如说链表长度为奇数，那么我们的cur要往下走一步
         # 1 2 3(cur) 2 1
         if length % 2 == 1:
             cur = cur.next
 
-        while cur != None and pre != None:
+        # 两种情况, 相互比较就好了
+        # 1 <- 2(pre) 2(cur) -> 1
+        # 1 <- 2(pre) 3 -> 2(cur)-> 1
+        while cur and pre:
             if cur.val != pre.val:
                 return False
-
             cur = cur.next
             pre = pre.next
 
