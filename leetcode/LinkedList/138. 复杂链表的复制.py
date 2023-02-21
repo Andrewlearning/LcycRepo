@@ -13,7 +13,39 @@ class Node:
         self.next = next
         self.random = random
 """
+
+
+# O(n) space 写法
 class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        hashmap = {}
+
+        cur = head
+        # hashmap key=old node value=new node
+        while cur:
+            hashmap[cur] = Node(cur.val)
+            cur = cur.next
+
+        cur = head
+        while cur:
+            # 注意这里要使用dict.get(), 因为cur.next和cur.random有可能是None
+            # 假如是None则返回None
+            hashmap[cur].next = hashmap.get(cur.next, None)
+            hashmap[cur].random = hashmap.get(cur.random, None)
+            cur = cur.next
+
+        return hashmap.get(head, None)
+
+
+# 古城算法28:20
+# https://www.bilibili.com/video/BV1e5411c7JR/?spm_id_from=333.337.search-card.all.click&vd_source=b81616a45fd239becaebfee25e0dbd35
+
+# O(1) space写法
+class Solution1(object):
     def copyRandomList(self, head):
         """
         :type head: Node
