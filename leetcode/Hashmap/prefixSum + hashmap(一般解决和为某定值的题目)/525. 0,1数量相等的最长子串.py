@@ -10,42 +10,33 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        # sum的值:当前下标
-        prefixSum = {0: -1}
+        # 先把所有的0变成-1
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                nums[i] = -1
 
-        # 这题的的sum, 当遇到0的时候+1，遇到1的时候-1
-        Sum = 0
-        maxSubLen = 0
+        # key=curSum的值
+        # value=当前子串的最后一位下标
+        hashmap = {}
+        hashmap[0] = -1
+        curSum = 0
+        res = 0
 
         for i in range(len(nums)):
-            if nums[i] == 1:
-                Sum += 1
-            else:
-                Sum -= 1
+            curSum += nums[i]
 
-            # 当sum重新回落到一个之前字典里有的key时，说明
-            #  从prefixSum[Sum] ~ i 碰到了一串具有相同数量的 0，1 数列
-            if Sum not in prefixSum:
-                prefixSum[Sum] = i
+            # 当两个子串的差为0的时候，说明中间这一段0和1的数量是相等的，记录长度
+            if curSum in hashmap:
+                res = max(res, i - hashmap[curSum])
+            # 若不存在，则记录当前curSum
             else:
-                maxSubLen = max(maxSubLen, i - prefixSum[Sum])
+                hashmap[curSum] = i
 
-        return maxSubLen
+        return res
 
 """
-思路：https://www.youtube.com/watch?v=uAGt1QoAoMU
+古城算法 24:20
+https://www.bilibili.com/video/BV1xB4y1N7Ut/?spm_id_from=333.999.0.0&vd_source=b81616a45fd239becaebfee25e0dbd35
 
-这题，key存的是经过处理后的sum, value是index
-1.其实我们可以看出这种，只要是value是index的，需要通过index相减来得到答案的，都需要吧0,-1给存进去
- 这是因为，对于 从index0就满足条件的子串来说，例如
-  [0,0,1,1] i = 3 
-   那么 len = 3-0 = 3 是不对的
-   
-   但是对于非index0开始的子串，例如
-   [0,0,0,0,1,1]  map= {2:1}
-    len = 5 - 1 = 4, 别的数是不造城影响的，所以我们只用对key=0 进行特殊处理就好
-    
-2. 这题的的sum, 当遇到0的时候+1，遇到1的时候-1，当sum重新回落到一个之前字典里有的key时，说明
-    碰到了一串具有相同数量的 0，1 数列
-
+相同的的两个sum出现后证明subarray部分的sum=0, 这时候因为只有1和-1，所以我们确定1和-1的数量的相同的
 """
