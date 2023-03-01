@@ -21,7 +21,7 @@ class MyStack(object):
         # 用来把非最早来的元素给滤出来，最后再给回self.out
         self.temp = []
 
-    # 元素全放到queue1里
+    # 元素全放到self.out里
     def push(self, x):
         """
         Push element x onto stack.
@@ -41,14 +41,13 @@ class MyStack(object):
             return self.out.pop()
 
         # 过程是这样的, 把out队列里前面的元素都装进temp里面去，然后再剩下的最后一个元素pop掉
-        # [] [1,2,3]
-        # [1,2] 3 []
-        # [] 3 [1,2]
+        # temp[]    out[1,2,3]
+        # temp[1,2] out[3] 只留一个元素在out是因为queue只能从队首出
+        # temp[]    out[1,2] pop_element=3
         while len(self.out) >= 2:
             self.temp.append(self.out.pop(0))
         pop_element = self.out.pop()
 
-        
         self.out, self.temp = self.temp, self.out
 
         return pop_element

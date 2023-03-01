@@ -7,12 +7,6 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-"""
-本题我们要明确什么是深度
-深度是指，从根节点走到叶节点的距离
-怎样才算叶节点，就是root.left = root.right = None
-所以我们要规避掉非叶子节点的节点
-"""
 
 class Solution(object):
     def minDepth(self, root):
@@ -30,6 +24,10 @@ class Solution(object):
         right = self.helper(root.right)
 
         # 假如其中一边是None,那我们一定得走有节点的那边
+        # 本题我们要明确什么是深度
+        # 深度是指，从根节点走到叶节点的距离
+        # 怎样才算叶节点，就是root.left = root.right = None
+        # 所以我们要规避掉非叶子节点的节点
         if not root.left or not root.right:
             return 1 + max(left, right)
         # 假如左右子树都有，那么我么要走深度小的那边

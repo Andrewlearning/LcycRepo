@@ -15,7 +15,7 @@ class MyQueue(object):
         """
         Initialize your data structure here.
         """
-        # 新增元素时，只先append到栈1
+        # 新增元素时，只先append到栈inn
         # pop元素时，当self.out有元素，self.out.pop()
         #           当self.out无元素，把self.inn的元素append到self.out后，在self.out.pop()
         self.inn = []
@@ -69,4 +69,6 @@ class MyQueue(object):
 
 """
 和剑指offer的第五题一样
+所有操作均摊下来时间复杂度是O(1)
+因为每个元素搬运最多只进行一次
 """

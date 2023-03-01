@@ -5,75 +5,82 @@ class MyCircularQueue(object):
         Initialize your data structure here. Set the size of the queue to be k.
         :type k: int
         """
-        self.head = 0
-        self.capacity = k
-        self.count = 0
-        self.queue = [0] * k
+        # 构造队列
+        self.q = [0] * k
 
+        # 队列头指针
+        self.front = 0
+
+        # 队列尾指针
+        # 因为第一个插入的位置是0，然后我们是(self.rear + 1) % len(self.q)，所以初始化为-1
+        self.rear = -1
+
+        # 队列的size
+        self.size = 0
+
+    # 往队列新插入一个元素，假如队列已满，则会覆盖掉下一个元素
     def enQueue(self, value):
         """
         Insert an element into the circular queue. Return true if the operation is successful.
         :type value: int
         :rtype: bool
         """
-
-        if self.count == self.capacity:
+        if not self.isFull():
+            # 指针往后移动一位取mod再插入
+            self.rear = (self.rear + 1) % len(self.q)
+            self.q[self.rear] = value
+            self.size += 1
+            return True
+        else:
             return False
 
-        #
-        new_value = (self.head + self.count) % self.capacity
-        self.queue[new_value] = value
-
-        self.count += 1
-        return True
-
+    # 把队列最后的元素取出
     def deQueue(self):
         """
         Delete an element from the circular queue. Return true if the operation is successful.
         :rtype: bool
         """
-        if self.count == 0:
+        if not self.isEmpty():
+            # 不用管之前的元素了，直接把指针往后移动一位就好
+            self.front = (self.front + 1) % len(self.q)
+            self.size -= 1
+            return True
+        else:
             return False
 
-        # 出队，我们只要把头指针移向下一位就好了， 因为只有在[头，尾] 之间的元素才属于队列元素
-        self.head = (self.head + 1) % self.capacity
-
-        self.count -= 1
-        return True
-
+    # 取队列最前面元素的值
     def Front(self):
         """
         Get the front item from the queue.
         :rtype: int
         """
-        if self.count == 0:
+        if self.isEmpty():
             return -1
-        return self.queue[self.head]
+        return self.q[self.front]
 
+    # 取队列最末尾的值
     def Rear(self):
         """
         Get the last item from the queue.
         :rtype: int
         """
-        if self.count == 0:
+        if self.isEmpty():
             return -1
-
-        last_index = (self.head + self.count - 1) % self.capacity
-        return self.queue[last_index]
+        return self.q[self.rear]
 
     def isEmpty(self):
         """
         Checks whether the circular queue is empty or not.
         :rtype: bool
         """
-        return self.count == 0
+        return self.size == 0
 
     def isFull(self):
         """
         Checks whether the circular queue is full or not.
         :rtype: bool
         """
-        return self.count == self.capacity
+        return self.size == len(self.q)
 
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)
@@ -88,15 +95,6 @@ class MyCircularQueue(object):
 时间复杂度：O(1)。该数据结构中，所有方法都具有恒定的时间复杂度。
 空间复杂度：O(N)，其中 N 是队列的预分配容量。循环队列的整个生命周期中，都持有该预分配的空间。
 
-
-https://leetcode-cn.com/problems/design-circular-queue/solution/she-ji-xun-huan-dui-lie-by-leetcode/
-本题最重要的一个定律，那就是
-假设一个queue有count个元素，那么我们已知head节点，那么tail节点的位置是在
-tail = (head + count - 1) % capacity
-
-与此同时，假如说我们要新加进去一个元素，那么这个元素应该加到队列的尾部元素再往后一个位置
-new = (head + count) % capacity
-
-还有一个就是，如果我们要删除一个元素，那么我们要做的就是，把head 的index往后挪动一位就好了
-head = (head + 1) % capacity
+古城算法 27:00
+https://www.bilibili.com/video/BV1Po4y1979k
 """
