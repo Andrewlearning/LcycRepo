@@ -13,10 +13,38 @@
 'e'出现两次，'r'和't'都只出现一次。
 因此'e'必须出现在'r'和't'之前。此外，"eetr"也是一个有效的答案。
 """
+import collections
 
 
 class Solution(object):
-    def frequencySort(self, s):
+    def frequencySort1(self, s):
+        # 记录每个字符出现的次数
+        hashmap = collections.defaultdict(int)
+        for i in range(len(s)):
+            hashmap[s[i]] += 1
+
+        bucket = collections.defaultdict(list)
+        # bucket key=字符出现的次数 value:[有哪些字符出现这么多次]
+        for key in hashmap.keys():
+            freq = hashmap[key]
+            bucket[freq].append(key)
+
+        res = ""
+        # 从大到小遍历字符可能出现的次数，这样会把出现最多次数的字符优先拼接
+        for i in range(len(s), -1, -1):
+            if bucket[i]:
+                for c in bucket[i]:
+                    res += c * i
+
+        return res
+
+"""
+# O(n+k) 古城算法 这个做法比较好，桶排序
+# https://www.bilibili.com/video/BV1G54y1a7gS
+"""
+
+class Solution(object):
+    def frequencySort2(self, s):
         """
         :type s: str
         :rtype: str
@@ -46,6 +74,7 @@ class Solution(object):
             res += char * times
 
         return res
+
 
 """
 时间复杂度: O(Nlogk)

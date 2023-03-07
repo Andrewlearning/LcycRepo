@@ -55,4 +55,4 @@ class Solution(object):
         self.helper(node.right)
 
 # 古城算法 32：00
-# https://www.bilibili.com/video/BV1e5411c7JR/?spm_id_from=333.337.search-card.all.click&vd_source=b81616a45fd239becaebfee25e0dbd35
+# https://www.bilibili.com/video/BV1e5411c7JR

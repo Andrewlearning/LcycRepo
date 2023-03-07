@@ -6,7 +6,39 @@ Output: [0,0,1,1,2,2]
 mid主动移动，left,right被动移动
 """
 class Solution(object):
-    def sortColors(self, nums):
+    def sortColors1(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        if not nums and len(nums) == 0:
+            return []
+
+        count0 = count1 = count2 = 0
+        for num in nums:
+            if num == 0:
+                count0 += 1
+            if num == 1:
+                count1 += 1
+            if num == 2:
+                count2 += 1
+
+        for i in range(len(nums)):
+            if i < count0:
+                nums[i] = 0
+            elif i < count0 + count1:
+                nums[i] = 1
+            else:
+                nums[i] = 2
+        return nums
+
+# O(n+k) 古城算法 这个做法比较好记
+# https://www.bilibili.com/video/BV1G54y1a7gS
+# counting sort最基本的做法，通过计算每个元素的出现次数，然后再从小到大赋值到res数组，完成排序
+
+
+class Solution(object):
+    def sortColors2(self, nums):
         """
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
@@ -50,7 +82,4 @@ class Solution(object):
 https://algocasts.io/episodes/aVWyAYW2
 Time: O(n), Space: O(1)
 这题有点三指针的感觉，left左边放的是0，right右边放的元素是2，mid在中间
-
-
-
 """
