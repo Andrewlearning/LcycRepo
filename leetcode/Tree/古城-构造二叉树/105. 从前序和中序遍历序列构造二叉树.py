@@ -12,27 +12,6 @@ class TreeNode(object):
         self.right = None
 
 
-# class Solution(object):
-#     def buildTree(self, preorder, inorder):
-#         """
-#         :type preorder: List[int]
-#         :type inorder: List[int]
-#         :rtype: TreeNode
-#         """
-#         # 假如说任意一个list为空的话，说明节点已经用完，应该返回None
-#         if not preorder or not inorder:
-#             return None
-#
-#         # 因为前序遍历，第一个节点总是root， 找到root以后就要对他进行一个分界了
-#         root = TreeNode(preorder.pop(0))
-#         # 中序遍历中， 在root左边的就是左子树， 在root右边的就是右子树
-#         index = inorder.index(root.val)
-#
-#         # 因为对于preorder来说， root left, 所以下一个节点是左子树的，所以就先递归左子树
-#         root.left = self.buildTree(preorder, inorder[:index])
-#         root.right = self.buildTree(preorder, inorder[index + 1:])
-#         return root
-
 class Solution(object):
     def buildTree(self, preorder, inorder):
         """
@@ -47,7 +26,7 @@ class Solution(object):
         self.inorder = inorder
         length = len(self.preorder)
 
-        # 记录inorder的下标在map里，使得获取下标时时间复杂度为O(1)
+        # 记录inorder的下标在map里，使得获取下标时时间复杂度为O(1)，这是一个最优化的做法
         for i in range(len(self.preorder)):
             self.map[inorder[i]] = i
         
@@ -60,7 +39,7 @@ class Solution(object):
             return None
 
         # 因为preOrder是 root,left,right
-        # 第一个节点总是其他节点的根节点，所以我们取它出来构造树
+        # 第一个节点总是其他节点的根节点，所以我们preorder的第一个节点作为root构造树
         root = TreeNode(self.preorder[self.preOrderIndex])
         self.preOrderIndex += 1
 
