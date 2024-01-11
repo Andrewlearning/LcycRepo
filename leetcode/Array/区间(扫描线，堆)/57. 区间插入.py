@@ -22,6 +22,7 @@ class Solution(object):
             k += 1
 
         # 中间有交集部分
+        # 每次出循环了，都要检查一下k有没有越界
         if k < len(old):
             # 先更新交集区间的左端点，这个只需要更新一次
             new[0] = min(old[k][0], new[0])
@@ -32,6 +33,7 @@ class Solution(object):
                 k += 1
 
         # 然后把合并好的区间加到答案里
+        # 或者new和old完全没交集，那么则会在这里直接被添加
         res.append(new)
 
         while k < len(old):
