@@ -24,35 +24,43 @@ class Solution(object):
         if not nums:
             return []
 
-        self.res = []
 
+        self.res = []
+        self.temp = []
+        self.nums = nums
         # 这属于一个比较通用的解法，因为在全排序2会碰到有相同元素的情况
         # 在那个时候就不太适合用一个 set去储存元素了
-        self.visited = [False] * len(nums)
-        self.helper(nums, [])
+        self.seen = [False] * len(nums)
+        self.helper()
 
         return self.res
 
-    def helper(self, nums, temp):
-        if len(temp) > len(nums):
+    def helper(self):
+        if len(self.temp) > len(self.nums):
             return
 
-        if len(temp) == len(nums):
-            self.res.append(temp[:])
+        if len(self.temp) == len(self.nums):
+            self.res.append(self.temp[:])
             return
 
-        for i in range(len(nums)):
+        for i in range(len(self.nums)):
+            if self.seen[i] == True:
+                continue
 
-            # 假如当前下标还没被访问过, 那我们则进去
-            if self.visited[i] == False:
-                self.visited[i] = True
-                self.helper(nums, temp + [nums[i]])
-                self.visited[i] = False
+            self.seen[i] = True
+            self.temp.append(self.nums[i])
+            self.helper()
+            self.seen[i] = False
+            self.temp.pop()
 
 
 """
 https://www.youtube.com/watch?v=zIY2BWdsbFs
-Time: O(n*n!), Space: O(n)
+- 时间复杂度 O(n×n!)
+    - 因为我们总是先从n个元素中选择一位，然后在从n-1个元素中选择下一位，最终遍历完所有结果，所以时间复杂度是n!, 最后把路径结果list添加到res, append list需要O(n), 所以总体时间复杂度是 O(n * n!)
+- 空间复杂度 O(n)
+    - dfs的时候，空间复杂度取决于递归栈的深度。
+    - 在最差情况下，有n个节点，调用栈最深是O(n)，
 答案：
 例子num = [1,2,3]
 1.我们把nums的数字一个个放进去尝试，第一放1, 然后尝试1,(1,2,3),发现1在里面了，所以只有可能[1,2],[1,3]

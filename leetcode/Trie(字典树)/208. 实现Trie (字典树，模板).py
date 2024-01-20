@@ -59,7 +59,7 @@ class Trie(object):
             if char not in node:
                 return False
             node = node[char]
-        # 假如最后一个节点只有一个"#":{}则表示当前已经是一个单词的最后一个字母了
+        # 假如搜到完所有字母都存在，且在最后一层包含"#":{}，则表示这个单词已经被储存过
         return "#" in node
 
     # 只搜索prefix在不在trie里面

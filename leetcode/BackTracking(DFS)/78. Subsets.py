@@ -24,18 +24,18 @@ class Solution(object):
         :rtype: List[List[int]]
         """
 
+        self.nums = nums
         self.res = []
-        self.helper(nums, 0, [])
-
+        self.helper(0, [])
         return self.res
 
-    def helper(self, nums, idx, temp):
+    def helper(self, startFrom, temp):
         self.res.append(temp[:])
 
-        # 这个for循环确保了 index不会越界
-        # 因为当要越界的时候 range(idx, len(nums))过不去
-        for i in range(idx, len(nums)):
-            self.helper(nums, i + 1, temp + [nums[i]])
+        for i in range(startFrom, len(self.nums)):
+            temp.append(self.nums[i])
+            self.helper(i + 1, temp)
+            temp.pop()
 
 if __name__  == "__main__":
     solution = Solution()
@@ -43,8 +43,6 @@ if __name__  == "__main__":
 
 """
 Time: O(2^n), Space: O(n)
-答案：
-
-注意，当for i in range(3,3)是，则不会执行这个for循环，所以我们在self.helper(nums,temp,i+1)
-处理i+1 的时候不用担心our of range
+- 因为答案最大长度为n，所以相当于最长的那个答案，对于每一位我们都可以进行选择是取还是不取，所以对于生成每一个答案的时间复杂度是2^n, 又因为往答案里添加第一个元素的for循环，需要循环n次，所以总体时间复杂度是 n*2^n
+- 空间复杂因为递归深度最大为n，所以就为n
 """

@@ -1,39 +1,45 @@
 class Solution(object):
-    def __init__(self):
-        self.mapping = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
-
     def letterCombinations(self, digits):
         """
         :type digits: str
         :rtype: List[str]
         """
-        if "1" in digits or "0" in digits or len(digits) == 0 or digits is None:
+        if digits == "":
             return []
 
+        self.nm = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
         self.res = []
-        self.helper(digits, 0, "")
+        self.temp = []
+        self.digits = digits
+        self.helper(0)
+
         return self.res
 
-    def helper(self, digits, index, temp):
-
-        if len(temp) == len(digits):
-            self.res.append(temp[:])
-            # 注意这个return, 要不然函数执行下去，index会out of range
+    def helper(self, startFrom):
+        if len(self.temp) > len(self.digits):
             return
 
-        chars = self.mapping[ord(digits[index]) - ord("2")]
+        if len(self.temp) == len(self.digits):
+            self.res.append("".join(self.temp[:]))
+            return
 
-        for char in chars:
-            self.helper(digits, index+1, temp + char)
+        for i in range(startFrom, len(self.digits)):
+            options = self.nm[self.digits[i]]
+            for j in options:
+                self.temp.append(j)
+                self.helper(i + 1)
+                self.temp.pop()
 
 
 """
-答案：
-其实这题就等于39题，combination Sum
-只不过他跟我们绕了一下弯子，给了点数字，让你去转换
-
-思想还是，假如说有digits 是 234， 然后234，各自对应着三个字符
-我们一次确定一个index，例如先确定2，2下面有3个字符，所以我们用for循环去遍历完这三个字符
-然后我们把确定下来的index=2,和结果，放入下一个helper
-重复这种循环
+与77题相似
 """

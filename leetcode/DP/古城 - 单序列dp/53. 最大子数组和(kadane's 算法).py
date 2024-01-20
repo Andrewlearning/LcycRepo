@@ -1,7 +1,9 @@
 import sys
 class Solution(object):
     def FindGreatestSumOfSubArray(self, nums):
+        # 用于记录全局最优
         res = -sys.maxsize
+        # 用于记录中间状态
         curSum = 0
 
         for num in nums:

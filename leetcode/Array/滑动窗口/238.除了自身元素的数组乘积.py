@@ -19,19 +19,18 @@ class Solution(object):
         res = [0] * len(nums)
         res[0] = 1
 
+        # 构造res前缀乘积数组
+        # res[i]代表 nums[0 ~ i-1] 的乘积
         for i in range(1, len(nums)):
-            # res[i-1]代表 nums[1~i-2]
-            # res[i-1] * nums[i-1] 代表 nums[start ~ i-1]的乘积
             res[i] = res[i - 1] * nums[i - 1]
 
+        # right表示nums[i], 右侧所有数的乘积
         right = 1
         for i in range(len(nums) - 1, -1, -1):
-            # right 代表 nums[i+1 ~ end]的乘积
-            res[i] *= right
-            right *= nums[i]
+            # res[i] * right = nums[0 ~ i-1]的乘积 * nums[i+1 ~ -1]的乘积
+            res[i] = res[i] * right
+            right = right * nums[i]
 
-        # 所以res[i] = res[i-1] * nums[i-1] * right
-        # res[i] = nums[start ~ i-1] * nums[i+1 ~ end]
         return res
 
 """

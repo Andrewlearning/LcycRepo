@@ -27,42 +27,30 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        if not candidates:
-            return []
-
+        self.nums = candidates
+        self.target = target
         self.res = []
-        self.helper(candidates, target, 0, [])
+        self.temp = []
+        self.helper(0)
         return self.res
 
-    def helper(self, candidates, target, idx, temp):
-        if idx >= len(candidates) or sum(temp) > target:
+    def helper(self, start):
+        if sum(self.temp) > self.target or start >= len(self.nums):
             return
 
-        if sum(temp) == target:
-            self.res.append(temp[:])
+        if sum(self.temp) == self.target:
+            self.res.append(self.temp[:])
             return
 
-        # candidates 中的数字可以无限制重复被选取, 所以这里的的idx不用变成range(idx+1, ..)
-        for i in range(idx, len(candidates)):
-            self.helper(candidates, target, i, temp + [candidates[i]])
+        for i in range(start, len(self.nums)):
+            self.temp.append(self.nums[i])
+            # 每个位置上的数都可以被选取无数次，所以下一次依旧可以从这里开始
+            self.helper(i)
+            self.temp.pop()
 
 
 """
-https://www.youtube.com/watch?v=zIY2BWdsbFs
-eg[2,3,6,7] t = 7
-注意：这里的target为什么减完后不需要还原？
-因为对于同一个for 循环来说，每个target都是相同的，意思就是说，假如说candidate[i] = 2,那么就是从2开始往下找
-                                            同样的，对于candiditaes[i] = 7来说，也是从7开始往下找，所以
-                                            大家机会都一样，不需要对target进行任何操作
-                                            
-1.组合，意味着无序，假如说，[1,1,3],[3,1,1],[1,3,1]对于组合来说是相同的，所以我们只用传里面的一个答案就好
-  但对于permutation 是不同的。所以permutation 要用一个used来记载当前使用着哪个元素。
-  所以对待组合题目，我们传递helper的时候，应该是传递candidates的index，使得之前已经被传递过的数，不应该被
-  再次传递
-2.同时因为这题是允许重复的，所以我们传参数，不需要传i+1, 只用传i就好了
-
-剪枝：
-1. if target < 0: return . 因为已经不能满足题目条件了，所以我们遇到这种情况直接return 
-2. 我在helper的 for里面增加了剪枝，只要有可能出现 target - candidate[i] < 0,的直接省略
-
+为什么这里需要 start，因为假如[1,2,3] target=6
+假如没有start的话，会产生[1,2,3] [2,1,3] [3,1,2]这三个结果，对于本题来说是重复的
+所以我们为了防止选取到相同的组合，我们得限制不能一直选取的范围
 """

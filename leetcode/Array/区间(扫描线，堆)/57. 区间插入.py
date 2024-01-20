@@ -15,6 +15,8 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
+
+        # 用k来作为遍历的old的下标
         k = 0
         # 左边无交集部分，老区间的右端点 < 新区间的左端点
         while k < len(old) and old[k][1] < new[0]:

@@ -22,15 +22,15 @@ def isValid(self, s):
     match = {"{": "}", "[": "]", "(": ")"}
     stack = []
 
-    for i in s:
-        if i in match.keys():
-            stack.append(i)
+    for char in s:
+        if char in match.keys():
+            stack.append(char)
         else:
             if len(stack) == 0:
                 return False
 
-            left = stack.pop(-1)
-            if i == match[left]:
+            left = stack.pop()
+            if char == match[left]:
                 continue
             else:
                 return False

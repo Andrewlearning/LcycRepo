@@ -21,25 +21,28 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        if n < 1:
-            return []
-
+        self.n = n
+        self.k = k
         self.res = []
-        self.helper(n, [], 1, k)
+        self.helper(1, [])
         return self.res
 
-    def helper(self, n, temp, index, k):
-        if len(temp) > k:
+    def helper(self, startFrom, temp):
+        if len(temp) > self.k:
             return
 
-        if len(temp) == k:
+        if len(temp) == self.k:
             self.res.append(temp[:])
             return
 
-        for i in range(index, n + 1):
-            self.helper(n, temp + [i], i + 1, k)
+        for i in range(startFrom, self.n + 1):
+            temp.append(i)
+            self.helper(i + 1, temp)
+            temp.pop()
 
 
 """
 https://www.youtube.com/watch?v=mlmpQB_yJfc
+时间复杂度: 一共有Ckn 另外记录每个方案时还需要O(k)的时间，所以时间复杂度是0(Ckn*k)
+空间复杂度：递归深度n, temp最大长度是k, 所以O(n+k)=O(n)
 """

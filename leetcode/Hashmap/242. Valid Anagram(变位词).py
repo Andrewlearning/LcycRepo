@@ -18,28 +18,29 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if (not s and t) or (not t and s): return False
-        alphabet = [0] * 26
+        hs = {}
 
-        for i in range(len(s)): alphabet[ord(s[i]) - ord("a")] += 1
-        for i in range(len(t)): alphabet[ord(t[i]) - ord("a")] -= 1
-        for i in alphabet:
-            if i != 0: return False
-        return True
+        # 构造可用的字母的map
+        for c in s:
+            if c not in hs:
+                hs[c] = 1
+            else:
+                hs[c] += 1
+
+        for c in t:
+            if c in hs:
+                hs[c] -= 1
+                if hs[c] == 0:
+                    # 假如这个可用的字母次数已经为0，那么直接删除掉
+                    del hs[c]
+            else:
+                return False
+
+        # 假如没有任何一个字母留下，刚好用完，则true
+        return len(hs.keys()) == 0
 
 
 """
-答案：
-可以用hashmap(字典) 来做，两个字典dic1[item] = dic1.get(item, 0) + 1,最后dic1 == dic2
-也可以直接 sorted(s) == sorted(t) 来做
-以上两种做法：https://leetcode.com/problems/valid-anagram/discuss/66499/Python-solutions-(sort-and-dictionary).
 
-Time O(n) Space O(n)
-最高赞做法：
-https://leetcode.com/problems/valid-anagram/discuss/66484/Accepted-Java-O(n)-solution-in-5-lines
-1.不是要看这两个字符串是不是由相同数量，相同字母组成的吗，直接创建一个list来统计
-2.第一string , 每个字符对应的位置++
-3.第二个string,每个字符对应的位置--
-4.两个字符串相等的话，那么alphabet应该里面全是0
 """
 

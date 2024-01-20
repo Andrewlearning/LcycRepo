@@ -21,33 +21,33 @@ class Solution(object):
 
         res = []
         nums.sort()
-        for index in range(len(nums)-2):
-            #查看当前的nums[index]和上一个index是否相同，如相同则跳过，因为会产生相同的结果
-            if index > 0 and nums[index] == nums[index - 1]:
+        for i in range(len(nums)-2):
+            #查看当前的nums[i]和上一个index是否相同，如相同则跳过，因为会产生相同的结果
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
-            left , right= index + 1 ,len(nums)-1
-            while left < right:
-                s = nums[index] + nums[left] + nums[right]
+            l, r = i + 1 ,len(nums)-1
+            while l < r:
+                s = nums[i] + nums[l] + nums[r]
                 if s > 0:
-                    right -= 1
+                    r -= 1
                 elif s < 0:
-                    left += 1
+                    l += 1
                 else:
-                    res.append([nums[index],nums[left],nums[right]])
+                    res.append([nums[i],nums[l],nums[r]])
 
                     #假如说当前循环left,right左右都有相同元素，则进行一次去重处理，不然会返回相同结果
                     # 例如 1,2,3,3,3,4 那么这个left最终会停留到最后一个3， 因为[3,4]是不相同的
-                    while left < right and nums[left] == nums[left+1]:
-                        left += 1
+                    while l < r and nums[l] == nums[l+1]:
+                        l += 1
                     # 同理这个 1,2,3,3,3,4 这个right最终会停留到最左的一个3，因为[2,3]不同
-                    while left < right and nums[right] == nums[right-1]:
-                        right -= 1
+                    while l < r and nums[r] == nums[r-1]:
+                        r -= 1
 
                     #res已经append了当前这个重复数字，当前我们的l,r还停留在最后一个重复数字上
                     #所以我们最后要移动一下
                     #直到执行完下一步操作left,right才摆脱重复数字
-                    left += 1
-                    right -= 1
+                    l += 1
+                    r -= 1
         return res
 
 
@@ -57,11 +57,7 @@ if __name__ == "__main__":
 
 
 """
-答案：
-1.暴力解，都是枚举，O(n^3)
-2.枚举a,b, 则c 我们知道是-(a+b),然后我们把nums放在一个set里，每次查c都是从set里面查
-  枚举a,b .查c, 时间复杂度O(n^2)*O(1) ,空间复杂度O(n),因为开了一个set
-  
+答案：  
 3.sort and find(two pointer) 
   1。首先先把数组sort一遍，O(nlogn)
   2。开始遍历数组，定遍历的指针为index,[index,-1,0,1,2,3]
@@ -71,7 +67,7 @@ if __name__ == "__main__":
   两个循环 O（n^2)
 
 注意：
-    假如说单纯按照方法3来写的话，有可能会出现重复的数导致出错，例如【0,0,0,0,0],那么直接把
+    假如说单纯按照方法3来写的话，有可能会出现重复的数导致出错，例如[0,0,0,0,0],那么直接把
     所有符合要求的答案都加进res的话，就会输出[[0,0,0],[0,0,0],[0,0,0]]
     所以我们还要进一步对代码进行处理
 """

@@ -14,28 +14,28 @@
 """
 class Solution(oblect):
     from collections import defaultdict
-    def lengthOfLongestSubstring(self, string):
+    def lengthOfLongestSubstring(self, s):
         """
         :type s: str
         :rtype: int
         """
-        if string is None or len(string) == 0:
-            return 0
-        window = defaultdict(int)
+        hm = {}
         res = 0
-
         # 记录滑动窗口的左端点
         l = 0
-        for i in range(len(string)):
-            window[string[i]] += 1
 
-            # 说明string[i]在window中有重复，那么则从前往后删，直到string[i]只出现一次
-            while window[string[i]] > 1:
-                window[string[l]] -= 1
-                l += 1
+        for i in range(len(s)):
+            c = s[i]
+            if c not in hm:
+                hm[c] = 1
+            else:
+                hm[c] += 1
+                # 说明s[i]在window中有重复，那么则从前往后删，直到s[i]只出现一次
+                while hm[c] > 1:
+                    hm[s[l]] -= 1
+                    l += 1
 
             res = max(res, i - l + 1)
-
         return res
 
 

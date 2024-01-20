@@ -7,35 +7,36 @@
 解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6]
 """
 class Solution(object):
-    def merge(self, intervals):
+    def merge(self, itvs):
         """
-        :type intervals: List[List[int]]
+        :type itvs: List[List[int]]
         :rtype: List[List[int]]
         """
-        if not intervals or len(intervals) == 0:
+        if not itvs or len(itvs) == 0:
             return []
 
-        intervals.sort(key = lambda x: x[0])
-        # intervals.sort()也行，默认是按第一个元素排序的
+        itvs.sort(key = lambda x: x[0])
+        # itvs.sort()也行，默认是按第一个元素排序的
 
         res = []
         # 先记录第一个区间的左右断点
-        cur = intervals[0]
+        p = itvs[0]
 
-        for i in range(1, len(intervals)):
+        for i in range(1, len(itvs)):
+            cur = itvs[i]
             #  情况2.2，两个区间没有交集
-            if cur[1] < intervals[i][0]:
+            if p[1] < cur[0]:
                 # 记录当前区间
-                res.append(cur)
+                res.append(p)
                 # 切换到下一个区间
-                cur = intervals[i]
+                p = cur
             # 情况2.1，两个区间有交集
             else:
                 # 更新当前区间的右端点
-                cur[1] = max(cur[1], intervals[i][1])
+                p[1] = max(p[1], cur[1])
 
         # 保存最后一个区间
-        res.append(cur)
+        res.append(p)
         return res
 
 """
