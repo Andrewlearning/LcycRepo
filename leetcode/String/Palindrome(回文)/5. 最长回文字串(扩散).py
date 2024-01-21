@@ -1,9 +1,8 @@
 class Solution(object):
     def expend(self, s, l, r):
         while l >= 0 and r < len(s) and s[l] == s[r]:
-            if r - l + 1 > self.maxLen:
-                self.maxLen = r - l + 1
-                self.res = s[l:r + 1]
+            if r - l + 1 > len(self.res):
+                self.res = s[l:r+1]
             l -= 1
             r += 1
 
@@ -15,13 +14,10 @@ class Solution(object):
         if s is None or len(s) == 0:
             return ""
 
-        self.maxLen = 0
-        self.res = 0
-
+        self.res = ""
         for i in range(len(s)):
-            len1 = self.expend(s, i, i)
-            len2 = self.expend(s, i, i + 1)
-
+            self.check(s, i, i)
+            self.check(s, i, i+1)
         return self.res
 
 

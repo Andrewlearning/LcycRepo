@@ -10,29 +10,32 @@
 6. 字符串如果不能合法地转为整数，则返回 0
 """
 class Solution(object):
-    def myAtoi(self, str):
-        lst , res = list(str.strip()),0
+    def myAtoi(self, s):
+        # strip的作用是去除字符串的前后空格
+        s = s.strip()
         # 假如说str除空格后空了，说明这个str全是空格组成的，返回0
-        if len(lst) == 0: return 0
+        if len(s) == 0:
+            return 0
 
-        # 判断str的符号
-        sign = -1 if lst[0] == "-" else 1
+        # 判断s的符号
+        sign = 1
+        if s[0] in "-":
+            sign = -1
         # 去除str的符号
-        if lst[0] in ["+","-"]: del lst[0]
+        if s[0] in "+-":
+            s = s[1:]
 
-        for char in lst:
+        res = 0
+        for c in s:
             # 111&666，中途出现奇怪符号的，直接break
-            if not char.isdigit():break
+            if not c.isdigit():
+                break
             # 我们用(ord(char) - ord("0"))来直接获取到 char当前位置的int
-            res = res * 10 + (ord(char) - ord("0"))
+            res = res * 10 + (ord(c) - ord("0"))
 
+        # 返回答案范围在[-2**31, 2*31-1], 假如超出这个范围，则返回超出的边界值
         return max(-2**31,min(2**31 - 1, sign*res))
 
 """
 https://leetcode.com/problems/string-to-integer-atoi/discuss/203523/Python-solution-beats-93
-Time O(n) SpaceO(n)->因为我们要用一个list变量去接收处理后的str
-1.为什么 if not char.digit() 返回break,因为可能出现 "4499 is you" 要返回"4499"
-.return这里要注意，因为说题目说假如res这个数大于取值范围，那么就返回取值范围的数
-
-
 """

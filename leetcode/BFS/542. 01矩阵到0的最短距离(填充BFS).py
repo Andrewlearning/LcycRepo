@@ -13,52 +13,46 @@
 1 2 1
 """
 
-
 class Solution(object):
     def updateMatrix(self, matrix):
         """
-        :type matrix: List[List[int]]
+        :type mat: List[List[int]]
         :rtype: List[List[int]]
         """
         self.dirs = [[-1, 0], [1, 0], [0, 1], [0, -1]]
         self.lr = len(matrix)
         self.lc = len(matrix[0])
-        dist = [[0 for c in range(self.lc)] for r in range(self.lr)]
+        dist = [[-1] * self.lc for _ in range(self.lr)]
 
-        zero_pos = []
+        queue = []
         for i in range(self.lr):
             for j in range(self.lc):
                 # 我们先把所有0的节点放进queue,然后从每个0节点开始向外面扩散
                 if matrix[i][j] == 0:
-                    zero_pos.append((i, j))
+                    dist[i][j] = 0
+                    queue.append([i,j])
 
-        queue = zero_pos
-        # 注意，假如说我们要set一个二维数组，那么这个数组里面只能存 tuple
-        visited = set(zero_pos)
 
         while queue:
             x, y = queue.pop(0)
 
             for dir in self.dirs:
-                new_x = x + dir[0]
-                new_y = y + dir[1]
-                if 0 <= new_x < self.lr and 0 <= new_y < self.lc and (new_x, new_y) not in visited:
-                    # 扩散顺序是这样的，先扩散0周围的，那么他们距离0的距离就是 0+1
-                    # 然后再扩散距离0为1 的点，那么这些点扩散出去的距离就是2
-                    dist[new_x][new_y] = dist[x][y] + 1
-                    queue.append([new_x, new_y])
-                    visited.add((new_x, new_y))
+                nx = x + dir[0]
+                ny = y + dir[1]
+                # dist[nx][ny] == -1 只扩散未去过的节点
+                if 0 <= nx < self.lr and 0 <= ny < self.lc and dist[nx][ny] == -1:
+                    # 往非0节点扩散
+                    # 先扩散0节点周围的，那么他们距离0的距离就是 0+1
+                    # 然后再扩散距离0为1的点，那么这些点扩散出去的距离就是2
+                    dist[nx][ny] = dist[x][y] + 1
+                    queue.append([nx, ny])
 
         return dist
 
 """
-时间复杂度：O(rc)，其中 r 为矩阵行数，c 为矩阵列数，即矩阵元素个数。广度优先搜索中每个位置最多只会被加入队列一次，因此只需要 O(rc)O(rc) 的时间复杂度。
+时间复杂度：O(rc)，其中 r 为矩阵行数，c 为矩阵列数，即矩阵元素个数。广度优先搜索中每个位置最多只会被加入队列一次，因此只需要 O(rc) 的时间复杂度。
 
 空间复杂度：O(rc)，其中 r 为矩阵行数，c 为矩阵列数，即矩阵元素个数。除答案数组外，最坏情况下矩阵里所有元素都为 0，全部被加入队列中，此时需要 O(rc) 的空间复杂度。
-
-
-链接：https://leetcode-cn.com/problems/01-matrix/solution/01ju-zhen-by-leetcode-solution/
-
 """
 
 

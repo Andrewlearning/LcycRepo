@@ -31,11 +31,11 @@ class Solution(object):
             # 往滑动窗口加入当前元素
             window[s[i]] += 1
 
-            # 假如加入当前元素后，当前元素在窗口内出现的次数没有超过要求的次数
+            # 假如加入当前元素后，当前元素在窗口内出现的次数没有超过要求的次数，并且这个元素是有效原则，则cnt++
             if window[s[i]] <= ht[s[i]]:
                 cnt += 1
 
-            # 检查 s[l]是否多余，因为s[i]有可能等于s[l], 如果是，则移除s[l]
+            # 从l -> i扫描，检查window里的元素是否多余，如有多余则剔除
             while l <= i and window[s[l]] > ht[s[l]]:
                 window[s[l]] -= 1
                 l += 1
