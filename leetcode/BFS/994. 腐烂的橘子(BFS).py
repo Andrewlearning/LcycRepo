@@ -12,13 +12,14 @@ class Solution(object):
         lr = len(grid)
         lc = len(grid[0])
 
-        # 因为腐烂一次
+        # 当最后一轮腐烂的橙子加进去的时候，还需要再多查询一遍
+        # 当然不会再有新的橙子可以腐烂，所以为了兼容这个问题，得设置成-1
         res = -1
         queue = []
 
-        # count是用来记录存不存在新鲜的橘子，假如说没有新鲜的橘子，那么直接返回0
+        # count新鲜的橘子的数量，假如说没有新鲜的橘子，那么直接返回0
         # 这是用来处理 corner case的
-        count = 0
+        fresh = 0
 
         for i in range(lr):
             for j in range(lc):
@@ -27,14 +28,15 @@ class Solution(object):
                     queue.append([i, j])
                 # 解决corner case
                 elif grid[i][j] == 1:
-                    count += 1
+                    fresh += 1
 
-        if count == 0:
+        if fresh == 0:
             return 0
 
         while queue:
             lenqueue = len(queue)
 
+            # 每一轮只遍历上一轮腐烂的橙子数量
             for i in range(lenqueue):
                 point = queue.pop(0)
                 row = point[0]
@@ -43,7 +45,7 @@ class Solution(object):
                 for dir in dirs:
                     r = row + dir[0]
                     c = col + dir[1]
-                    if r >= 0 and c >= 0 and r < lr and c < lc and grid[r][c] == 1:
+                    if 0 <= r < lr and 0 <= c < lc and grid[r][c] == 1:
                         # 把新鲜橘子腐烂掉
                         grid[r][c] = 2
                         queue.append([r, c])

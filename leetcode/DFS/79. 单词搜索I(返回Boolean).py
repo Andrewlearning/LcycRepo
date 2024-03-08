@@ -19,39 +19,35 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
-        if not board:
-            return False
-
-        self.lr = len(board)
-        self.lc = len(board[0])
         self.visited = []
-        self.res = False
+        self.word = word
+        self.board = board
+        self.dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
-        for i in range(self.lr):
-            for j in range(self.lc):
-                if board[i][j] == word[0]:
-                    if self.helper(board, word, 0, i, j):
-                        self.res = True
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if self.helper(i, j, 0):
+                    return True
 
-        return self.res
+        return False
 
-    def helper(self, board, word, index, i, j):
-        if i < 0 or j < 0 or i >= self.lr or j >= self.lc or [i, j] in self.visited or index >= len(word) or board[i][
-            j] != word[index]:
+    def helper(self, i, j, index):
+        if self.board[i][j] != self.word[index]:
             return False
 
-        if index == len(word) - 1:
+        if len(self.word) - 1 == index:
             return True
 
         self.visited.append([i, j])
 
-        res = self.helper(board, word, index + 1, i + 1, j) \
-              or self.helper(board, word, index + 1, i - 1, j) \
-              or self.helper(board, word, index + 1, i, j + 1) \
-              or self.helper(board, word, index + 1, i, j - 1)
+        for dir in self.dirs:
+            ni = i + dir[0]
+            nj = j + dir[1]
+            if 0 <= ni < len(self.board) and 0 <= nj < len(self.board[0]) and [ni, nj] not in self.visited:
+                if self.helper(ni, nj, index + 1):
+                    return True
 
         self.visited.pop(-1)
-        return res
 
 """
 

@@ -22,15 +22,19 @@ class Solution:
     def accountsMerge(self, accounts):
         import collections
         uf = UF()
-        # 每个email 与这个 email对应的名字
+        # 每个email 与这个 email对应的用户名字
         emailToName = {}
-        # keys: 同属于一个union的emails的根节点，values: 同属于一个union的emails list
+        # keys: 同属于一个union的emails的根节点(email)
+        # values: 同属于一个union的emails list
         rootMap = collections.defaultdict(list)
 
         for account in accounts:
             for i in range(1, len(account)):
                 name = account[0]
-                emailToName[account[i]] = name
+                email = account[i]
+                if email not in emailToName:
+                    emailToName[email] = name
+
                 # 初始化当前邮箱的parent
                 uf.initParent(account[i])
 

@@ -32,9 +32,11 @@ class Solution(object):
         visited = set()
         newCharPool = "abcdefghijklmnopqrstuvwxyz"
 
+        # 假如没有这一步，会导致不可到达的endword也能被走到
         if endWord not in wordList:
             return 0
 
+        # 初始单词没变化就已经算作是step=1了
         step = 1
         n = len(beginWord)
 
@@ -45,7 +47,7 @@ class Solution(object):
             # 用于记录BFS的下一层
             nextSet = set()
 
-            # 从beginSet出发
+            # 永远从beginSet出发
             for word in beginSet:
                 for i in range(len(word)):
                     # 替换掉单词的每一个字母，看看能不能构造出在wordList的单词
