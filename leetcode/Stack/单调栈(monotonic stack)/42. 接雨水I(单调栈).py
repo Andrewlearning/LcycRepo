@@ -4,30 +4,36 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        # stack只有碰到比stack[-1]小的，才会保留
+        # 单调递增的栈，越栈底的值越小
+        # 遍历时只有碰到比stack[-1]大的值，才会被加进栈中
         # 碰到比stack[-1]大的，说明都有可能会构成一个凹槽
         stack = []
         res = 0
 
         for i in range(len(height)):
             # 当栈不为空
-            # 且当前元素高度 > 栈顶元素高度，这说明这里可能存在空间有雨水
+            # 且栈顶元素(底) < 当前高度(右墙壁)的高度，这说明这里可能存在雨水
+            # 每次我们有 左墙壁stack[-2], 底stack[-1], 右墙壁i 这三个元素，才可以计算雨水体积
+            #
+            # 同时我们怎么保证一定 左墙壁stack[-2] > 底stack[-1]，因为假如左墙壁stack[-2] < 底stack[-1]
+            # 那么左墙壁就已经进入下面流程被pop掉了
             while stack and height[stack[-1]] < height[i]:
-                # 获取栈顶元素，这个元素是底
+                # 获取底
                 button = stack.pop()
 
                 # 假如栈里没元素了，说明我们没有左墙壁了，无法接到雨水
+                # pop的元素也不用理会，因为目前无法构成说明后面也无法构成
                 if len(stack) == 0:
                     break
 
                 # 获取左墙壁
-                preWall = stack[-1]
+                leftWall = stack[-1]
                 # 获取右墙壁
-                nextWall = i
-                # 计算左右墙壁的最小值 和 底的差， 再乘左右墙壁的距离
-                res += (min(height[preWall], height[nextWall]) - height[button]) * (nextWall - preWall - 1)
+                rightWall = i
+                # 计算左右墙壁高度的最小值 和 底的差， 再乘左右墙壁的距离
+                res += (min(height[leftWall], height[rightWall]) - height[button]) * (rightWall - leftWall - 1)
 
-            # 记录当前高度
+            # 每次都记录当前高度，因为今后都有作为左墙壁或者底使用的可能
             stack.append(i)
 
         return res

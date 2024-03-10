@@ -25,17 +25,14 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
-        fast, slow = head, head
+        fast = slow = head
+
         while fast and fast.next:
-            fast = fast.next.next
-            slow = slow.next
+            slow, fast = slow.next, fast.next.next
             if fast == slow:
-                break
+                return True
 
-        if fast is None or fast.next is None:
-            return False
-
-        return True
+        return False
 
 
 """

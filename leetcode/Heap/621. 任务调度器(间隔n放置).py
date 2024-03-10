@@ -5,7 +5,8 @@
      在本示例中，两个相同类型任务之间必须间隔长度为 n = 2 的冷却时间
      而执行一个任务只需要一个单位时间，所以中间出现了（待命）状态。
 """
-
+import heapq
+from collections import defaultdict
 class Solution(object):
     def leastInterval(self, tasks, n):
         """
@@ -13,52 +14,49 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        # 一开始先把每个字母所对应的频率给加入到maxheap里面去
-        maxheap = []
-        for x in set(tasks):
-            maxheap.append((-tasks.count(x), x))
+        # 如果冷却时间为0，直接返回任务的数量，因为怎么执行任务都可以
+        if n == 0:
+            return len(tasks)
 
-        heapq.heapify(maxheap)
+        # 统计每个任务的出现频率
+        freq = defaultdict(int)
+        for task in tasks:
+            freq[task] += 1
 
+        # 构建最大堆（使用负数表示最大堆）, 用于记录每个任务的出现频率
+        maxHeap = []
+        for freq in freq.values():
+            heappush(maxHeap, -freq)
 
-        time = 0
+        res = 0
 
-        # 当maxheap还有元素的时候，继续执行放置
-        while len(maxheap) > 0:
-            i = 0
-
-            # temp用来记录我们每个被pop出去的字母，最后我们把它的次数-1后再加回到queue
+        while maxHeap:
+            # 临时列表用于存储本次执行的任务
             temp = []
 
-            #首先先在优先队列中选择最多n+1个任务，把他们的数量减去1
-            while i <= n:
-                if len(maxheap) > 0:
-                    # 当前字母的出现次数-1后依旧大于0，说明它依旧存在，把它加进temp
-                    # 待会再把它重新添加进heap里面去
-                    if -maxheap[0][0] > 1:
-                        temp.append(maxheap.pop(0))
-                    # 要是-1等于=0，的话，说明这个字母不能用了，直接pop掉
-                    else:
-                        maxheap.pop(0)
+            # 我们相当于预留一个n+1的执行时间，在n+1这个时间段内，每种任务都只能运行一次
+            # 假如在n+1这个周期内，任务数量不够，则需用idle来填充
+            for _ in range(n + 1):
+                # 如果堆不为空，取出堆顶任务并放入temp中，并减少一次任务需要运行的次数
+                if maxHeap:
+                    temp.append(heapq.heappop(maxHeap) + 1)
+                # 假如堆为空，说明在当前n+1个时间段内已经没有任务可以执行了(因为两相同任务执行间隔最小为n)
+                # 要使用idle来进行填充不用执行任务的间隔
 
-                # 这里有几个作用
-                # 当heap还有元素时，每用一个元素 time++
-                # 当heap已经没元素时，上面那个判断跳过，直接time++, 表示补空位
-                time += 1
+            for t in temp:
+                # 如果任务频率小于0，表示任务还未执行完毕，需要重新放入堆中，在下一个循环中继续执行
+                if t < 0:
+                    heapq.heappush(maxHeap, t)
 
-                # 当所有字母都用完的时候，我们直接跳出循环，返回结果
-                if len(maxheap) == 0 and len(temp) == 0:
-                    break
+            # 根据堆里是否还有任务需要执行，来判断本次循环CPU执行了多少次interval
+            # 如果堆不为空，增加n+1个周期，因为说明本次循环n+1的时间被完全利用
+            # 如果堆为空，则表示所有任务已经执行完毕，不需要再统计idle的时间
+            if maxHeap:
+                res += n + 1
+            else:
+                res += len(temp)
 
-                i += 1
-
-
-
-            # 把每个字母的次数-1后加回到heap里去
-            for element in temp:
-                heapq.heappush(maxheap, (element[0] + 1, element[1]))
-
-        return time
+        return res
 
 """
 本题有巧妙的数学解法，但是我选择使用比较具有通用性的解法，这种解法是767的迁移

@@ -25,12 +25,9 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-
-        if not head:
-            return None
-
+        pre = None
         cur = head
-        pre, next = None, None
+
         while cur:
             # 记录下一个节点，方便cur向后移动
             next = cur.next

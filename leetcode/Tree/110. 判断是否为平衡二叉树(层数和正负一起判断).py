@@ -28,7 +28,7 @@ class Solution(object):
 
         #判断左右子树的高度差满足要求了吗
         #这里要大于1，因为只有大于1才可以满足不平衡
-        if abs(left - right) > 1:
+        if left_height == -1 or right_height == -1 or abs(left - right) > 1:
             # 假如不平衡，则返回-1
             return -1
 

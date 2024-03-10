@@ -8,14 +8,18 @@ class Solution(object):
         stack = []
         n = len(h)
 
-        # 储存当前元素，左边第一个比它小的元素下标
+        # 储存当前元素左边 第一个比它矮的元素下标
+        # 说明从 h[左边第一个比它小的元素下标+1 ~ 当前元素元素下标-1] >= h[当前元素元素下标]
         left = [0] * n
-        # 储存当前元素，右边第一个比它大的元素下标
+
+        # 储存当前元素右边 第一个比它矮的元素下标
+        # 说明从 h[当前元素元素下标+1 ~ 右边第一个比它矮的元素下标-1] >= h[当前元素元素下标]
         right = [0] * n
 
         for i in range(n):
             while stack and h[stack[-1]] >= h[i]:
                 stack.pop()
+
             # 假如左边已经没有元素比h[i]小了，那么只能把left[i]标记成-1
             # 这样后面计算的下标的时候就表示从[0~i-1]都可以被用上
             if len(stack) == 0:
@@ -42,6 +46,7 @@ class Solution(object):
             # 我们只用遍历一遍
             # 用 当前高度 * (左右第一个比当前高度低的下标的坐标差) = 以当前高度为高的矩形面积
             res = max(res, h[i] * (right[i] - left[i] - 1))
+        return res
 
 """
 Time O(n) space O(n)

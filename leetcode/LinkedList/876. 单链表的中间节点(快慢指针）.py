@@ -9,13 +9,11 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-
-        fast = head
-        slow = head
-
-        while fast != None and fast.next != None:
+        fast = slow = head
+        while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
+
         return slow
 
 
@@ -23,5 +21,4 @@ class Solution(object):
 https://algocasts.io/episodes/4rpa6aWZ
 Time: O(n), Space: O(1)
 这题使用一个快慢指针，就能完成一次遍历就能找出所有结果
-
 """

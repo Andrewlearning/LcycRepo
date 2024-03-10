@@ -14,26 +14,27 @@ class Solution(object):
         if not root:
             return []
 
-        self.res = []
-        self.dfs(root, 0)
-        return self.res
+        res = []
+        queue = [root]
 
-    def dfs(self, root, level):
-        if not root:
-            return
+        while queue:
+            nxt = []
+            n = len(queue)
+            res.append(queue[-1].val)
 
-        if level == len(self.res):
-            self.res.append(root.val)
+            while n:
+                cur = queue.pop(0)
+                if cur.left:
+                    nxt.append(cur.left)
+                if cur.right:
+                    nxt.append(cur.right)
+                n -= 1
 
-        self.dfs(root.right, level + 1)
-        self.dfs(root.left, level + 1)
+            queue = nxt
+
+        return res
 
 """
-https://www.youtube.com/watch?v=_iKUgRiUYKA
 On On
-原理很简单：
-因为我们只要同一层的最右边节点，所以我们就把len(res) 和 level
-对应起来，保证每一层我们只记录最右边的节点
-
-然后因为我们要最右边的节点，所以递归的时候优先递归右边，右边没有，再递归左边
+二叉树的层序遍历，每次只取最右边的点
 """

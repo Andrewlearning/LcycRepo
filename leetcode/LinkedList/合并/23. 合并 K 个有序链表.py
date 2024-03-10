@@ -5,26 +5,26 @@ class ListNode(object):
         self.next = None
 
 
-from heapq import heapreplace, heappush, heappop
+from heapq import heappush, heappop
 class Solution(object):
     def mergeKLists(self, lists):
         """
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-
         res = cur = ListNode(0)
-        minHeap = []
+        # 最小堆
+        heap = []
         for head in lists:
             if head:
-                heappush(minHeap, (head.val, head))
+                heappush(heap, (head.val, head))
 
-        while minHeap:
-            value, node = minHeap[0]
-            if node.next is None:
-                heappop(minHeap)
-            else:
-                heapreplace(minHeap, (node.next.val, node.next))
+        while heap:
+            # 每次把heap中值最小的节点pop出，加入到答案中
+            value, node = heappop(heap)
+            # 假如node这一条链表还有next，则继续加入到heap中
+            if node.next:
+                heappush(heap, (node.next.val, node.next))
 
             cur.next = node
             cur = cur.next
@@ -32,15 +32,5 @@ class Solution(object):
 
 
 """
- // Time: O(n*log(k)), Space: O(k)
-https://leetcode.com/problems/merge-k-sorted-lists/discuss/10513/108ms-python-solution-with-heapq-and-avoid-changing-heap-size
-https://algocasts.io/episodes/RVmVkkGQ
-1.我们先创建创建两个指针指向一个新的node,一个用来记录，一个用来return 答案
-2.然后我们创建mini_heap, 用的是 (n.val, n) 这样的顺序, 因为这个heaplify就会按照node.val来进行排序
-3. heapify
-4. 我们每次都把min_heap的堆顶元素取出，因为它是当前三个node里面最小的
-5. 假如说n.next == None,说明这个链表已经走到最后了，没有利用价值，就要把它给t了
-6. 假如n.next还有的话，那我们就要把n.next给搞进heap，把n搞出去
-7. 最后完成的时候就是要把答案链表给串起来
-
+Time: O(n*log(k)), Space: O(k)
 """
