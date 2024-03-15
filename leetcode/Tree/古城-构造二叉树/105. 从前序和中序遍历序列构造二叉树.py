@@ -20,7 +20,7 @@ class Solution(object):
         :rtype: TreeNode
         """
         # key:inorder的值 value:值在数组里的下标
-        self.map = {}
+        self.inOrderMap = {}
         self.preOrderIndex = 0
         self.preorder = preorder
         self.inorder = inorder
@@ -28,7 +28,7 @@ class Solution(object):
 
         # 记录inorder的下标在map里，使得获取下标时时间复杂度为O(1)，这是一个最优化的做法
         for i in range(len(self.preorder)):
-            self.map[inorder[i]] = i
+            self.inOrderMap[inorder[i]] = i
         
         return self.helper(0, length - 1)
 
@@ -41,11 +41,12 @@ class Solution(object):
         # 因为preOrder是 root,left,right
         # 第一个节点总是其他节点的根节点，所以我们preorder的第一个节点作为root构造树
         root = TreeNode(self.preorder[self.preOrderIndex])
+        # 每次构造完一个root节点后，都需要把preOrderIndex +1，用于构造下一个root
         self.preOrderIndex += 1
 
         # 获取这个根节点在 inOrder中的下标
         # root下标的左边是左子树，下标的右边是右子树
-        rootIndex = self.map[root.val]
+        rootIndex = self.inOrderMap[root.val]
 
         root.left = self.helper(inStart, rootIndex - 1)
         root.right = self.helper(rootIndex + 1, inEnd)
@@ -55,4 +56,11 @@ class Solution(object):
 """
 古城算法 O(n) 22:00
 https://www.bilibili.com/video/BV1jb4y1974B
+
+preOrder: root, left, right
+inOrder: left, root, right
+
+每次我们获取preOrder的root节点，作为根节点 [3,9,20,15,7] -> root = 3
+然后找到这个root节点在inorder里的下标，下标左边作为root.left, 下标右边作为root.right
+[9,(3),15,20,7] -> left=[9] root=3 right=[20,15,7]
 """

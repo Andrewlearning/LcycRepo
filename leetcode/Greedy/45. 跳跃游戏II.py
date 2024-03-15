@@ -2,6 +2,40 @@
 问跳到数组最后最少需要几次
 """
 
+# 记忆化搜索(memo)
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+
+        @cache
+        def dp(cur):
+            # 假如当前下标已经到达或超过最后一位了，说明可以到达终点
+            if cur >= n - 1:
+                return True
+            # # 假如从当前下标出发，说明可以到达或超过终点
+            if cur + nums[cur] >= n - 1:
+                return True
+
+            # 走1步 ~ nums[cur]步，因为走0步效果相同，就直接忽略了
+            for i in range(1, nums[cur] + 1):
+                # 假如从当前位置出发再走i步可以到达，则返回true
+                if dp(cur + i):
+                    return True
+            # 无法到达终点则返回false
+            return False
+
+        return dp(0)
+
+"""
+@cache的作用是，例如dp(0) return过一个结果，那么下次当调用到dp(0)的时候会返回上次获得的结果，不会重新计算
+可以用@cache来作为一种dp的实现方式, 函数参数不能带有list, 因为无法被hash, 只能放int或string
+只有python3才支持
+用法解析: https://zhuanlan.zhihu.com/p/621769520
+
+解题解析: https://www.youtube.com/watch?v=3mIc_mKP4yM
+因为每次dp()里都有一个for循环，加上记忆化搜索需要计算每个节点，所以时间复杂度相当于O(n**2), 空间复杂度是O(n)
+"""
+
 class Solution(object):
     def jump(self, nums):
         """
@@ -50,28 +84,5 @@ class Solution(object):
 """
 https://algocasts.io/episodesaAEpo1vmQ
 Time: O(n), Space: O(1)
+贪心做法，最优解
 """
-
-#Time: O(n), Space: O(n)
-def jump(self, nums):
-    """
-    :type nums: List[int]
-    :rtype: int
-    """
-    if nums is None or len(nums) == 0: return -1
-
-    n = len(nums)
-    next_max = 0
-    step = [0] * n
-
-    for i in xrange(n):
-        if next_max >= n - 1: return step[n - 1]
-        if i > next_max: return -1
-        next_max = i + nums[i] if i + nums[i] > next_max else next_max
-        last = next_max if next_max < n - 1 else n - 1
-        for j in xrange(last, i, -1):
-            if step[j] != 0:
-                break
-            step[j] = step[i] + 1
-
-    return -1

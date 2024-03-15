@@ -1,3 +1,10 @@
+"""
+ nums = [0,1,2,2,3,0,4,2], val = 2
+
+ 返回5，说明只有5个数字是非val的，而且要求nums前5位都是非val的数字，要求inplace
+Output: 5, nums = [0,1,4,0,3,_,_,_]
+"""
+
 class Solution(object):
     def removeElement(self, nums, val):
         """
@@ -9,7 +16,6 @@ class Solution(object):
             return
 
         slow = 0
-        fast = 0
 
         for fast in range(len(nums)):
             # 如果fast不等于我们要移除的元素，那么就把fast填充到

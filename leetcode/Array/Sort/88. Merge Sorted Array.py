@@ -18,24 +18,30 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        if not nums1 or not nums2 or m == 0 : return nums1
+        p1 = m - 1
+        p2 = n - 1
+        # 作为插入元素的指针，从后往前是因为nums1后面的元素都是无关紧要的
+        # 从后往前插不会影响到nums1前面的元素
+        pi = m + n - 1
 
-        i = m - 1; j = n - 1; k = m + n - 1
-        while i >= 0 and j >= 0:
-            if nums1[i] > nums2[j]:
-                nums1[k] = nums1[i]
-                i -= 1
+        while p1 >= 0 and p2 >= 0:
+            if nums1[p1] > nums2[p2]:
+                nums1[pi] = nums1[p1]
+                p1 -= 1
             else:
-                nums1[k] = nums2[j]
-                j -= 1
-            k -= 1
+                nums1[pi] = nums2[p2]
+                p2 -= 1
+            pi -= 1
 
-        while i >= 0:
-            nums1[k] = nums1[i]
-            k , i = k -1 , i - 1
-        while j >= 0:
-            nums1[k] = nums2[j]
-            k , j = k -1 , j -1
+        while p1 >= 0:
+            nums1[pi] = nums1[p1]
+            p1 -= 1
+            pi -= 1
+        while p2 >= 0:
+            nums1[pi] = nums2[p2]
+            p2 -= 1
+            pi -= 1
+
         return nums1
 
 """

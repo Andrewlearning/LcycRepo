@@ -25,8 +25,8 @@ class Solution(object):
 
         # 我们把每一个node所对应的复制节点一一对应保存在map里
         # 这样当我们去到一个节点时，我们就可以知道它有没有复制过
-        # 没有复制过，我们就再调用本函数
-        # 有复制过，就把它加进neighbor里去
+        # 没有复制过，我们就再调用本函数复制子节点
+        # 有复制过，就把它加进当前节点neighbor里去
         self.map[node] = copy
 
         # 这里的neighbor, 最终都要要复制到copy的neighbor里去
@@ -35,7 +35,9 @@ class Solution(object):
                 copy.neighbors.append(self.map[neighbor])
             # 假如说neighbor不在map里面，说明我们并没有复制它的节点
             else:
-                copy.neighbors.append(self.cloneGraph(neighbor))
+                # 先把子节点复制一遍
+                copyNeighbor = self.cloneGraph(neighbor)
+                copy.neighbors.append(copyNeighbor) # self.map[neighbor] 也可以
 
         # 返回copy节点，给其他节点添加进neighbor
         return copy

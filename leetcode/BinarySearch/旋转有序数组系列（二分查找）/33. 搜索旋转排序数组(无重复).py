@@ -31,7 +31,7 @@ class Solution(object):
         # 找到上升区间和下降区间的分解点
         while l < r:
             mid = (l + r + 1) // 2
-            # 我们要找到，满足这个条件的最右点，所以是找右边界
+            # 我们要找到上升区间的最右点，既是满足这个条件的最右点，所以是找右边界
             if nums[mid] >= nums[0]:
                 l = mid
             else:
@@ -57,8 +57,8 @@ class Solution(object):
             else:
                 r = mid - 1
 
-        # 为什么这里用r, 因为在假如输入数组只有一个元素的l=r+1会导致越界
-        # 所以这里用r
+        # 为什么这里用r, 因为在假如输入数组只有一个元素时，l=r+1, r=n-1, 这个时候l=1,r=0
+        # 会导致上面那个循环无法进入，所以nums[l=1]导致越界
         if nums[r] == target:
             return r
         else:

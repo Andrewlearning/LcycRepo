@@ -32,7 +32,7 @@ class Solution(object):
             while l < r:
                 mid = (l + r) // 2
                 # [...b mid b b b]
-                # 一个符合条件区间的左边界
+                # 符合条件区间的左边界
                 if isBadVersion(mid):
                     r = mid
                 else:
