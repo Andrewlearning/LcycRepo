@@ -8,25 +8,20 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        minheap = []
+        # 最小堆，堆顶元素是堆里面最小的元素
+        minHeap = []
 
         for num in nums:
-            if len(minheap) < k:
-                heapq.heappush(minheap, num)
-            else:
-                if num > minheap[0]:
-                    heapq.heapreplace(minheap, num)
+            heapq.heappush(minHeap, num)
 
-        return minheap[0]
+            # 始终维护堆的大小为k， 这样堆顶元素就是第K大的元素
+            if len(minHeap) > k:
+                heapq.heappop(minHeap)
+
+        return minHeap[0]
 
 
 """
 https://algocasts.io/episodes/vkmelbWb
 Time: O(n*log(k)), Space: O(k)
-答案：
-1.我们建立和维护一个最小堆
-2.当最小堆的大小小于 k时，我们就不断往最小堆里面插入数字
-3.当最小堆的大小大于 k时，且num > 堆顶元素， 说明到目前位置这个num 是前k大的
-  我们就要开始用 heapreplace去进行替换
-4. 最后我们返回heap的堆顶元素，那个就是第k大的元素
 """

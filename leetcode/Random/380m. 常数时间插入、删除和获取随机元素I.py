@@ -1,6 +1,6 @@
 """
 380. Insert Delete GetRandom O(1)
-设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
+设计一个支持在平均时间复杂度 O(1)下，执行以下操作的数据结构。
 
 insert(val)：当元素 val 不存在时，向集合中插入该项。
 remove(val)：元素 val 存在时，从集合中移除该项。
@@ -34,6 +34,7 @@ class RandomizedSet(object):
         # 假如不在数据结构内，那么要把元素加进去
         if val not in self.hashmap:
             self.nums.append(val)
+            # 记录新加进去元素的下标
             self.hashmap[val] = len(self.nums)-1
             return True
 
@@ -48,17 +49,17 @@ class RandomizedSet(object):
         :rtype: bool
         """
         if val in self.hashmap:
-            # 我们取出一个val的下标
-            delete_index = self.hashmap[val]
+            # 我们取出要删除元素的下标
+            deleteIndex = self.hashmap[val]
 
             # 取出数组最后一个元素
-            last_value = self.nums[-1]
+            lastVal = self.nums[-1]
 
             # 我们把最后一个元素，覆盖到我们要删除的元素上，这样就完成了O(1)的删除了
-            self.nums[delete_index] = last_value
+            self.nums[deleteIndex] = lastVal
 
-            # 更新和last_value原有下标
-            self.hashmap[last_value] = delete_index
+            # 更新和last_value的下标
+            self.hashmap[lastVal] = deleteIndex
 
             # 把多余的last_value 给pop()掉，因为它已经附值在val之前的index上了
             self.nums.pop()

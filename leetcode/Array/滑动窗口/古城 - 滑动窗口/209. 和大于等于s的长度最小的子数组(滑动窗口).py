@@ -25,18 +25,18 @@ class Solution(object):
         res = float('inf')
 
         # 滑动窗口内的值
-        curSum = 0
+        wSum = 0
 
         for i in range(len(nums)):
             # 每次循环都往滑动窗口里添加元素
-            curSum += nums[i]
+            wSum += nums[i]
 
             # 假如滑动窗口内的和 >= s了，说明我们可以缩小窗口了
             # 用while的原因是，有可能这个窗口可以缩小不止一次
             # 例如 [0,0,3,4] s = 7, 那么这个窗口就可以缩小两次
-            while curSum >= s:
+            while wSum >= s:
                 res = min(res, i - l + 1)
-                curSum -= nums[l]
+                wSum -= nums[l]
                 l += 1
 
         # 假如res没有更新，说明没有满足 >= s的子数组，返回0

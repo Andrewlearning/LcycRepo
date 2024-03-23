@@ -17,14 +17,12 @@ class Solution(object):
         r = len(s) - 1
 
         while l < r:
-            # 跳过空格和非字母数字
-            if s[l] == " " or not s[l].isalnum():
+            # 跳过非字母数字
+            while l < r and not s[l].isalnum():
                 l += 1
-                continue
 
-            if s[r] == " " or not s[r].isalnum():
+            while l < r and not s[r].isalnum():
                 r -= 1
-                continue
 
             if s[l] != s[r]:
                 return False

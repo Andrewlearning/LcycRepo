@@ -19,18 +19,21 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if len(s) == 0:return True
-        if len(t) == 0:return False
-        i , j = 0 , 0
-        while i < len(s) and j < len(t):
-            if s[i] == t[j]:
-                i += 1
-            j += 1
-        return True if i == len(s) else False
+        ps = pt = 0
+        ns = len(s)
+        nt = len(t)
+
+        while ps < ns and pt < nt:
+            if s[ps] != t[pt]:
+                pt += 1
+            else:
+                ps += 1
+                pt += 1
+
+        if ps == ns:
+            return True
+        return False
 
 """
 Time:O(n) space:O(1)
-答案：
-1.运用了双指针，一个指向s,一个指向t
-
 """

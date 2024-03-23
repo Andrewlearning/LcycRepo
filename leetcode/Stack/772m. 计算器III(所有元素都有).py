@@ -69,5 +69,5 @@ class Solution(object):
 
         return self.num[-1]
 
-
+# 对应lintcode 849, 不过lintcode没有负数case，例如 -1 + (-2)
 # https://leetcode-cn.com/problems/basic-calculator-iii/solution/shuang-zhan-fa-tong-yi-jie-jue-ji-ben-ji-suan-qi-s/

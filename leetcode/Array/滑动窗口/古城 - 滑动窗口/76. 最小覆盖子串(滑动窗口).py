@@ -1,5 +1,5 @@
 """
-Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+Given a string S and a string T, find the minimum wMap in S which will contain all the characters in T in complexity O(n).
 
 Example:
 Input: S = "ADOBECODEBANC", T = "ABC"
@@ -17,10 +17,10 @@ class Solution(object):
         :rtype: str
         """
         from collections import defaultdict
-        window = defaultdict(int)
-        ht = defaultdict(int)
+        wMap = defaultdict(int)
+        reqMap = defaultdict(int)
         for char in t:
-            ht[char] += 1
+            reqMap[char] += 1
 
         res = ""
         # 滑动窗口内有效的字母个数，因为窗口内可能有些字母无效
@@ -29,18 +29,19 @@ class Solution(object):
 
         for i in range(len(s)):
             # 往滑动窗口加入当前元素
-            window[s[i]] += 1
+            wMap[s[i]] += 1
 
             # 假如加入当前元素后，当前元素在窗口内出现的次数没有超过要求的次数，并且这个元素是有效原则，则cnt++
-            if window[s[i]] <= ht[s[i]]:
+            if wMap[s[i]] <= reqMap[s[i]]:
                 cnt += 1
 
             # 从l -> i扫描，检查window里的元素是否多余，如有多余则剔除
-            while l <= i and window[s[l]] > ht[s[l]]:
-                window[s[l]] -= 1
+            # 假如s[l]删除后会破坏满足window包含t的情况，则不再删除
+            while l <= i and wMap[s[l]] > reqMap[s[l]]:
+                wMap[s[l]] -= 1
                 l += 1
 
-            # 检查当前窗口已经包含了 T 中所有字符，更新答案
+            # 检查当前窗口已经包含了t中所有字符，更新答案
             if cnt == len(t):
                 if res == "" or i - l + 1 < len(res):
                     res = s[l:i + 1]

@@ -17,27 +17,18 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        if not s and len(s) == 0:
-            return 0
+        n = len(s)
 
-        end = len(s) - 1
+        p = n - 1
 
-        # 把字符串后面的空格给去掉
-        while end >= 0 and s[end] == " ":
-            end -= 1
+        # 跳过末尾可能存在的空格 " hello world  "
+        while p > -1 and s[p] == " ":
+            p -= 1
 
-        # "  "遇上这种情况
-        if end < 0:
-            return 0
+        res = 0
+        # 开始计算最后一个单词的长度
+        while p > -1 and s[p] != " ":
+            res += 1
+            p -= 1
 
-        # 此时end停留在字符串最后一个单词的最后一个字母上
-        start = end
-        while start >= 0 and s[start] != " ":
-            start -= 1
-
-        # 此时start停留在最后一个单词的前一个空格上， " star" start = 0, end=4
-        # 所以 4-0= 4
-        return end - start
-"""
-https://leetcode-cn.com/problems/length-of-last-word/solution/hua-jie-suan-fa-58-zui-hou-yi-ge-dan-ci-de-chang-d/
-"""
+        return res

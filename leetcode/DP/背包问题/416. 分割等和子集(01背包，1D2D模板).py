@@ -14,16 +14,19 @@ class Solution(object):
         """
 
         total = sum(nums)
+        n = len(nums)
 
         # 总和不能刚好被平分成两份，所以不可能构成
         if total % 2 == 1:
             return False
 
-        # 每一份数应该是1/2个total
+        # 每一份数的和 应该是1/2total
         half = total // 2
 
-        # dp[i][j] 从前i个数中选择，他们的目标和是否能达到j
-        dp = [[False] * (half + 1) for i in range(len(nums))]
+        # dp[i][j]
+        # 从前i个数中选择，他们的目标和是否能达到j
+        # i=0表示什么数都不选，i=2表示(不选，选第一个数，选第二个数)
+        dp = [[False] * (half + 1) for i in range(n+1)]
 
         # base case, 使用前i个数，目标和为0，只要所有的数都不去选择，那么就能满足和为0
         # 所以都为True
@@ -31,24 +34,28 @@ class Solution(object):
             dp[i][0] = True
 
         # 枚举每个物品
-        for i in range(1, len(nums)):
+        # i从1开始是因为要跟[i-1]作对比
+        for i in range(1, n + 1):
             # 枚举体积，从小到大
+            # j从1开始是因为j=0的情况我们已经处理过了，从0开始遍历也不会报错
             for j in range(1, half + 1):
                 # 假如不使用nums[i-1]这个元素，所以dp[i][j]的结果与dp[i-1][j]相同
                 dp[i][j] = dp[i-1][j]
 
+                # 第i个元素对应 nums[i-1]
                 # 假如使用nums[i-1]这个元素, 首先判断nums[i-1]会不会超出目标和
                 # 假如没超出，我们则可以使用
+                # or 表示要是之前dp[i][j]就为True了，则保留这个记录
                 if j >= nums[i-1]:
                     dp[i][j] = dp[i-1][j - nums[i-1]] | dp[i][j]
 
-        return dp[-1][-1]
+        return dp[n][half]
 
 
 """
 时间复杂度：O(NC)：这里 N是数组元素的个数, C 是数组元素的和的一半。
 空间复杂度：O(NC)
-古城算法: https://www.youtube.com/watch?v=ihf8JjQdta0 12:00
+古城算法: https://www.youtube.com/watch?v=OJ3ykzYCsLQ 12:00
 acwing较为详细的推导: https://www.acwing.com/video/944/
 """
 

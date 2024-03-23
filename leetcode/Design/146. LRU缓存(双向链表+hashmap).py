@@ -11,6 +11,9 @@ class DLinkedNode:
         self.val = value
         self.pre = pre
         self.next = next
+        # head.pre  最晚创建的节点，最新的节点
+        # head      最早创建的节点
+        # head.next 第二早创建的节点
 
 
 class LRUCache(object):
@@ -27,31 +30,30 @@ class LRUCache(object):
             cur.next = DLinkedNode(-1, -1, cur, None)
             cur = cur.next
 
-        # 首尾相连
+        # 双向链表首尾相连
         cur.next = self.head
         self.head.pre = cur
 
-    # 把我们要处理的节点移动到头部
-    def move2head(self, cur):
-        # 假如说我们要处理的节点，刚好是头节点
-        # 那么我们就把head指针，移动到最久未遍历的节点就好了
+    # get和push节点后，都要把该节点移动到head.pre的位置，这个位置代表最近被访问过的节点
+    def move2HeadPre(self, cur):
+        # 假如说我们要处理的节点，刚好是head
+        # 那么我们就把head，变为最新的节点(head.pre)，把head.next作为新的head节点
         if cur == self.head:
-            self.head = self.head.pre
+            self.head = self.head.next
             return
 
-            # 把指向cur节点的指针移动开
+        # 解除指向cur的指针, 让cur.pre 和 cur.next相互连接
         cur.pre.next = cur.next
         cur.next.pre = cur.pre
 
-        # 再把cur节点插入到头部后面
-        # 先把cur与原来第一个元素相连
-        cur.next = self.head.next
+        # 把cur节点放在 head 和 head.pre之间，表明cur现在变成最新节点
+        cur.pre = self.head.pre
+        cur.pre.next = cur
+
+        cur.next = self.head
         cur.next.pre = cur
 
-        # 再把cur与head相连
-        cur.pre = self.head
-        self.head.next = cur
-
+    # O(1) 时间复杂度
     def get(self, key):
         """
         :type key: int
@@ -62,24 +64,25 @@ class LRUCache(object):
             return -1
 
         cur_node = self.dic[key]
-        self.move2head(cur_node)
+        self.move2HeadPre(cur_node)
         return cur_node.val
 
+    # O(1) 时间复杂度
     def put(self, key, value):
         """
         :type key: int
         :type value: int
         :rtype: None
         """
-        # 假如说我们要插入的节点存在，更新它的value后，再把它挪到头部就好
+        # 假如说我们要插入的节点存在，更新它的value后，再把它挪到head.pre就好
         if key in self.dic:
             cur_node = self.dic[key]
             cur_node.val = value
-            self.move2head(cur_node)
-        # 否则要插入的值是新值
+            self.move2HeadPre(cur_node)
+        # 假如要插入的值是新值
         else:
             # 我们要看当前头节点是否有值
-            # 如果有值，那么把它给清空，因为要放新的值
+            # 如果有值，那么把它给清空，因为head是最老的值，要把它替换掉放最新的值
             if self.head.val != -1:
                 del self.dic[self.head.key]
 
@@ -87,8 +90,8 @@ class LRUCache(object):
             self.head.val = value
             self.dic[key] = self.head
 
-            # head往前移动一个节点，指向最久未使用的节点
-            self.head = self.head.pre
+            # head往前移动一个节点，指向第二久未使用的节点
+            self.head = self.head.next
 
 
 # https://algocasts.io/episodes/rLmP8moY
@@ -96,6 +99,3 @@ class LRUCache(object):
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
-
-# 本题，创建双向链表的时候是顺时针创建
-# 但是插入节点的时候，是逆时针插入，所以就是说head是最久未被访问的节点，head.pre是第二久未被访问的节点

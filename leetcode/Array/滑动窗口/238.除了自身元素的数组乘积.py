@@ -13,24 +13,22 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        if not nums and len(nums) == 0:
-            return []
-
-        res = [0] * len(nums)
-        res[0] = 1
+        left = [1] * len(nums)
+        right = [1] * len(nums)
 
         # 构造res前缀乘积数组
-        # res[i]代表 nums[0 ~ i-1] 的乘积
+        # left[i] 代表 nums[0 ~ i-1] 的乘积
         for i in range(1, len(nums)):
-            res[i] = res[i - 1] * nums[i - 1]
+            left[i] = left[i-1] * nums[i-1]
 
-        # right表示nums[i], 右侧所有数的乘积
-        right = 1
-        for i in range(len(nums) - 1, -1, -1):
-            # res[i] * right = nums[0 ~ i-1]的乘积 * nums[i+1 ~ -1]的乘积
-            res[i] = res[i] * right
-            right = right * nums[i]
+        # right[i] 表示nums[i+1 ~ -1], 右侧所有数的乘积
+        for i in range(len(nums) - 2, -1, -1):
+            right[i] = right[i+1] * nums[i+1]
 
+        res = []
+        for i in range(len(nums)):
+            # 最后left[i] * right[i] 表示除自己这个数以外的所有数的乘积
+            res.append(left[i] * right[i])
         return res
 
 """
