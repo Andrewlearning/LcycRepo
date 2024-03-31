@@ -1,2 +1,2 @@
 # LcycRepo
-Personal project
+Personal project.
