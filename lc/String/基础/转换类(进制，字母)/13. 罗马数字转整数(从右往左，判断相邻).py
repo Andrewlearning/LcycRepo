@@ -42,7 +42,7 @@ class Solution(object):
         res = mapping[s[l - 1]]
 
         for i in range(l - 2, -1, -1):
-            # 每次我们都只比较i,和i+1 的大小关系
+            # 每次我们都只比较i,和 i+1 的大小关系
             # 左边数字比右边大， VI = 6 II = 2
             if mapping[s[i]] >= mapping[s[i + 1]]:
                 res += mapping[s[i]]

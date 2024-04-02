@@ -19,7 +19,7 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        if board == None or len(board) == 0:
+        if board is None or len(board) == 0:
             return
         return self.solve(board)
 

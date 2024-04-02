@@ -12,6 +12,8 @@ rotate the input matrix in-place such that it becomes:
   [9,6,3]]
 把矩阵顺时针旋转90度
 """
+
+
 class Solution(object):
     def rotate(self, matrix):
         """
@@ -20,8 +22,9 @@ class Solution(object):
         """
         matrix.reverse()
         for i in range(len(matrix)):
-            for j in range(i+1,len(matrix[0])):
-                matrix[i][j],matrix[j][i] = matrix[j][i],matrix[i][j]
+            for j in range(i + 1, len(matrix[0])):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
 
 """
 注意，python 的reverse是inplace的
@@ -37,7 +40,7 @@ for i in range(len(matrix)):
 
 for i in range(len(matrix)):
     for j in range(i+1,len(matrix[0])):
-这样写的话能直接排除掉中轴上的，能节省一般的位置
+这样写的话能直接排除掉中轴上的，能节省一半的位置
    0 2 3 
    0 0 6 
    0 0 0 
