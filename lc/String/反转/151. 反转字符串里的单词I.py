@@ -11,8 +11,6 @@ Input: "  hello world!  "
 Output: "world! hello"
 Explanation: Your reversed string should not contain leading or trailing spaces.
 """
-
-
 class Solution(object):
     def reverseWords(self, s):
         """
@@ -44,22 +42,31 @@ class Solution(object):
             # 反转[ni ~ nj - 1]
             self.reverse(s, ni, nj - 1)
 
-            # 假如移动后的nj还没有越界，TODO
+            # 假如移动后的nj还没有越界，则在后面添加空格，为下一个单词准备TODO
             if nj < n:
                 s[nj] = ' '
 
-            # TODO
+            # nj < n, 让ni跳过空格，放到下一个单词的起始位置
+            # nj == n,让ni = n+1, 方便后面统一处理
             ni = nj + 1
             i = j
 
-        # TODO
-        return ''.join(reversed(s[:ni - 1]))
+        # 对于最后一个单词，ni总是会被放到下一个单词的起始位置
+        # 假如nj < n, 那么[a,b,c," ",ni]
+        # 假如nj == n, 那么则返回所有值，就是[0 ~ n-1, nj, ni] 中 [0 ~ n-1]
+        needed = s[:ni - 1]
+        return ''.join(reversed(needed))
 
+    # 需要inplace旋转
     def reverse(self, s, l, r):
         while l < r:
             s[l], s[r] = s[r], s[l]
             l += 1
             r -= 1
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.reverseWords(" asdasd df f"))
 
 """
 // Time: O(n), Space: O(n)
