@@ -24,12 +24,13 @@ class Solution(object):
 
         for i in range(1, len(itvs)):
             cur = itvs[i]
-            #  情况2.2，两个区间没有交集
+            #  情况2.2，两个区间没有交集, 则记录p
             if p[1] < cur[0]:
-                # 记录当前区间
                 res.append(p)
+
                 # 切换到下一个区间
                 p = cur
+
             # 情况2.1，两个区间有交集
             else:
                 # 更新当前区间的右端点

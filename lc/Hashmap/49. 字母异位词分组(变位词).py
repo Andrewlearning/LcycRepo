@@ -31,7 +31,7 @@ class Solution(object):
             else:
                 hashmap[key] = [string]
 
-        return [value for value in hashmap.values()]
+        return hashmap.values()
 
     # 把每个单词所对应的hash给记录下来
     def getKeybyCount(self, string):
