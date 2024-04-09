@@ -16,26 +16,33 @@ Output: false
 
 
 class Solution(object):
-    def wordPattern(self, s, t):
+    def wordPattern(self, s, pattern):
         """
         :type pattern: str
         :type str: str
         :rtype: bool
         """
-        if not s or not t: return False
+        s = s.split(" ")
 
-        hashmap = {}
-        t = t.split(" ")
-        if len(s) != len(t): return False
+        hp = {}
+        hs = {}
 
-        for i in range(len(s)):
-            if s[i] in hashmap:
-                if hashmap.get(s[i]) != t[i]: return False
-            else:
-                if t[i] in hashmap.values():
-                    return False
-                else:
-                    hashmap[s[i]] = t[i]
+        if len(s) != len(pattern):
+            return False
+
+        n = len(s)
+        for i in range(n):
+            word = s[i]
+            char = pattern[i]
+
+            if char in hp and hp[char] != word:
+                return False
+            if word in hs and hs[word] != char:
+                return False
+
+            hp[char] = word
+            hs[word] = char
+
         return True
 
 """

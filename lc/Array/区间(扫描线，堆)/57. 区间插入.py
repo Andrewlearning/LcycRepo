@@ -15,30 +15,35 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
+        n = len(old)
 
         # 用k来作为遍历的old的下标
         k = 0
         # 左边无交集部分，老区间的右端点 < 新区间的左端点
-        while k < len(old) and old[k][1] < new[0]:
+        while k < n and old[k][1] < new[0]:
             res.append(old[k])
             k += 1
+        # 假如遍历完old还没有遇到交集，则说明new可以直接加在最后面
+        if k == n:
+            res.append(new)
+            return res
 
         # 中间有交集部分
         # 每次出循环了，都要检查一下k有没有越界
-        if k < len(old):
+        if k < n:
             # 先更新交集区间的左端点，这个只需要更新一次
             new[0] = min(old[k][0], new[0])
 
             # 持续更新区间的右端点
-            while k < len(old) and old[k][0] <= new[1]:
+            # 我们怎么确认还有交集，只要能明确知道不是 old[k][0] > new[1]，就说明还有交集
+            while k < n and old[k][0] <= new[1]:
                 new[1] = max(old[k][1], new[1])
                 k += 1
 
         # 然后把合并好的区间加到答案里
-        # 或者new和old完全没交集，那么则会在这里直接被添加
         res.append(new)
 
-        while k < len(old):
+        while k < n:
             res.append(old[k])
             k += 1
 

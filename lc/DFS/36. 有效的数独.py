@@ -7,7 +7,6 @@
 
 
 注意：
-
 一个有效的数独（部分已被填充）不一定是可解的。
 只需要根据以上规则，验证已经填入的数字是否有效即可。
 空白格用'.'表示。
@@ -19,19 +18,19 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        if board is None or len(board) == 0:
-            return
-        return self.solve(board)
+        nrow = len(board)
+        ncol = len(board[0])
 
-    def solve(self, board):
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if board[i][j] == ".":
+        for i in range(nrow):
+            for j in range(ncol):
+                val = board[i][j]
+                if val == ".":
                     continue
                 else:
-                    if self.isvalid(board, i, j, board[i][j]):
-                        continue
-                    return False
+                    res = self.helper(board, i, j, val)
+                    if res == False:
+                        return False
+
         return True
 
     def isvalid(self, board, row, col, num):
@@ -42,12 +41,19 @@ class Solution(object):
             if board[row][i] == num and i != col:
                 return False
 
-            # 以[row, col]为中心的九宫格内，假如有与num相同数字的话，那么九宫格无效
-            if (3 * (row // 3) + i // 3) == row and 3 * (col // 3) + i % 3 == col:
-                continue
-            else:
-                if board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] == num:
-                    return False
+            """
+                以画线出来的九宫格内，假如有与num相同数字的话，那么说明数独无法成立
+                九宫格的起点都是左上角，例如, 下面这些点的起点就是都属于同一个九宫格内
+                [0,0] [0,1] [0,2]
+                [1,0] [1,1] [1,2]
+                [2,0] [1,1] [2,2]
+                遵循下面 nrow, ncol的规律
+            """
+
+            nrow = 3 * (row // 3) + i // 3
+            ncol = 3 * (col // 3) + i % 3
+            if nrow != row and ncol != col and board[nrow][ncol] == num:
+                return False
         return True
 
 

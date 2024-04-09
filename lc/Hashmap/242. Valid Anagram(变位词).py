@@ -18,14 +18,11 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        hs = {}
+        hs = defaultdict(int)
 
         # 构造可用的字母的map
         for c in s:
-            if c not in hs:
-                hs[c] = 1
-            else:
-                hs[c] += 1
+            hs[c] += 1
 
         for c in t:
             if c in hs:

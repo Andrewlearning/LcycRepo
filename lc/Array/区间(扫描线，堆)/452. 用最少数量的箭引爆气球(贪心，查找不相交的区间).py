@@ -23,19 +23,19 @@ class Solution:
         # 首先先针对气球的尾部进行排序
         points.sort(key=lambda x: x[1])
 
-        disconnect = 1
-        cur_end = points[0][1]
+        disconn = 1
+        curEnd = points[0][1]
 
-        for x_start, x_end in points[1:]:
+        for l, r in points[1:]:
 
             # 说明两个区间之间不相交，想射爆这两个区间则需要新的弓箭
-            if cur_end < x_start:
-                disconnect += 1
+            if curEnd < l:
+                disconn += 1
 
                 # 发现有不相交的区间，更换到下一个不相交区间，继续寻找不相交区间
-                cur_end = x_end
+                curEnd = r
 
-        return disconnect
+        return disconn
 
 """
 时间复杂度：O(NlogN)。因为对输入数据进行了排序。
