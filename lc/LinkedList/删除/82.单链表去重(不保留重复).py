@@ -11,15 +11,18 @@ class Solution(object):
         # cur是探测是否有重复的指针
         cur = head
 
-        while cur and cur.next:
+        while cur:
             # 当cur检测到重复
-            if cur.val == cur.next.val:
+            if cur.next and cur.val == cur.next.val:
                 temp = cur.val
                 # 一直让cur移动到不重复区域
                 while cur and temp == cur.val:
                     cur = cur.next
                 # 让pre连接到不重复区域
                 pre.next = cur
+
+            # 我们需要这个else, 因为有可能会出现连续的循环区 2 3 3 4 4 5
+            # 当cur刚逃出3时，它此时是第一个4，我们需要再循环一次来跳过4
             else:
                 pre = pre.next
                 cur = cur.next

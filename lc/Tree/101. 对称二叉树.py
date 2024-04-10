@@ -31,3 +31,5 @@ class Solution(object):
 
         # 我们继续判断下面的节点
         return self.helper(left.left, right.right) and self.helper(left.right, right.left)
+
+# 跟100类似

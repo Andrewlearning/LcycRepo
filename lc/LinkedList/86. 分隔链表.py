@@ -23,28 +23,22 @@ class Solution(object):
         :type x: int
         :rtype: ListNode
         """
+        # head less, pointer less
+        hl = pl = ListNode(0)
+        hg = pg = ListNode(0)
 
-        if not head:
-            return head
-
-        smaller = ListNode(0)
-        larger = ListNode(0)
-        ps = smaller
-        pl = larger
-
-        cur = head
-        while cur:
-            if cur.val >= x:
-                pl.next = cur
-                pl = pl.next
+        while head:
+            if head.val >= x:
+                pg.next = head
+                pg = pg.next
             else:
-                ps.next = cur
-                ps = ps.next
-            cur = cur.next
+                pl.next = head
+                pl = pl.next
+            head = head.next
 
-        ps.next = larger.next
-        pl.next = None
-        return smaller.next
+        pg.next = None
+        pl.next = hg.next
+        return hl.next
 
 """
 Time: O(n), Space: O(1)
