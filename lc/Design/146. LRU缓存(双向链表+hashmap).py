@@ -21,9 +21,11 @@ class LRUCache(object):
         """
         :type capacity: int
         """
+        # key: key value: node
+        self.dic = {}
         self.capacity = capacity
         self.head = DLinkedNode(-1, -1, None, None)
-        self.dic = {}
+
         cur = self.head
         # 我们已经有了head节点, 我们则还要创造 capacity-1个节点
         for i in range(capacity - 1):
