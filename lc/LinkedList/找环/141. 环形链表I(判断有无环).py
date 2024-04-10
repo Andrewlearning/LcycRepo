@@ -27,6 +27,7 @@ class Solution(object):
         """
         fast = slow = head
 
+        # 因为fast永远走的比slow快，所以我们只用看fast和fast.next是不是None就行
         while fast and fast.next:
             slow, fast = slow.next, fast.next.next
             if fast == slow:

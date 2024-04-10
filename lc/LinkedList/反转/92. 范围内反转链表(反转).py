@@ -26,15 +26,19 @@ class Solution(object):
         # 因为有可能从头结点开始就要发生翻转，所以我们创建一个dummy节点不影响翻转
         dummy = ListNode(0)
         dummy.next = head
-        # edge，翻转区间的前一个节点
+        # edge，翻转区间的前一个节点, 从dummy开始的原因是和上面一样
+        # 当区间翻转完成后，我们用edge.next 和 edge.next.next来连接头尾
         edge = dummy
 
         for _ in range(left-1):
             edge = edge.next
 
+        # left=2, right=4
         # 0 -> 1(edge) -> 2(pre) -> 3(cur) -> 4 -> 5
         pre = edge.next
         cur = edge.next.next
+
+        # right - left的原因是，例如left=2,right=4,完成这个翻转我们只移动两次指针
         for _ in range(right-left):
             # 记录下一个节点，方便cur向后移动
             temp = cur.next
@@ -46,10 +50,10 @@ class Solution(object):
             pre = cur
             cur = temp
 
-        # 1(edge) <=> 2 <- 3 <- 4(pre) 5(cur)
+        # 0 -> 1(edge) <=> 2 <- 3 <- 4(pre) 5(cur)
         # 让2连到了5
         edge.next.next = cur
-        # 1(edge) -> 4(pre) -> 3 -> 2 -> 5(cur)
+        # 0 -> 1(edge) -> 4(pre) -> 3 -> 2 -> 5(cur)
         # 让edge连到了4
         edge.next = pre
         return dummy.next
