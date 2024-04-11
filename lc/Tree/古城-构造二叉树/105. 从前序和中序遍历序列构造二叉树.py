@@ -23,14 +23,13 @@ class Solution(object):
         self.inOrderMap = {}
         self.preOrderIndex = 0
         self.preorder = preorder
-        self.inorder = inorder
-        length = len(self.preorder)
+        n = len(self.preorder)
 
         # 记录inorder的下标在map里，使得获取下标时时间复杂度为O(1)，这是一个最优化的做法
         for i in range(len(self.preorder)):
             self.inOrderMap[inorder[i]] = i
         
-        return self.helper(0, length - 1)
+        return self.helper(0, n - 1)
 
     def helper(self, inStart, inEnd):
         # 当遍历到只有最后一个叶节点时，从index来看
@@ -46,6 +45,7 @@ class Solution(object):
 
         # 获取这个根节点在 inOrder中的下标
         # root下标的左边是左子树，下标的右边是右子树
+        # 假如
         rootIndex = self.inOrderMap[root.val]
 
         root.left = self.helper(inStart, rootIndex - 1)
@@ -63,4 +63,6 @@ inOrder: left, root, right
 每次我们获取preOrder的root节点，作为根节点 [3,9,20,15,7] -> root = 3
 然后找到这个root节点在inorder里的下标，下标左边作为root.left, 下标右边作为root.right
 [9,(3),15,20,7] -> left=[9] root=3 right=[20,15,7]
+
+可以和106题相互参考
 """

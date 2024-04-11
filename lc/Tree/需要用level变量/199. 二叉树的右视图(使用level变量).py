@@ -14,27 +14,23 @@ class Solution(object):
         if not root:
             return []
 
+        q = [root]
         res = []
-        queue = [root]
 
-        while queue:
-            nxt = []
-            n = len(queue)
-            res.append(queue[-1].val)
-
-            while n:
-                cur = queue.pop(0)
-                if cur.left:
-                    nxt.append(cur.left)
-                if cur.right:
-                    nxt.append(cur.right)
-                n -= 1
-
-            queue = nxt
-
+        while q:
+            temp = []
+            for i in range(len(q)):
+                node = q[i]
+                if i == len(q) - 1:
+                    res.append(node.val)
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
+            q = temp
         return res
 
 """
 On On
-二叉树的层序遍历，每次只取最右边的点
+二叉树的层序遍历，每次只取最右边的点, acwing也是这样写
 """

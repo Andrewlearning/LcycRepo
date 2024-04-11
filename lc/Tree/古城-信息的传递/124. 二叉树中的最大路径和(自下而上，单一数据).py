@@ -35,7 +35,8 @@ class Solution(object):
         if root is None:
             return 0
 
-        #这题有负数，所以我们在找子树的最大和时，一定要让max(子树和，0），避免负数入选
+        # 这题有负数，所以我们在找子树的最大和时，一定要让max(子树和，0），避免负数入选
+        # 选中0的时候，表示root.left子树和是为负数，相当于不计算root.left所有节点
         left = max(self.helper(root.left), 0)
         right = max(self.helper(root.right), 0)
 
@@ -45,13 +46,19 @@ class Solution(object):
         # 记录最大值
         self.res = max(self.res, curSum)
 
-        # 向上返回当前节点所计算得出的最大值
+        """
+        向上返回当前节点所计算得出的最大值
+        由于对path的定义，是不能出现折返的，例如 a -> b -> c ，只有abc 或 abd算path, abcd是不算的
+                                                  \> d
+        所以需要返回max(left, right)
+        """
         return root.val + max(left, right)
 
 
 """
 https://www.youtube.com/watch?v=10-xBLiytBA&t=95s 22:48
-在每一个节点，都会往下遍历所有节点一次，所以时间复杂度和空间复杂度都是N^2
+在每一个节点都可以作为起点，同时每一个节点也都可以作为终点，所以所以遍历所有起点到所有终点的可能性是n*n
+所以时间复杂度和空间复杂度都是N^2
 
 相似题型：
 51

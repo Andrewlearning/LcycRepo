@@ -13,7 +13,8 @@ class Solution(object):
         :rtype: TreeNode
         """
 
-        # left root right      left right root
+        # inorder: left root right
+        # postorder: left right root
         if not inorder or not postorder:
             return None
 
@@ -31,4 +32,5 @@ class Solution(object):
 因为 postorder是 left, right, root, 所以把root抽出来后， 下一个节点是right的
 所以我们要把先遍历右子树
 然后才遍历左子树
+可以与105题相互参考
 """

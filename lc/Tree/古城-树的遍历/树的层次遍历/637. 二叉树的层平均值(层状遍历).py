@@ -29,21 +29,24 @@ class Solution(object):
         if not root:
             return []
 
-        queue = [root]
+        q = [root]
         res = []
-        temp = []
 
-        while queue:
-            val = [node.val for node in queue]
-            res.append(sum(val)*1.0 / len(val))
+        while q:
+            temp = []
 
-            for node in queue:
+            n = len(q)
+            ttl = 0
+
+            for i in range(n):
+                node = q[i]
+                ttl += node.val
                 if node.left:
                     temp.append(node.left)
                 if node.right:
                     temp.append(node.right)
 
-            queue = temp
-            temp = []
+            res.append(float(ttl) / n)
 
+            q = temp
         return res

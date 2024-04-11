@@ -15,18 +15,20 @@ class Solution(object):
         :type sum: int
         :rtype: bool
         """
-        if not root: return False
+        if not root:
+            return False
         return self.helper(root, sum)
 
-    def helper(self, root, sum):
+    def helper(self, root, ts):
         if not root:
             return False
 
-        if root.val == sum and not root.left and not root.right:
+        ts -= root.val
+        # 必须是要到根节点的时候没有 sum=target才满足条件
+        if ts == 0 and not root.left and not root.right:
             return True
 
-        return self.hasPathSum(root.left, sum - root.val) or \
-               self.hasPathSum(root.right, sum - root.val)
+        return self.helper(root.left, ts) or self.helper(root.right, ts)
 
 """
 答案：

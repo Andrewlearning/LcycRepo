@@ -34,23 +34,22 @@ class Solution(object):
         :rtype: int
         """
         self.res = 0
-        self.helper(root, "")
-
+        self.helper(root, 0)
         return self.res
 
-    def helper(self, root, string):
+    def helper(self, root, cur):
         if not root:
-            return 0
-
-        # 当到叶子节点的时候，把每回合拼在一起的字符加进res里去
-        if not root.left and not root.right:
-            self.res += int(string + str(root.val))
             return
 
+        cur *= 10
+        cur += root.val
 
-        if root.left:
-            # 之前节点的字符 + 当前节点的值
-            self.helper(root.left, string + str(root.val))
-        if root.right:
-            self.helper(root.right, string + str(root.val))
+        # 当道根节点时，添加这条path的答案
+        if not root.left and not root.right:
+            self.res += cur
+            return
+
+        # 继续遍历
+        self.helper(root.left, cur)
+        self.helper(root.right, cur)
 

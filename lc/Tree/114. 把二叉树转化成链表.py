@@ -5,40 +5,42 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
+	def __init__(self):
+		# 记录前一个节点
+		self.pre = None
+
 	def flatten(self, root):
 		"""
-		:type root: TreeNode
-		:rtype: None Do not return anything, modify root in-place instead.
+        :type root: TreeNode
+        :rtype: None Do not return anything, modify root in-place instead.
+        """
+
+		"""
+			我们希望构造成链表的顺序是pre order: root left right
+			所以构造的时候要从相反顺序进行构造: right left root
+			假如试图从pre order的顺序构造，会发现没办法获得下一个节点，所以不行
 		"""
 		if not root:
-			return []
+			return
 
-		stack = [root]
-		pre = None
+		self.flatten(root.right)
+		self.flatten(root.left)
 
-		while stack:
-			cur = stack.pop(-1)
+		root.right = self.pre
+		root.left = None
+		# 当当前node构造完成后，记录在self.pre里面，以供上一层节点进行连接
+		self.pre = root
 
-			if pre:
-				pre.right = cur
-				pre.left = None
-
-			if cur.right:
-				stack.append(cur.right)
-
-			if cur.left:
-				stack.append(cur.left)
-
-			pre = cur
-
-	  # 方法3：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--26/
+		return root
 
 
 
 
 
 """
-时间 O(n),遍历n个点，循环n个node , 空间  O(n)，建了一个长度为n的list
+时间 O(n),遍历n个点，循环n个node
+空间 O(n)，建了一个长度为n的list
+
 这题其实不难
 1.就是先用前序遍历把所有的节点都加进一个list
 2.然后遍历这个list,从root出发，因为这个list都是前序遍历来的

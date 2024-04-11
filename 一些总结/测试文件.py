@@ -1,53 +1,34 @@
-# def kth_difference(k, array):
-#     diff_pair = []
-#     for i in range(len(array)):
-#         for j in range(i + 1, len(array)):
-#             if i != j:
-#                 diff_pair.append(abs(array[i] - array[j]))
-#
-#     diff_pair.sort()
-#     return diff_pair[k - 1]
-#
-# print(kth_difference(1, [23, 80, 88, 91, 23]))
-# print(kth_difference(2, [23, 80, 88, 91, 23]))
-# print(kth_difference(3, [23, 80, 88, 91, 23]))
-# print(kth_difference(3, [1, 2, 3, 4]))
+from collections import Counter
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words:
+            return []
 
-array = [[0,1,0,1,0],
-         [1,0,1,0,0],
-         [0,1,0,0,0],
-         [0,0,0,1,0]]
+        nw = len(words[0])
+        n = len(s)
+        wmap = Counter(words)
+        res = []
 
-def ladder_n(table, n):
-    res = set()
-    for i in range(len(table)):
-        for j in range(len(table[i])):
-            if table[i][j] == 1:
-                count = 1
-                p_i = i
-                p_j = j
-                while 0 <= p_i - 1 <= len(table) and \
-                    0 <= p_j + 1 <= len(table[i]) and table[p_i][p_j] == 1:
-                    count += 1
-                    p_i -= 1
-                    p_j += 1
-                res.add(count)
+        for i in range(nw):
+            l = i
+            r = i
 
-    return n in res
+            # 滑动窗口
+            window = Counter()
 
-array = [[0,1,0,1,0],
-         [1,0,1,0,0],
-         [0,1,0,0,0],
-         [0,0,0,1,0]]
+            # 只要没有越界，持续移动指针，因为right指向的是匹配的单词的下一位，所以这里需要=
+            while r + nw <= n:
+                curWord = s[r: r+nw]
+                window[curWord] += 1
+                r += nw
 
-print(ladder_n(array, 1))
-print(ladder_n(array, 2))
-print(ladder_n(array, 3))
-print(ladder_n(array, 4))
+                # 出
+                # 如果数量超过了目标数量，移动左边界
+                while window[curWord] > wmap[curWord]:
+                    window[s[l:l + nw]] -= 1
+                    l += nw
 
+                if r - l == nw * len(words):
+                    res.append(l)
 
-
-
-
-
-
+        return res
