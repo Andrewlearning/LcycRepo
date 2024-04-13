@@ -16,6 +16,7 @@ class Solution(object):
         :rtype: List[int]
         """
 
+        # 这种做法的好处是inplace
         digits[-1] += 1
         carry = 0
 
@@ -27,6 +28,7 @@ class Solution(object):
                 digits[i] -= 10
                 carry = 1
 
+        # [9,9,9] -> [10,0,0] -> [0,0,0] carry=1 -> [1,0,0,0]
         if carry:
             digits.insert(0, carry)
 

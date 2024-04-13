@@ -28,15 +28,15 @@ class Solution(object):
         if left == n and right == n:
             self.res.append(string)
             return
+        # 我们优先加左括号，这样才能保证能生成有效的括号
         if left < n:
-            # 把 string + "(" 里面，等于完成了一次一次状态取消
-            # 在下面right 拿到的string, 是没有加左括号的
             """
             string += "("
             self.helper(left + 1, right, n, string)
             string = string[:-1]
             """
             self.helper(left + 1, right, n, string + "(")
+        # right < left 这个条件很重要，避免右括号生成在了左括号之前
         if right < n and right < left:
             self.helper(left, right + 1, n, string + ")")
 

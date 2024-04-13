@@ -23,6 +23,8 @@ class Solution(object):
             return head
 
         # 把链表分成两半
+        # 这里注意fast要先走一步，不然当只剩下两个节点的时候，会无法切分
+        # [1,2] fast = slow= 1 -> 走完循环后slow = 2, fast = None, mid = None 会用于停在这个循环
         slow, fast = head, head.next
         while fast and fast.next:
             slow = slow.next
@@ -30,6 +32,9 @@ class Solution(object):
 
         # head代表前一半，mid代表后一半
         mid = slow.next
+        # 这一步把链表的前后部分分开
+        # 前半部分 head -> ... -> slow -> None
+        # 后半部分 mid -> .. None
         slow.next = None
 
         # 分而治之
@@ -46,10 +51,14 @@ class Solution(object):
                 right = right.next
             cur = cur.next
 
-        cur.next = left if left else right
+        if left:
+            cur.next = left
+        elif right:
+            cur.next = right
         return res.next
 
 """
+Time O(nlogn)，Space O(logn)
 就是一般归并排序的做法
 首先通过快慢指针找到链表的中间节点
 然后分出两段链表，分别来进行递归

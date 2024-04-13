@@ -45,6 +45,9 @@ class Solution(object):
         for i in range(start, len(self.nums)):
             self.temp.append(self.nums[i])
             # 每个位置上的数都可以被选取无数次，所以下一次依旧可以从这里开始
+            # 但我们不可以倒着选，例如[2,3], 我们选可以选[2,2],[2,3],[3,3], 但不能[3,2]
+            # 所以这里要传一个当前下标进去
+            # 但是在permutation中，可以存在[3,2]这种选法，它不允许重复选同一个数字
             self.helper(i)
             self.temp.pop()
 

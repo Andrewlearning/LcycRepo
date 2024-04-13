@@ -20,19 +20,20 @@ class Solution(object):
         self.res = []
         self.temp = []
         self.digits = digits
+        self.n
         self.helper(0)
 
         return self.res
 
     def helper(self, startFrom):
-        if len(self.temp) > len(self.digits):
+        if len(self.temp) > self.n:
             return
 
-        if len(self.temp) == len(self.digits):
+        if len(self.temp) == self.n:
             self.res.append("".join(self.temp[:]))
             return
 
-        for i in range(startFrom, len(self.digits)):
+        for i in range(startFrom, self.n):
             options = self.nm[self.digits[i]]
             for j in options:
                 self.temp.append(j)

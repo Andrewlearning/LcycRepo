@@ -12,16 +12,16 @@ class Solution(object):
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-        res = cur = ListNode(0)
         # 最小堆
         heap = []
-        for head in lists:
-            if head:
-                heappush(heap, (head.val, head))
+        for node in lists:
+            if node:
+                heappush(heap, (node.val, node))
 
+        res = cur = ListNode(0)
         while heap:
             # 每次把heap中值最小的节点pop出，加入到答案中
-            value, node = heappop(heap)
+            val, node = heappop(heap)
             # 假如node这一条链表还有next，则继续加入到heap中
             if node.next:
                 heappush(heap, (node.next.val, node.next))

@@ -28,4 +28,5 @@ https://algocasts.io/episodes/deG4vW1R
 Time: O(n), Space: O(1)
 
 可以和leetcode 124对比着来看
+运用kadane算法的思想，这个算法详情可以看918
 """
