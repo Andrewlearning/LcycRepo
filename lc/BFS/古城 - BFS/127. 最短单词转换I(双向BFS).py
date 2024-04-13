@@ -22,26 +22,25 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
-        # 从beginSet 和 endSet 这两个集合出发，假如bfs到对方set，那么说明可以从beginWord -> endWorld
-        beginSet = set()
-        endSet = set()
-        wordList = set(wordList)
-
-        # 记录单词有没被构建过，剪枝
-        # 假如单词被构建过，第二次来到这个单词是没意义的，因为第一次走不通，第二次肯定也走不通
-        visited = set()
-        newCharPool = "abcdefghijklmnopqrstuvwxyz"
-
         # 假如没有这一步，会导致不可到达的endword也能被走到
         if endWord not in wordList:
             return 0
 
-        # 初始单词没变化就已经算作是step=1了
-        step = 1
-        n = len(beginWord)
-
+        # 从beginSet 和 endSet 这两个集合出发，假如bfs到对方set，那么说明可以从beginWord -> endWorld
+        # set的底层实现是map, 查询时时间是O(1)
+        wordList = set(wordList)
+        beginSet = set()
+        endSet = set()
         beginSet.add(beginWord)
         endSet.add(endWord)
+
+        # 记录单词有没被构建过
+        # 假如单词被构建过，第二次来到这个单词是没意义的，因为第一次走不通，第二次肯定也走不通
+        visited = set()
+        newCharPool = "abcdefghijklmnopqrstuvwxyz"
+
+        # 初始单词没变化就已经算作是step=1了
+        step = 1
 
         while len(beginSet) > 0 and len(endSet) > 0:
             # 用于记录BFS的下一层
@@ -55,6 +54,7 @@ class Solution(object):
                         newWord = word[:i] + newChar + word[i + 1:]
 
                         # 假如beginSet的元素和endSet的元素重合了，那么说明我们找到一条路径满足条件
+                        # 又因为endWord总是会在wordList出现的，所以我们这里不用校验newWord是否在wordList里
                         if newWord in endSet:
                             return step + 1
                         if newWord not in visited and newWord in wordList:
@@ -63,11 +63,10 @@ class Solution(object):
 
             # 重点，我们看哪个set的size小，下一次就从哪一边开始向中间遍历
             # 这样确保了我们的搜索范围不会变的特别大
-            if len(endSet) < len(nextSet):
-                beginSet = endSet
-                endSet = nextSet
-            else:
-                beginSet = nextSet
+            beginSet = nextSet
+            if len(endSet) < len(beginSet):
+                endSet, beginSet = beginSet, endSet
+
             step += 1
 
         return 0

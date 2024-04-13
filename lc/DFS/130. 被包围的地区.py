@@ -34,8 +34,10 @@ class Solution(object):
     def dfs(self, board, i, j, flip):
         if i < 0 or i > self.lrow - 1 or j < 0 or j > self.lcol - 1:
             return
-        if board[i][j] == "X": return
-        if self.visited[i][j]: return
+        if board[i][j] == "X":
+            return
+        if self.visited[i][j]:
+            return
 
         if flip: board[i][j] = "X"
 

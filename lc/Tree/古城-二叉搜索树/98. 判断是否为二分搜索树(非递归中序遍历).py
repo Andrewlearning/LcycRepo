@@ -25,17 +25,17 @@ class Solution(object):
         if not root:
             return True
 
-        stack = []
+        q = []
         pre = -sys.maxsize
         cur = root
 
-        while cur or stack:
+        while cur or q:
             # 每次检查cur,cur.left,cur.right是否存在节点，都在这里检测
             while cur:
-                stack.append(cur)
+                q.append(cur)
                 cur = cur.left
 
-            cur = stack.pop(-1)
+            cur = q.pop(-1)
             # 中序遍历，从小到大，所以node.val一定会比之前的大
             if cur.val <= pre:
                 return False

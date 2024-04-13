@@ -19,29 +19,35 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
-        self.grid = grid
-        self.lr = len(grid)
-        self.lc = len(grid[0])
-        res = 0
+        self.nr = len(grid)
+        self.nc = len(grid[0])
+        self.visited = set()
+        self.res = 0
 
-        for i in range(self.lr):
-            for j in range(self.lc):
-                if self.grid[i][j] == "1":
-                    res += 1
-                    self.helper(i, j)
+        for i in range(self.nr):
+            for j in range(self.nc):
+                # 这里需要过滤掉已经去过的"1"，因为假如不过滤的话res会+1
+                if grid[i][j] == "1" and (i, j) not in self.visited:
+                    self.dfs(grid, i, j)
+                    self.res += 1
 
-        return res
+        return self.res
 
-    def helper(self, i, j):
-        if not (0 <= i < self.lr) or not (0 <= j < self.lc) or self.grid[i][j] == "0":
+    def dfs(self, grid, i, j):
+        if not (0 <= i < self.nr) or not (0 <= j < self.nc) or (i, j) in self.visited:
             return
 
-        # 去完一个岛，就把一个岛给沉没掉，等于是做了一个记忆化的操作，防止再次遍历回来
-        self.grid[i][j] = "0"
-        self.helper(i+1, j)
-        self.helper(i-1, j)
-        self.helper(i, j+1)
-        self.helper(i, j-1)
+        # 每次到达一个地方，都要记录这里遍历过了
+        self.visited.add((i, j))
+
+        # 我们只遍历"1"的节点，忽略掉其他
+        if grid[i][j] == "0":
+            return
+
+        self.dfs(grid, i + 1, j)
+        self.dfs(grid, i - 1, j)
+        self.dfs(grid, i, j + 1)
+        self.dfs(grid, i, j - 1)
 
 
 """

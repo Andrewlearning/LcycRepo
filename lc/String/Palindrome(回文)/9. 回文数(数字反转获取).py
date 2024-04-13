@@ -11,13 +11,19 @@ class Solution(object):
         if x < 0:
             return False
 
-        temp = x
-        res = 0
-        while temp > 0:
-            res = res * 10 + temp % 10
-            temp //= 10
+        origin = x
+        reverse = 0
 
-        return res == x
+        while x:
+            # 每次取下x的最后一位元素 x=121 -> last=1
+            last = x % 10
+            # 并把最后一位元素添加到reverse后面，reverse = 0 * 10 + 1
+            reverse = reverse * 10 + last
+
+            # x = 121//10 = 12
+            x //= 10
+
+        return reverse == origin
 
 """
 这题其实跟7,reverse integer很像
@@ -28,7 +34,4 @@ https://algocasts.io/episodes/zbmKMpZq
 2.我们用res来计算x的相反数字
 3.res*10等于把原来有的数进位，9 -> 90, + temp%10,把temp最末尾一位加到res
 4.return时对比两者是否相同
-
-答案2：
-可以用双指针，但是TimeO(n) space:O(n)
 """
