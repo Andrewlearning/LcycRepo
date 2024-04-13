@@ -19,12 +19,17 @@ def maxSubarraySumCircular(self, nums):
     :type nums: List[int]
     :rtype: int
     """
+    # 局部最大序列和
     curMax = 0
+    # 全局最大序列和
     maxSum = nums[0]
 
+    # 局部最小序列和
     curMin = 0
+    # 全局最小序列和
     minSum = nums[0]
 
+    # nums所有元素的和
     total = 0
 
     for num in nums:
@@ -36,9 +41,11 @@ def maxSubarraySumCircular(self, nums):
 
         total += num
 
+    # 当nums全部为负数的时，total - minSum = 0，所以max(maxSum, total - minSum)=0
+    # 但真实结果应该为maxSum
     if maxSum < 0:
         return maxSum
-    print(maxSum, total, minSum)
+    # 在case1和case2两个答案中取最优
     return max(maxSum, total - minSum)
 
 """
