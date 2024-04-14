@@ -22,7 +22,9 @@ class Solution(object):
             mid = (l + r) // 2
 
             # [l, traget, mid] [mid+1, r]
-            if nums[mid] >= target:
+            if nums[mid] == target:
+                r = mid
+            if nums[mid] > target:
                 r = mid
             # [l, mid, mid+1) [target, r]
             else:
@@ -39,7 +41,9 @@ class Solution(object):
             mid = (l + r + 1) // 2
 
             # [l, mid-1] [mid, target, r]
-            if nums[mid] <= target:
+            if nums[mid] == target:
+                l = mid
+            if nums[mid] < target:
                 l = mid
             else:
                 r = mid - 1

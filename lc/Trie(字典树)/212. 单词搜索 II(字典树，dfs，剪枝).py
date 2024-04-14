@@ -28,45 +28,50 @@ class Solution:
                 if char not in node:
                     node[char] = {}
                 node = node[char]
+            # 遍历完成后，存的是整个单词
             node["finish"] = word
 
-        # 由于我们在下面，会把添加完单词的trie剪枝，所以不用担心会添加到重复答案的问题
+        self.n = len(board)
+        self.m = len(board[0])
+
         self.res = []
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if board[i][j] in trie:
-                    self.dfs(i, j, trie, board)
+        for i in range(self.n):
+            for j in range(self.m):
+                self.dfs(i, j, trie, board)
 
         return self.res
 
     def dfs(self, i, j, node, board):
-        cur = board[i][j]
+        if not (0 <= i < self.n) or not (0 <= j < self.m) or board[i][j] == "#" or board[i][j] not in node:
+            return
         """
         1.
         一个单词的最后一个字母的子节点只有{finish:word}了
         假如已经遍历到一个单词的最后一个字母了, pop则返回这个单词, 并记录这个单词
         假如没有遍历到一个单词的最后一个字母，pop则返回默认值False
         题目潜在假设，一个单词在一个表只能被找到一次，所以我们把这个单词找到后，pop掉单词
+        dict.pop(key, default)的用途是，假如dict有这个key，那么则返回value并清除这个key-value, 否则则返回default， 与get有点相似
         例如 {a:{b:{finish:ab}}} -> {a:{b:{}}}, 然后在下面2处进行清理
         """
+        cur = board[i][j]
         isLast = node[cur].pop("finish", False)
         if isLast:
             self.res.append(isLast)
 
-        # 本次dfs遍历过这个点，标记，在本次不会再被访问
+        # 本次dfs遍历过这个点，标记，在本单词的遍历中不会再被访问
+        # 同位置在同一个单词里不能经过两次，但是同位置在不同单词是可以被使用两次的
         board[i][j] = "#"
         for x, y in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
             newi = i + x
             newj = j + y
+            self.dfs(newi, newj, node[cur], board)
 
-            # 当满足所有条件的时候，我们可以把元素加进去
-            if 0 <= newi <= len(board) - 1 and 0 <= newj <= len(board[0]) - 1 and board[newi][newj] in node[cur]:
-                self.dfs(newi, newj, node[cur], board)
         # 本次dfs遍历完成，解除标记，在下个dfs会被再使用
         board[i][j] = cur
 
         """
-        2. 假如存在形如这种的trie, 则把b:{}给pop掉，以减少下次查询的长度
+        2. 重要优化，加上在碰到极端case能快接近十倍 
+        假如存在形如这种的trie, 则把b:{}给pop掉，以减少下次查询的长度
         {a:{b:{}}} -> {a:{}}
         """
         if node[cur] == {}:

@@ -48,6 +48,7 @@ class MedianFinder(object):
 
 
 """
+对比过acwing的做法，基本一样
 https://leetcode.com/problems/find-median-from-data-stream/discuss/74047/JavaPython-two-heap-solution-O(log-n)-add-O(1)-find
 https://algocasts.io/episodes/VlWdOvp0
 答案：

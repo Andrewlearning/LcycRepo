@@ -21,6 +21,7 @@ class Solution(object):
         l = 0
         r = len(nums)  # 因为可以插在len(nums)的那个位置上，所以这里要保留
 
+        # 目的是, 从前往后找，第一个 >= target数的位置。所以使用左边界做法
         while l < r:
             mid = (l + r) // 2
 
