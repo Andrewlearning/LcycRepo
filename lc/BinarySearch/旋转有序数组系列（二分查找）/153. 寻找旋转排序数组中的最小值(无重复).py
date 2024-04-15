@@ -19,10 +19,6 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        # 处理 [1] 这种情况
-        if len(nums) == 1:
-            return nums[0]
-
         n = len(nums)
         l = 0
         r = n - 1
@@ -30,7 +26,7 @@ class Solution(object):
         target = nums[0]
 
         # 找出上升区间的最大值(右边界模板)，下一个数就是下降区间的最小值
-        # [3,4,5(找到这个的下标),1,2]
+        # 例如: [3,4,5(找到这个的下标),1,2]
         while l < r:
             mid = (l + r + 1) // 2
             if nums[mid] >= target:
@@ -38,8 +34,9 @@ class Solution(object):
             else:
                 r = mid - 1
 
+        # 假如我们发现，大于nums[0]的右边界，在数组最后一位，说明这个数组是递增的
         # 处理 [1,2,3,4] 这种情况，没有下降区间了，所以我们取第一个数
-        if l == n - 1 and nums[l] > nums[0]:
+        if l == n - 1:
             return nums[0]
         # 正常情况下，下降区间的最小值应该是上升区间最大值后一个数
         return nums[l + 1]
