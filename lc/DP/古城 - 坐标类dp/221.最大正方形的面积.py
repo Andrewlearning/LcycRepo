@@ -27,7 +27,7 @@ class Solution(object):
         # dp[i][j]表示以m[i-1][j-1]作为正方形的右下角，所能形成最大正方形的边长长度
         dp = [[0] * (lc + 1) for i in range(lr + 1)]
 
-        # 正方形的最大边长
+        # 记录正方形的最大边长
         res = 0
 
         for i in range(1, lr + 1):
@@ -35,7 +35,7 @@ class Solution(object):
                 # 我们注意，每次开始计算，都是从正方形的右下角开始计算的
                 if m[i - 1][j - 1] == "1":
 
-                    # 因为这个dp的赋值是从左上到右下赋值的，所以我们可以通过这样的递推式去进行赋值
+                    # 因为这个dp的i,j遍历是从左上到右下赋值的，所以我们可以通过这样的递推式去进行赋值
                     dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
                     if dp[i][j] > res:
                         res = dp[i][j]
