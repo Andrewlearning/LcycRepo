@@ -13,53 +13,39 @@ Output: 2
 Explanation: Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.
 """
 
-import sys
+
 class Solution(object):
-    def maxProfit(self, n, prices):
+    def maxProfit(self, k, prices):
         """
         :type k: int
         :type prices: List[int]
         :rtype: int
         """
+        n = len(prices)
 
-        if prices is None or len(prices) == 0 or n == 0:
-            return 0
-        res = 0
+        # 创建一个二维数组dp，dp[i][j]表示在第i天最多进行j次买卖时的最大利润
+        # dp[i][j] 已经表示手里没有股票了，都卖掉了，相当于省略掉了一个记录买卖的状态
+        dp = [[0] * (k + 1) for _ in range(n)]
 
-        # 买卖两种操作，  k次交易次数，prices天的时间流程
-        profit = [[[0 for i in range(2)] for i in range(n)] for i in range(len(prices))]
+        for j in range(1, k + 1):
+            # 当前持有股票的最大利润
+            # 由于我们每次都从第一天开始算，我们都假设在第0天购买了股票
+            max_diff = -prices[0]
 
-        profit[0][0][0], profit[0][0][1] = 0, -prices[0]
+            for i in range(1, n):
+                # dp[i - 1][j], 表示在0 - i-1天最多进行j次买卖时的最大利润, 且在第i天不买卖股票
+                # max_diff + prices[i], [0~i-1]天持有股票时的最大利润 + 第i天卖出股票的利润
+                dp[i][j] = max(dp[i - 1][j], max_diff + prices[i])
 
+                # 更新当前持有股票的最大利润
+                # 0-i天且当前已经持有股票的最大利润
+                # 在第i天之前已经不持有股票，在第i-1天进行j-1次买卖时的最大利润 + 购买股票并减去当天的价格
+                max_diff = max(max_diff, dp[i - 1][j - 1] - prices[i])
 
-        for i in range(len(prices)-1):
-            diff = prices[i+1] - prices[i]
-            for k in range(n,0,-1):
-                # 交易0次
-                # 手头上没股票，正常，因为一开始就没有
-                # 手头上有股票，可能是之前买的，也有可能是现在买
-                if i == 1 and k == 0:
-                    profit[i][k][0] = profit[i - 1][k][0]
-                    profit[i][k][1] = max(profit[i - 1][k][1], profit[i - 1][k][0] - prices[i])
-                if k == n-1:
-                    profit[i][k][0] = max(profit[i - 1][k][0], profit[i - 1][k - 1][1] + prices[i])
-                    continue
+        return dp[-1][k]
 
-                profit[i][k][0] = max(profit[i - 1][k][0], profit[i-1][k-1][1] + prices[i])
-                profit[i][k][1] = max(profit[i - 1][k][1], profit[i-1][k-1][0] - prices[i])
-
-
-
-
-
-        return max(profit[-1][n-1])
-
-
-if __name__ == "__main__":
-    solution = Solution()
-    print(solution.maxProfit(4,[3,2,6,5,0,9,1,5,3,8])) #22
-    print(solution.maxProfit(5, [3, 2, 6, 5, 0, 9, 1, 5, 3, 8]))  # 24
-    print(solution.maxProfit(1, [1,2])) #1
-    print(solution.maxProfit(2, [3,2,6,5,0,3])) #7
-    print(solution.maxProfit(2, [2,4,1]))  # 2
+"""
+跟acwing思路接近
+来自宋姐: https://github.com/Christinezy/Leetcode/blob/main/Dp/%E5%A4%9A%E7%BB%B4%E7%8A%B6%E6%80%81dp%E9%97%AE%E9%A2%98/188.%20%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%20IV.py
+"""
 

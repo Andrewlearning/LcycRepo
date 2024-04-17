@@ -14,55 +14,42 @@ Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-
              Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
 (最多有两次交易,买和卖合在一起算一次交易)，这题递归就需要有三个状态了
 """
-import sys
 class Solution(object):
     def maxProfit(self, prices):
         """
         :type prices: List[int]
         :rtype: int
         """
-        if prices is None or len(prices) == 0:
-            return 0
 
+        n = len(prices)
 
-        # [第几天][交易第几次(卖出股票多少次)][手上有股票1，手上没股票0]
-        profit = [[[0 for i in range(2)] for i in range(3)] for i in range(len(prices))]
+        # 0~i最小的股票价格
+        minPre = float('inf')
+        # 从[0~i]，只买卖一次股票的最大收益
+        f = [0] * n
 
-        # 第0天，0次交易，手上没股票，所以收益为0
-        profit[0][0][0] = 0
+        # 我们先构造f
+        for i in range(n):
+            if i > 0:
+                f[i] = f[i - 1]
+            if prices[i] > minPre:
+                f[i] = max(f[i], prices[i] - minPre)
+            # 记录从0到当前位置的最小股票价格
+            minPre = min(minPre, prices[i])
 
-        # 第0天，0次交易，手上有股票，所以收益为-prices[0]
-        profit[0][0][1] = -prices[0]
-
-        # 第0天，1次买卖，手上有没股票都是不可能的，因为在第0天不可能同时完成买卖两次操作
-        profit[0][1][0], profit[0][1][1] = -sys.maxsize, -sys.maxsize
-
-        # 第0天，2次买卖，手上有没股票都是不可能的，因为在第0天不可能同时完成买卖两次操作
-        profit[0][2][0], profit[0][2][1] = -sys.maxsize, -sys.maxsize
-
-
-        for i in range(1, len(prices)):
-            # 0买0卖，不进行交易的话，那么还是等于上一天的情况
-            profit[i][0][0] = profit[i-1][0][0]
-
-            # 1买0卖，手头上有股票，可能是上一天买的，也有可能是这一天买的
-            profit[i][0][1] = max(profit[i-1][0][1], profit[i-1][0][0] - prices[i])
-
-
-            # 1买1卖，手头上没股票，说明上一天卖了，或者是这一天卖了
-            profit[i][1][0] = max(profit[i-1][1][0], profit[i-1][0][1] + prices[i])
-
-            # 2买1卖，手头上有股票，说明上一天买了，或者是这一天买了
-            profit[i][1][1] = max(profit[i-1][1][1], profit[i-1][1][0] - prices[i])
-
-            # 2买2卖，手头上没股票（不可能再买了），看股票之前卖赚的多还是现在卖赚最多
-            profit[i][2][0] = max(profit[i-1][2][0], profit[i-1][1][1] + prices[i])
-
-
-
-
-        # 中间都是0是因为，手上没股票了，利润才可能是最大的
-        return max(profit[-1][0][0], profit[-1][1][0], profit[-1][2][0])
+        # 记录从当前[i ~ -1]的最大股票价格
+        maxPriceForward = float('-inf')
+        # 初始状态设置为从0 ~ n-1只交易一次的最大利润
+        res = f[n - 1]
+        for i in range(n - 1, 1, -1):
+            if maxPriceForward > prices[i]:
+                # maxPriceForward - prices[i] 为 i ~ -1 的最大利润
+                # f[i - 1] 为 0 ~ i-1 的最大利润
+                # 我们有了这两次交易的最大利润，就可以得到题目所要的结果
+                res = max(res, maxPriceForward - prices[i] + f[i - 1])
+            maxPriceForward = max(maxPriceForward, prices[i])
+        return res
 
 """
+acwing: https://www.acwing.com/activity/content/problem/content/2551/
 """
