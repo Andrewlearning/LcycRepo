@@ -61,7 +61,7 @@ word1的[0~i]的片段 和 word2的[0~j]的片段，把他们变成相同的字�
 dp[i][j] = dp[i-1][j-1]
 
 3.当i,j位不相等时，我们有三种操作，delect,insert,replace
-这三种操作所针对的都是word1[i]或word2[j]字符串
+这三种操作所针对的都是`word1[i]`字符串
 
 3.1 delect,表示删除第word1[i]位能保证两个字符串相等，
 那么前提就是word1[0,i-1] = word2[0,j]可通过dp[i-1][j]次转化达到
