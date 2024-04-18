@@ -1,5 +1,5 @@
 """
-给出方程式 A / B = k, 其中 A 和 B 均为用字符串表示的变量， k 是一个浮点型数字。根据已知方程式求解问题，并返回计算结果。如果结果不存在，则返回 -1.0。
+给出方程式A / B = k, 其中A 和B 均为用字符串表示的变量，k 是一个浮点型数字。根据已知方程式求解问题，并返回计算结果。如果结果不存在，则返回-1.0。
 
 输入总是有效的。你可以假设除法运算中不会出现除数为 0 的情况，且不存在任何矛盾的结果。
 
@@ -25,25 +25,31 @@ class Solution(object):
         """
         vertex = set()
         path = collections.defaultdict(dict)
-        for (a, b), v in zip(equations, values):
-            path[a][b] = v
-            path[b][a] = 1 / v
+        n = len(equations)
+
+        for i in range(n):
+            x, y = equations[i][0], equations[i][1]
+            path[x][y] = values[i]
+            path[y][x] = 1/values[i]
+
             # 把记录过的点加入到vertex里去
-            vertex.add(a)
-            vertex.add(b)
+            vertex.add(x)
+            vertex.add(y)
 
         # 把所有的点之间的距离都求出来，后面遍历就行了
+        # 主要利用k做桥梁计算，通过i, j来遍历vertex里的所有组合，记录所有组合的除法结果
+        # 当然，这里只能对有交集的集合 [a,b] [b,c] -> a:[a,b,c] 进行连接
+        # 对无交集的集合，没办法进行链接 [a,b] [c,c] -> a:[a,b]
         for k in vertex:
             for i in vertex:
                 for j in vertex:
-                    # i/k * j/k = i/k, 得到i ~ k的距离
+                    # i/k * k/j = i/k, 得到i ~ k的距离
                     if k in path[i].keys() and j in path[k].keys():
                         path[i][j] = path[i][k] * path[k][j]
 
         res = []
         for q in queries:
-            up = q[0]
-            down = q[1]
+            up, down = q[0], q[1]
             # up/down 存在，返回结果
             if down in path[up].keys():
                 res.append(path[up][down])

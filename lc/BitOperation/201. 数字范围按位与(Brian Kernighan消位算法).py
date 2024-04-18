@@ -23,8 +23,6 @@ class Solution(object):
         return n
 
 """
-时间复杂度：O(logn)。和位移方法类似，算法的时间复杂度取决于 mm 和 nn 二进制展开的位数。尽管和位移方法具有相同的渐近复杂度，但 Brian Kernighan 的算法需要的迭代次数会更少，因为它跳过了两个数字之间的所有零位。
-空间复杂度：O(1)。我们只需要常数空间存放若干变量。
-
-链接：https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/solution/shu-zi-fan-wei-an-wei-yu-by-leetcode-solution/
+这题用y总的办法写吧，他的解释也比较好懂
+https://www.acwing.com/activity/content/problem/content/2569/
 """

@@ -1,3 +1,22 @@
+"""
+In a Unix-style file system, a period '.' refers to the current directory,
+a double period '..' refers to the directory up a level,
+and any multiple consecutive slashes (i.e. '//') are treated as a single slash '/'.
+For this problem, any other format of periods such as '...' are treated as file/directory names.
+
+其实这道题，输入只有 "/", ".", "..", "...", "word"
+我们只要处理好这些情况就好
+
+Example 2:
+Input: path = "/../"
+Output: "/"
+Explanation: Going one level up from the root directory is a no-op, as the root level is the highest level you can go
+
+Input: path = "/home//foo/"
+Output: "/home/foo"
+Explanation: In the canonical path, multiple consecutive slashes are replaced by a single one.
+"""
+
 class Solution(object):
     def simplifyPath(self, path):
         """
@@ -34,6 +53,4 @@ https://www.youtube.com/watch?v=l-og2X5GibY思路
 所以操作方法是
 遇到字母，那么把字母加进结果
 遇到.., 要是不可以pop了，就不处理，要是有元素，那就pop
-
-
 """

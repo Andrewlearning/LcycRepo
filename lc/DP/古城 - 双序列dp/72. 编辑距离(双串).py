@@ -52,7 +52,7 @@ class Solution(object):
         return dp[n1][n2]
 
 """
-https://www.acwing.com/video/334/
+https://www.acwing.com/video/1415/
 答案：
 1.dp[i][j] i表示word1的[0~i]的片段，j表示word2的[0~j]的片段，合在一起的意思就是
 word1的[0~i]的片段 和 word2的[0~j]的片段，把他们变成相同的字符串最少需要多少步操作
@@ -63,11 +63,11 @@ dp[i][j] = dp[i-1][j-1]
 3.当i,j位不相等时，我们有三种操作，delect,insert,replace
 这三种操作所针对的都是`word1[i]`字符串
 
-3.1 delect,表示删除第word1[i]位能保证两个字符串相等，
+3.1 delect,表示删除第word1[i]位才能保证两个字符串相等，这种情况发生于len(word1[0,i]) > len(word2[0,j]) 
 那么前提就是word1[0,i-1] = word2[0,j]可通过dp[i-1][j]次转化达到
-所以操作数 dp[i][j] = dp[i-1][j] + 1
+所以操作数 dp[i][j] = dp[i-1][j] + 1(这个操作时删掉A)
 
-3.2 insert,表示要在第word1[i]位后面添加一个字母word[j]，才能保证两个字符串相等
+3.2 insert,表示要在第word1[i]位后面添加一个字母word[j]，才能保证两个字符串相等，这种情况发生于len(word1[0,i]) < len(word2[0,j]) 
 那么前提就是word1[0,i] = word2[0,j-1]可通过dp[i][j-1]次转化达到
 所以操作数是 dp[i][j] = dp[i][j-1] + 1
 
