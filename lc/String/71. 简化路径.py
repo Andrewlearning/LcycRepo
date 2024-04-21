@@ -28,15 +28,17 @@ class Solution(object):
 
         # 因为一开始可能会出现 "/////C/A" 这种多重斜杠的情况，所以我们把斜杠去掉
         # 然后去掉斜杠后原位置会出现 空格
-        path = path.split("/")
+        ps = path.split("/")
         res = []
 
-        for char in path:
-            if char == "..":
+        for p in ps:
+            if p == "/" or p == "" or p == ".":
+                continue
+            elif p == "..":
                 if len(res) > 0:
-                    res.pop(-1)
-            elif char != "." and char != "":
-                res.append(char)
+                    res.pop()
+            else:
+                res.append(p)
 
         return "/" + "/".join(res)
 

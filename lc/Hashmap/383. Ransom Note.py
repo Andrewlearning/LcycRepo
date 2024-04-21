@@ -14,24 +14,22 @@ class Solution(object):
         :type magazine: str
         :rtype: bool
         """
-        mm = {}
+        from collections import defaultdict
 
-        for char in magazine:
-            if char not in mm:
-                mm[char] = 1
-            else:
-                mm[char] += 1
+        r = ransomNote
+        m = magazine
+        mm = defaultdict(int)
+        rm = defaultdict(int)
 
-        for char in ransomNote:
-            # 假如不存在，则说明无法构成
-            if char not in mm:
+        for c in r:
+            rm[c] += 1
+        for c in m:
+            mm[c] += 1
+
+        for k in rm:
+            # 需要magazine不单包含ransomNote里的所有元素，且出现次数也要 >= ransomNote
+            if k not in mm or rm[k] > mm[k]:
                 return False
-            else:
-                mm[char] -= 1
-                # 假如构成magazine需要更多元素，则说明无法构成
-                if mm[char] < 0:
-                    return False
-
         return True
 
 """

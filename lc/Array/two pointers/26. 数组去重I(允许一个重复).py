@@ -11,10 +11,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        k  = 0
+        # 把不重复的元素，都通过这个指针来放置
+        k = 0
         for num in nums:
             # k < 1, 第一个位置的数字不用考虑重复问题
-            # nums[k-1] != num，例如2，3这种情况，3是可以加入的
+            # nums[k-1] != num，例如2，3, 3这种情况，第一个3是可以加入的不重复数组的
             if k < 1 or nums[k-1] != num:
                 nums[k] = num
                 k += 1

@@ -20,11 +20,13 @@ class Solution(object):
         if not nums and len(nums) == 0:
             return 0
 
-        # 我们采用的是[]的滑动窗口
+        # 我们采用的是利用[l, i]来表示滑动窗口
         l = 0
         res = float('inf')
 
         # 滑动窗口内的值
+        # 得用一个值来记录滑动窗口内值的和
+        # 利用sum()的话在一些特别大的case会超时
         wSum = 0
 
         for i in range(len(nums)):

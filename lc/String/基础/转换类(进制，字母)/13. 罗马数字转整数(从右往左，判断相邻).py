@@ -36,20 +36,18 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        mapping = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-        l = len(s)
+        m = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        n = len(s)
+        res = 0
 
-        # 我们首先将 最后一个元素的值给赋予到res上
-        res = mapping[s[l - 1]]
-
-        for i in range(l - 2, -1, -1):
+        for i in range(n-1, -1, -1):
             # 每次我们都只比较i,和 i+1 的大小关系
-            # 左边数字比右边大， VI = 6 II = 2
-            if mapping[s[i]] >= mapping[s[i + 1]]:
-                res += mapping[s[i]]
             # 左边数字比右边小, IV = 4
+            if i < n-1 and m[s[i]] < m[s[i+1]]:
+                res -= m[s[i]]
+            # 左边数字比右边大， VI = 6 II = 2
             else:
-                res -= mapping[s[i]]
+                res += m[s[i]]
 
         return res
 

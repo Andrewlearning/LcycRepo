@@ -23,22 +23,23 @@ class Solution(object):
         :rtype: str
         """
         # 获取最短的单词的长度
-        minL = len(strs[0])
+        n = float('inf')
         for str in strs:
-            minL = min(minL, len(str))
+            n = min(n, len(str))
 
         # 假如最短长度=0，说明不可能有共同前缀
-        if minL == 0:
+        if n == 0:
             return ""
 
-        for i in range(minL):
-            char = strs[0][i]
+        res = ""
+        for i in range(n):
+            cur = s[i]
             # 遍历每个单词，假如找到某一位不相等的话，那么就返回这一位前面的所有字母
-            for str in strs:
-                if char != str[i]:
-                    return str[:i]
-
-        return strs[0][:minL]
+            for s in strs:
+                if s[i] != cur:
+                    return res
+            res += cur
+        return res
 
 
 """

@@ -24,6 +24,8 @@ class RandomizedSet(object):
         self.hashmap = {}
         # 把每个在hashmap存在的元素都加进来，用于做随机处理
         self.nums = []
+        # 实时记录self.nums的长度，避免使用len(), 降低时间复杂度
+        self.n = 0
 
     def insert(self, val):
         """
@@ -36,6 +38,7 @@ class RandomizedSet(object):
             self.nums.append(val)
             # 记录新加进去元素的下标
             self.hashmap[val] = len(self.nums)-1
+            self.n += 1
             return True
 
         # 假如在里面，return False
@@ -63,6 +66,7 @@ class RandomizedSet(object):
 
             # 把多余的last_value 给pop()掉，因为它已经附值在val之前的index上了
             self.nums.pop()
+            self.n -= 1
 
             # 把hashmap 中把 val给去掉
             del self.hashmap[val]
@@ -77,7 +81,7 @@ class RandomizedSet(object):
         Get a random element from the set.
         :rtype: int
         """
-        return self.nums[randint(0,len(self.nums)-1)]
+        return self.nums[randint(0,self.n-1)]
 
 """
 https://leetcode.com/problems/insert-delete-getrandom-o1/discuss/85397/Simple-solution-in-Python

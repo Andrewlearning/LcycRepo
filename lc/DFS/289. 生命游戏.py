@@ -62,5 +62,45 @@ class Solution(object):
 
 """
 youtube.com/watch?v=9AsUixzUGa0
-
 """
+
+# 做法和上面一样，不过这样写比较生位置
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        n = len(board)
+        m = len(board[0])
+
+        def count(i, j):
+            res = 0
+            for di in range(-1, 2):
+                for dj in range(-1, 2):
+                    ni = i + di
+                    nj = j + dj
+                    if di == 0 and dj == 0:
+                        continue
+                    if 0 <= ni < n and 0 <= nj < m and board[ni][nj] in [1, -2]:
+                        res += 1
+            return res
+
+        for i in range(n):
+            for j in range(m):
+                c = count(i, j)
+                # print(c)
+                val = board[i][j]
+                # 本轮死，下一轮是活的标记成-1
+                if val == 0 and c == 3:
+                    board[i][j] = -1
+                if val == 1:
+                    # 本轮活，下一轮死的标记成-2
+                    if c < 2 or c > 3:
+                        board[i][j] = -2
+
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == -1:
+                    board[i][j] = 1
+                elif board[i][j] == -2:
+                    board[i][j] = 0

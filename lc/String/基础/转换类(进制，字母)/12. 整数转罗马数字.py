@@ -31,21 +31,18 @@ class Solution(object):
         nums = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
         sbs = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
         n = len(nums)
-        res = []
-
-        for i in range(len(values)):
-            # 注意：这里是等于号，表示尽量使用大的"面值"
+        res = ""
 
         while num > 0:
             for i in range(n):
                 # 从大往小遍历，当发现可以相减的，记录
                 if nums[i] <= num:
                     num -= nums[i]
-                    res.append(sbs[i])
+                    res += sbs[i]
                     # 减完一次重新开始，要不然会把较小的数放在左边
                     break
 
-        return "".join(res)
+        return res
 
 """
 https://leetcode-cn.com/problems/integer-to-roman/solution/tan-xin-suan-fa-by-liweiwei1419/

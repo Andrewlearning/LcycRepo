@@ -23,6 +23,7 @@ class Solution(object):
         lrow = len(matrix)
         lcol = len(matrix[0])
 
+        # 先进性标记，后进行修改，这样就避免了很多重复的计算
         rows = [0] * lrow
         cols = [0] * lcol
 

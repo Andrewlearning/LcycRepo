@@ -60,3 +60,39 @@ class Solution(object):
 """
 作为求解数独的简单版，我们只要检查数独中的数字是否满足数独的规定就好了
 """
+
+# 这样把函数定义在里面，比较省事，不用传这么多变量
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+
+        nr = len(board)
+        nc = len(board[0])
+
+        def verify(i, j):
+            for di in range(nr):
+                if i == di:
+                    continue
+                if board[i][j] == board[di][j]:
+                    return False
+
+            for dj in range(nc):
+                if j == dj:
+                    continue
+                if board[i][j] == board[i][dj]:
+                    return False
+
+            for x in range(9):
+                di = 3 * (i // 3) + x // 3
+                dj = 3 * (j // 3) + x % 3
+                if di == i and dj == j:
+                    continue
+                if board[i][j] == board[di][dj]:
+                    return False
+            return True
+
+        for i in range(nr):
+            for j in range(nc):
+                if board[i][j] != ".":
+                    if not verify(i, j):
+                        return False
+        return True

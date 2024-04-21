@@ -1,24 +1,18 @@
 
 
-def solve(m, strings):
-    # map = []
-    # for i in range(26):
-    #     map.append(chr(97 + i))
-    # print(map)
-    # print(ord("a"))
+def solve():
+    n = nc = 6
 
-    res = 0
-    for s in strings:
-        temp = 1
-        for char in s:
-            # print("ord", int(ord(char)))
-            temp *= ord(char)
+    for val in range(1, 37):
 
-        print(temp)
-        res += temp
-    if res % 2 == 0:
-        return "EVEN"
-    return "ODD"
+        row = (val - 1) // nc
+        col = (val - 1) % nc
+
+        if row % 2 == 1:
+            col = n - 1 - col
+        row = n - 1 - row
+
+        print(val, (row,col))
 
 if __name__ == '__main__':
-    print(solve(2, ["azbde", "abcher", "acegk"]))
+    print(solve())

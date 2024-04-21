@@ -18,6 +18,7 @@ class Solution(object):
         ln = len(needle)
 
         # 我们最多遍历前 [0 ~ lh - ln + 1],
+        # +1是考虑到lh，ln 长度相等的情况，那么lh-ln=0，所以要+1来保证可以可以进行一轮遍历
         for i in range(lh - ln + 1):
             ph = i
             pn = 0
