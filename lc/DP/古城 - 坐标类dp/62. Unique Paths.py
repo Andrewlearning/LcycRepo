@@ -20,8 +20,11 @@ class Solution(object):
         # 初始化dp数组
         dp = [[0] * lc for i in range(lr)]
 
-        for i in range(0, lr):
-            for j in range(0 ,lc):
+        # 初始化dp的起点，假如从起点只往右走，或只往下走，都是只有一条路线才可以到达
+        dp[0][0] = 1
+
+        for i in range(lr):
+            for j in range(lc):
                 # 初始化[0][0]这个格子，走到这个格子只有一种走法
                 if i == 0 and j == 0:
                     dp[i][j] = 1
@@ -33,7 +36,7 @@ class Solution(object):
                     if j > 0:
                         dp[i][j] += dp[i][j-1]
 
-        return dp[lr-1][lc-1]
+        return dp[-1][-1]
 
 
 """

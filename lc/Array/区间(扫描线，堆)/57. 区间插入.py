@@ -29,20 +29,16 @@ class Solution(object):
             return res
 
         # 中间有交集部分
-        # 每次出循环了，都要检查一下k有没有越界
-        if k < n:
-            # 先更新交集区间的左端点，这个只需要更新一次
-            new[0] = min(old[k][0], new[0])
-
-            # 持续更新区间的右端点
-            # 我们怎么确认还有交集，只要能明确知道不是 old[k][0] > new[1]，就说明还有交集
-            while k < n and old[k][0] <= new[1]:
-                new[1] = max(old[k][1], new[1])
-                k += 1
-
+        # 持续更新区间的右端点
+        # 我们怎么确认还有交集，new[1] >= old[k][0]，就说明还有交集
+        while k < n and new[1] >= old[k][0]:
+            new[0] = min(new[0], old[k][0])
+            new[1] = max(new[1], old[k][1])
+            i += 1
         # 然后把合并好的区间加到答案里
         res.append(new)
 
+        # 把剩余没有交集的区间也加入到res中
         while k < n:
             res.append(old[k])
             k += 1

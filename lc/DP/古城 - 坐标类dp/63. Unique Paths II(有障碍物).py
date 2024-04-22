@@ -1,30 +1,34 @@
 class Solution(object):
-    def uniquePathsWithObstacles(self, o):
+    def uniquePathsWithObstacles(self, obstacleGrid):
         """
         :type obstacleGrid: List[List[int]]
         :rtype: int
         """
-        lr = len(o)
-        if lr == 0:
-            return 0
-        lc = len(o[0])
+        o = obstacleGrid
 
-        dp = [[0] * lc for _ in range(lr)]
+        n = len(o)
+        m = len(o[0])
 
-        for i in range(lr):
-            for j in range(lc):
-                # 提前过滤掉障碍物，障碍物那个格子方案肯定为0，就不用计算了
-                if o[i][j] == 0:
-                    # 剩下做法和62题一样
-                    if i == 0 and j == 0:
-                        dp[i][j] = 1
-                    else:
-                        if i > 0:
-                            dp[i][j] += dp[i - 1][j]
-                        if j > 0:
-                            dp[i][j] += dp[i][j - 1]
+        dp = [[0] * m for _ in range(n)]
 
-        return dp[lr - 1][lc - 1]
+        # 假如起步就是石头，那么则没办法遍历了
+        if o[0][0] != 1:
+            dp[0][0] = 1
+
+        for i in range(n):
+            for j in range(m):
+                # 假如当前位置时石头，那么dp[i][j]保持默认=0，说明此路无法到达
+                # 当下面遍历到这个地方的时候，也没办法获得任何路径
+                if o[i][j] == 1:
+                    continue
+                # 假如有从上面下来的走法
+                if i > 0:
+                    dp[i][j] += dp[i - 1][j]
+                # 假如有从左边往右的走法
+                if j > 0:
+                    dp[i][j] += dp[i][j - 1]
+
+        return dp[-1][-1]
 
 
 """

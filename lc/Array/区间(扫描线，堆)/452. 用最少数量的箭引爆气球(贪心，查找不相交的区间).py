@@ -32,7 +32,8 @@ class Solution:
             if curEnd < l:
                 disconn += 1
 
-                # 发现有不相交的区间，更换到下一个不相交区间，继续寻找不相交区间
+                # 发现有不相交的区间，更换到下一个不相交区间，然后继续寻找不相交区间
+                # 因为相交的区间，都可以被一支箭射爆
                 curEnd = r
 
         return disconn
