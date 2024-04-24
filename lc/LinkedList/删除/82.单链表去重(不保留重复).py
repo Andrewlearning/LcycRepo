@@ -4,11 +4,16 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        dummy = ListNode(0)
-        dummy.next = head
+        d = ListNode(0)
+        d.next = head
         # pre代表是无重复链表
-        pre = dummy
-        # cur是探测是否有重复的指针
+        pre = d
+
+        """
+            cur是探测是否有重复的指针
+            这里cur必须要领先pre一个，要不然在[1,2,3,3,4,4..]这个case, pre和cur都会先在else中移动到3
+            然后就没办法把3给删除掉了
+        """
         cur = head
 
         while cur:
@@ -27,7 +32,7 @@ class Solution(object):
                 pre = pre.next
                 cur = cur.next
 
-        return dummy.next
+        return d.next
 
 """
 古城算法 7:00

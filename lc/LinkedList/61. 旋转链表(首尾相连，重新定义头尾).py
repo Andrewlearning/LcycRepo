@@ -29,10 +29,7 @@ class Solution(object):
         tail.next = head
 
         # 第三步，考虑到k大于长度的情况，那么我们就先取余
-        # 假如翻转的次数是链表长度的倍数，那么说明翻转后结果一样，直接返回
         k = k % n
-        if k == 0:
-            return head
 
         # 第四步， 就是那出新指针要指向的点，其中有newend, newhead
         newend = head
