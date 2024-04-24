@@ -60,4 +60,7 @@ class Solution(object):
 
 """
 https://www.acwing.com/video/2612/
+
+206反转链表，需要两个指针 pre, cur
+本题需要再在反转部分链表的时候，也需要pre, cur, 而且还需要多一个edge, 放在需要反转区间左边外一个节点，后用于连接反转区间的头尾
 """
