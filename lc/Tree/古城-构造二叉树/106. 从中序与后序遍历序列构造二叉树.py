@@ -5,27 +5,33 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class Solution(object):
-    def buildTree(self, inorder, postorder):
-        """
-        :type inorder: List[int]
-        :type postorder: List[int]
-        :rtype: TreeNode
-        """
 
-        # inorder: left root right
-        # postorder: left right root
-        if not inorder or not postorder:
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        n = len(inorder)
+        self.p = postorder
+        self.pi = n - 1
+
+        self.im = {}
+        for i in range(n):
+            self.im[inorder[i]] = i
+
+        return self.h(0, n - 1)
+
+    def h(self, l, r):
+        if l > r:
             return None
 
-        val = postorder.pop(-1)
-        root = TreeNode(val)
-        i = inorder.index(val)
+        node = TreeNode(self.p[self.pi])
+        self.pi -= 1
 
-        root.right = self.buildTree(inorder[i + 1:], postorder)
-        root.left = self.buildTree(inorder[:i], postorder)
+        # 注意这里的遍历的顺序，postorder是 left, right, root
+        # 所以这里也要按照这个顺序构建
+        nindex = self.im[node.val]
+        node.right = self.h(nindex + 1, r)
+        node.left = self.h(l, nindex - 1)
 
-        return root
+        return node
 
 """
 对于这种题， 我们首先先要把root节点找出来， 然后进行左右分堆递归

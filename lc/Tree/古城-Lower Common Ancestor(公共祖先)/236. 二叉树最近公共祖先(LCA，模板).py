@@ -13,9 +13,11 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        # 1. 遍历到 p,q的情况，则返回p 或 q
-        # 2. 遍历到None的情况(说明没找到pq),则返回None
-        if (not root) or (root == p) or (root == q):
+        # 遍历到None的情况(说明没找到pq),则返回None
+        if not root:
+            return None
+        # 遍历到 p,q的情况，则返回p 或 q
+        if root == p or root == q:
             return root
 
         # 看左子树和右子树有没有找到pq

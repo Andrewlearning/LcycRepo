@@ -26,7 +26,7 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        visited = []
+        visited = set()
 
         while n != 1:
             cur = self.getDigit(n)
@@ -38,7 +38,7 @@ class Solution(object):
             if cur in visited:
                 return False
 
-            visited.append(cur)
+            visited.add(cur)
             n = cur
         return True
 

@@ -14,6 +14,54 @@
 返回：[6.0, 0.5, -1.0, 1.0, -1.0 ]
 """
 
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        from collections import defaultdict
+
+        graph = defaultdict(dict)
+
+        # 构建有向图
+        for (x, y), val in zip(equations, values):
+            graph[x][y] = val
+            graph[y][x] = 1 / val
+
+        def dfs(start, end, visited):
+            # 假如除数和被除数有任何一个不存在记录，则说明无法得到答案
+            if start not in graph or end not in graph:
+                return -1.0
+            # 这对除法有结果，则直接返回答案
+            if end in graph[start]:
+                return graph[start][end]
+
+            # 每次图的寻找，记录走过的节点，避免进入死循环
+            visited.add(start)
+            
+            # 查看当前start有哪些child可以遍历
+            for child, val in graph[start].items():
+                # 核心思想: start/child * child/end = start/end
+                if child not in visited:
+                    result = dfs(child, end, visited)
+                    if result != -1.0:
+                        return val * result
+
+            # 假如没找到结果，则返回-1
+            return -1.0
+
+        res = []
+        for query in queries:
+            start, end = query
+            res.append(dfs(start, end, set()))
+
+        return res
+
+# from chatgpt，比闫总的好理解
+
 import collections
 class Solution(object):
     def calcEquation(self, equations, values, queries):
