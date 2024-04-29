@@ -33,15 +33,14 @@ class WordDictionary(object):
             nc = word[p]
             if nc in m and self.dfs(m[nc], p+1, word):
                 return True
-            else:
-                return False
         else:
             # 假如word[p] == ".", 则我们使用26个字母去替代"."来继续遍历
             for i in range(26):
                 nc = chr(ord('a') + i)
                 if nc in m and self.dfs(m[nc], p + 1, word):
                     return True
-            return False
+
+        return False
 
 
 # 古城算法: https://www.youtube.com/watch?v=qU3SbJHb7o8

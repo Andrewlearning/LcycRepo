@@ -44,5 +44,35 @@ class Solution(object):
 """
 https://www.youtube.com/watch?v=xtDjDTFk-Cw&list=PLyIjPezcZJNNcmV2N3ZSypT00t7o2oSS-&index=31
 时间复杂度：O(2^n)
-
 """
+
+# 下面这种更常用的 append, pop写法，相对于上面的写法来说更复杂一点
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        self.res = []
+
+        def dfs(l, r, temp):
+            if len(temp) > 2 * n:
+                return
+            if l == n and r == n:
+                self.res.append("".join(temp[:]))
+
+            if l < n:
+                temp.append("(")
+                l += 1
+                dfs(l, r, temp)
+                l -= 1
+                temp.pop()
+            if r < n and r < l:
+                temp.append(")")
+                r += 1
+                dfs(l, r, temp)
+                r -= 1
+                temp.pop()
+
+        dfs(0, 0, [])
+        return self.res
