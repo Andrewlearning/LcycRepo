@@ -32,6 +32,7 @@ class Solution(object):
             wMap[s[i]] += 1
 
             # 假如加入当前元素后，当前元素在窗口内出现的次数没有超过要求的次数，并且这个元素是有效原则，则cnt++
+            # 后面去除多余元素的时候不需要清理cnt, 因为我们不会删除到需要的元素，cnt只记录了window里是否包含足够量的必须元素
             if wMap[s[i]] <= reqMap[s[i]]:
                 cnt += 1
 
@@ -47,6 +48,10 @@ class Solution(object):
                     res = s[l:i + 1]
 
         return res
+
+if __name__ == '__main__':
+    s = Solution()
+    s.minWindow("ADOBECODEBANC", "ABC")
 
 """
 https://www.acwing.com/video/1419/

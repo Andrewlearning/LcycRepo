@@ -27,6 +27,7 @@ class Solution(object):
         :rtype: int
         """
         # 假如终点不在bank里，说明无法到达
+        # 加判断的愿意是，可能有不存在的word,但可以通过字母变换，在bank里有对应值，从而混过去了
         if endGene not in bank:
             return -1
 
@@ -42,6 +43,7 @@ class Solution(object):
         pool = "ACGT"
         deepth = 1
 
+        # 这里应该是and, 因为假如通过单词转换后，无法到达下一站，sset应该会等于空的set
         while sset and eset:
             # 记录下一层需要遍历的基因
             temp = set()

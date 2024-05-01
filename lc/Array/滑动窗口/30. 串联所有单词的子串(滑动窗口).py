@@ -28,6 +28,7 @@ class Solution(object):
 
         nw = len(words[0])
         n = len(s)
+        # 这也是一个dafaultdict(int), 假如[不存在的key]=0
         wmap = Counter(words)
         res = []
 
@@ -49,9 +50,11 @@ class Solution(object):
             while r + nw <= n:
                 curWord = s[r: r + nw]
                 window[curWord] += 1
+                # r的下标放在这里更新
                 r += nw
 
-                # 如果窗口里的所需单词数量超过了目标数量，移动左边界，去除单词
+                # 1. 如果窗口里的所需单词数量超过了目标数量，移动左边界，去除单词
+                # 2. 假如curWord不在要求的列表里，则不断更新l的位置,直到indow里不再有这个单词
                 while window[curWord] > wmap[curWord]:
                     window[s[l:l + nw]] -= 1
                     l += nw
@@ -64,6 +67,9 @@ class Solution(object):
 
         return res
 
+if __name__ == '__main__':
+    s = Solution()
+    s.findSubstring("barfoothefoobarman", ["foo","bar"])
 """
 借鉴acwing的思想，但是代码没有按照他的写
 time:O(n**2) space O(n)
