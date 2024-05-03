@@ -4,6 +4,7 @@ Output: 3
 """
 
 class Solution(object):
+    # 比较快但是比较难记忆，忽略
     def hammingWeight(self, n):
         """
         :type n: int
