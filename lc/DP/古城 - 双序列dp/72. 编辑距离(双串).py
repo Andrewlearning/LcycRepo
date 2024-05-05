@@ -43,8 +43,10 @@ class Solution(object):
         if n2 == 0 or n1 == 0:
             return dp[n1][n2]
 
-        for i in range(1,n1+1):
-            for j in range(1,n2+1):
+        # 从1开始是因为[0,1],[1,0]都在上面初始化过了
+        # 而且过滤掉n1,n2都为0的情况
+        for i in range(1, n1+1):
+            for j in range(1, n2+1):
                 dp[i][j] = min(dp[i-1][j-1] + (0 if word1[i-1] == word2[j-1] else 1),
                                dp[i-1][j] + 1,
                                dp[i][j-1] + 1)

@@ -13,12 +13,12 @@ class Solution(object):
         # dp[i][j]表示从起点走到[i][j]的最小值
         dp = [[float('inf')] * lc for _ in range(lr)]
 
-        for i in range(0, lr):
-            for j in range(0, lc):
+        for i in range(lr):
+            for j in range(lc):
                 if i == 0 and j == 0:
                     dp[i][j] = grid[i][j]
                 else:
-                    # 假如i,j都>0, 到[i][j]都有两条路可以选
+                    # 假如i或j>0, 到[i][j]都有1条或2条路可以选
                     # 所以相当于我们选用更小的一条路，并记录
                     if i > 0:
                         dp[i][j] = min(dp[i][j], dp[i - 1][j] + grid[i][j])

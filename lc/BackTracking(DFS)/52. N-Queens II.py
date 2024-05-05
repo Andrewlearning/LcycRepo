@@ -23,7 +23,10 @@ class Solution(object):
         for col in range(n):
             if self.safe(row, col, queens):
                 # 假如当前row,col可以放皇后，则记录，并且row移动到下一行
-                self.bt(n, row + 1, queens + [(row, col)])
+                queens.append([row, col])
+                self.bt(n, row + 1, queens)
+                queens.pop()
+
         return
 
     def safe(self, row, col, queens):

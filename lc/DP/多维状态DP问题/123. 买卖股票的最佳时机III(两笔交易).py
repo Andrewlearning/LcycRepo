@@ -24,24 +24,28 @@ class Solution(object):
         n = len(prices)
 
         # 0~i最小的股票价格
-        minPre = float('inf')
+        preMin = float('inf')
         # 从[0~i]，只买卖一次股票的最大收益
         f = [0] * n
 
         # 我们先构造f
         for i in range(n):
+            curMax = prices[i] - preMin
             if i > 0:
-                f[i] = f[i - 1]
-            if prices[i] > minPre:
-                f[i] = max(f[i], prices[i] - minPre)
+                f[i] = max(f[i-1], curMax)
             # 记录从0到当前位置的最小股票价格
-            minPre = min(minPre, prices[i])
+            preMin = min(preMin, prices[i])
 
         # 记录从当前[i ~ -1]的最大股票价格
         maxPriceForward = float('-inf')
+
         # 初始状态设置为从0 ~ n-1只交易一次的最大利润
+        # 存在一种可能只交易一次的结果就是最好的，例如[1,2,3,4]
+        # 所以要设置为这个值
         res = f[n - 1]
-        for i in range(n - 1, 1, -1):
+
+        # 遍历范围到n-1 ~ 1是因为f[i-1]
+        for i in range(n - 1, 0, -1):
             if maxPriceForward > prices[i]:
                 # maxPriceForward - prices[i] 为 i ~ -1 的最大利润
                 # f[i - 1] 为 0 ~ i-1 的最大利润

@@ -26,6 +26,7 @@ class Solution(object):
 
         # 因为nums1[0] 是nums1中最小的数
         # 所以我们把 nums1[0] 和 nums2中所有的数组成对子放进heap中
+        # 这里无论是用nums1[0] 还是用 nums2[0]结果都是一样的(已验证)
         heap = []
         for i in range(n2):
             heappush(heap, [nums1[0] + nums2[i], 0, i])
@@ -49,3 +50,4 @@ https://algocasts.io/episodes/Z5mz0Qpd
 这题的接发基本上和378一摸一样，唯一不同的地方在于，我们要想办法去利用两个数组去构造一个矩阵，来形成对子
 且这个矩阵也要是，从左到右，从上到下递增
 """
+
