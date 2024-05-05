@@ -21,7 +21,7 @@ class Solution(object):
 
         # 每次进入一个backtracking, 我们都给定一个row，然后从0开始遍历col, 看看能不能找到一个合适的(row,col)来放置一个皇后
         for col in range(n):
-            if self.safe(row, col, queens):
+            if self.isSafe(row, col, queens):
                 # 假如当前row,col可以放皇后，则记录，并且row移动到下一行
                 queens.append([row, col])
                 self.bt(n, row + 1, queens)
@@ -29,7 +29,7 @@ class Solution(object):
 
         return
 
-    def safe(self, row, col, queens):
+    def isSafe(self, row, col, queens):
         # 看当前位置可不可以放皇后
         for qrow, qcol in queens:
             # 当前row, 和col上不能存在其他皇后
@@ -43,7 +43,7 @@ class Solution(object):
 答案来自宋姐
 Time O(n!), n为n皇后的数量
 因为bracktracking在每一行都要尝试n个位置，但由于在每一行都会放置一个皇后，那么往下一行col可以选择的位置都在减少-1
-由于只有在往下递归时间复杂度才高，safe()遍历到不可以选择位置的复杂度大约为O(1~n), 时间复杂为 n * n-1 * n-2 .. * 1 = n!
+由于只有在往下递归时间复杂度才高，isSafe()遍历到不可以选择位置的复杂度大约为O(1~n), 时间复杂为 n * n-1 * n-2 .. * 1 = n!
 
 空间复杂度，由于最多row递归n层，所以空间复杂度为 O(n)
 """

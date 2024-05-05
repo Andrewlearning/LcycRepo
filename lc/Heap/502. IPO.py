@@ -29,7 +29,7 @@ class Solution(object):
         n = len(profits)
 
         # 由于项目有资本门槛，所以我们先按资本门槛排序，然后再按项目的利润排序
-        # 这样就能保证假如两个项目资本门槛相同，我们能有限选择到利润高的
+        # 这样就能保证假如两个项目资本门槛相同，我们能优先选择到利润高的
         pjs = []
         for i in range(n):
             pjs.append([capital[i], profits[i]])
@@ -39,7 +39,7 @@ class Solution(object):
         hp = []
         i = 0
         while k:
-            # 把达到当前门槛的羡慕都加进heap里
+            # 把达到当前门槛的先都加进heap里
             while i < n and pjs[i][0] <= w:
                 profit = pjs[i][1]
                 # 我们要让利润大的项目排在前面

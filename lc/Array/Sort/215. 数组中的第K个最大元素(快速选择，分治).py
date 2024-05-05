@@ -23,6 +23,7 @@ class Solution:
         # 找到最后了，说明数组已经被排序成nums = [>=k的元素从大到小排 | <k的元素乱序]
         # 这是因为因为我们只对我们想找的区间进行排序
         # 所以我们直接返回nums[k]，这个元素必然是第k大的元素
+        # 到这里，l = r = k，因为我们不断在缩小范围寻找k
         if l == r:
             return nums[k]
 
@@ -62,7 +63,7 @@ class Solution:
 # 链接：https://www.acwing.com/video/1589/
 
 """
-如何变成找到数组中第K小的元素, 调整下下面就好
+如何变成找到数组中第K小的元素, 把i,j根据什么元素交换，调整下就好
 while i < j:
     i += 1
     while nums[i] < pivot:
