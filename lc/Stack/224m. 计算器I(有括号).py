@@ -38,7 +38,7 @@ class Solution:
             if char in "+-*/":
                 # case1: -1, i=0, 要往开头加0，变为0-1
                 # case2: (-1, i=2, 要往-1前加0，变为(0-1
-                if i == 0 or s[i - 1] in '(+-':
+                if i == 0 or s[i - 1] in '(':
                     self.nums.append(0)
                 while len(self.ops) > 0 and self.p[self.ops[-1]] >= self.p[char]:
                     # debug用
