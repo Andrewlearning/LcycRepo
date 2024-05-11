@@ -28,16 +28,16 @@ class Solution(object):
         dp = [[0] * (k + 1) for _ in range(n)]
 
         for j in range(1, k + 1):
-            # 当前持有股票的最大利润
+            # 在第i-1天持有股票时的最大利润
             # 由于我们每次都从第一天开始算，我们都假设在第0天购买了股票
             max_diff = -prices[0]
 
-            for i in range(1, n):
+            for i in range(1, n) :
                 # dp[i - 1][j], 表示在0 - i-1天最多进行j次买卖时的最大利润, 且在第i天不买卖股票
                 # max_diff + prices[i], [0~i-1]天持有股票时的最大利润 + 第i天卖出股票的利润
                 dp[i][j] = max(dp[i - 1][j], max_diff + prices[i])
 
-                # 更新当前持有股票的最大利润
+                # 更新当前第i天持有股票的最大利润
                 # 0-i天且当前已经持有股票的最大利润
                 # 在第i天之前已经不持有股票，在第i-1天进行j-1次买卖时的最大利润 + 购买股票并减去当天的价格
                 max_diff = max(max_diff, dp[i - 1][j - 1] - prices[i])

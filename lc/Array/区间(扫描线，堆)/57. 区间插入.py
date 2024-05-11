@@ -16,6 +16,8 @@ class Solution(object):
         """
         res = []
         n = len(old)
+        if n == 0:
+            return [new]
 
         # 用k来作为遍历的old的下标
         k = 0
@@ -23,14 +25,11 @@ class Solution(object):
         while k < n and old[k][1] < new[0]:
             res.append(old[k])
             k += 1
-        # 假如遍历完old还没有遇到交集，则说明new可以直接加在最后面
-        if k == n:
-            res.append(new)
-            return res
 
         # 中间有交集部分
         # 持续更新区间的右端点
         # 我们怎么确认还有交集，new[1] >= old[k][0]，就说明还有交集
+        # 没有交集的情况: new[1] < old[k][0]
         while k < n and new[1] >= old[k][0]:
             new[0] = min(new[0], old[k][0])
             new[1] = max(new[1], old[k][1])
