@@ -42,3 +42,4 @@ class Solution(object):
         return res
 
 # https://www.youtube.com/watch?v=ihf8JjQdta0 22:06
+# 对应lintcode: https://www.lintcode.com/problem/3678/

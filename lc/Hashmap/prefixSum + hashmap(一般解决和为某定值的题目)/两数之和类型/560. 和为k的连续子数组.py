@@ -24,7 +24,7 @@ class Solution(object):
         hashmap = {}
         # key = preFixSum的值
         # value = 这个值所出现过的次数
-        # 这相当于一个base case, 当prefixSum = curSum = k的这种情况发生时，能统计到这种结果
+        # hashmap[0] = 1 这相当于一个base case, 当prefixSum = curSum = k的这种情况发生时，能统计到这种结果
         # 例如 nums[1,1] k=2
         hashmap[0] = 1
         curSum = 0
@@ -34,8 +34,9 @@ class Solution(object):
             curSum += nums[i]
             # curSum - k = v
             # curSum - v = k
-            # [0 ~ i] - [0 ~ j] = k
-            # [j ~ i] = k, 所以存在一个从[j ~ i]的连续数组和为k
+            # curSum([0 ~ i]) - k = Sum([0 ~ j])
+            # curSum([0 ~ i]) - Sum([0 ~ j]) = k
+            # Sum([j ~ i]) = k, 所以存在一个从[j ~ i]的连续数组和为k
             if (curSum - k) in hashmap:
                 res += hashmap[curSum - k]
 

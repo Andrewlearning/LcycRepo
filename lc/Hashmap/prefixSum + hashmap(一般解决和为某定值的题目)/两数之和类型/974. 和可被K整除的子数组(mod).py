@@ -19,10 +19,13 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        from collections import defaultdict
         # key = curSum % k 的值
         # value = 这个值所出现过的次数
-        hashmap = {}
-        hashmap[0] = 1
+        m = defaultdict(int)
+
+        # base caas, 当两个sum%后的余数相等的数相减，他们原始值的差一定是k的倍数
+        m[0] = 1
         prefix = 0
         res = 0
 
@@ -33,10 +36,10 @@ class Solution(object):
             prefix = (prefix + num % k + k) % k
 
             # 两个mod相同的prefix相减，中间这一段子两次出现余数i,j之间的subarray一定是能够被k整除的串
-            res += hashmap.get(prefix, 0)
+            res += m.get(prefix, 0)
 
             # 更新这个mod的出现次数
-            hashmap[prefix] = hashmap.get(prefix, 0) + 1
+            m[prefix] += 1
 
         return res
 

@@ -24,15 +24,17 @@ class Solution(object):
         map = {}
 
         # 初始化，curSum=0, index = -1
+        # 例如这个case [23,2,4,6,1] k=7, Sum(23,2,4,6)=35 35%7=0
+        # 假如map[0]=-1没有设置的话，那么则无法统计到这个有效结果
         map[0] = -1
 
         curSum = 0
         for i in range(len(nums)):
             curSum += nums[i]
 
-            # 语法不允许mod0, 所以当k=0的时候key = curSum
+            # 语法不允许mod0, 因为mod背后是除法机制，所以当k=0的时候key = curSum
             # 否则 key = curSum%k
-            # 因为 a = b(modk), 那么 a - b = m*k
+            # 因为 a(modk) = b(modk), 那么 a - b = m*k
             if k != 0:
                 curSum %= k
 
@@ -42,6 +44,8 @@ class Solution(object):
                 if i - map.get(curSum) > 1:
                     return True
             # mod不在map.keys()里面的话，那么就要把当前mod，index给加进去
+            # 我们对于每个mod后的值，我们只用添加一次就好，因为我们只是想找到"是否存在一个"
+            # 所以保留一个最远的是最合理的
             else:
                 map[curSum] = i
 

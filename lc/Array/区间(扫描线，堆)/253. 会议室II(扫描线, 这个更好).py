@@ -42,3 +42,30 @@ class Solution(object):
 
         return res
 
+# 古城算法，扫描线: https://docs.google.com/presentation/d/1RGF03Syyw2rhU7MojUWT3G-ejw8NFHEANbgnY2AuDEo/edit#slide=id.g885522199d_0_54
+
+# lintcode
+# https://www.lintcode.com/problem/919/
+class Solution:
+    """
+    @param intervals: an array of meeting time intervals
+    @return: the minimum number of conference rooms required
+    """
+    def min_meeting_rooms(self, intervals: List[Interval]) -> int:
+        # Write your code here
+        ps = []
+        for i in intervals:
+            ps.append([i.start, 1])
+            ps.append([i.end, -1])
+        ps.sort()
+
+        count = 0
+        res = 0
+        for time, val in ps:
+            if val > 0:
+                count += 1
+            else:
+                count -= 1
+            res = max(res, count)
+
+        return res
