@@ -32,29 +32,31 @@ class Solution(object):
         # (从起点到cur的花销，cur节点，总共有多少次转机次数)
         heap = [(0, src, k + 1)]
 
-        # cur节点，从起点到cur的最多还剩转机次数
-        res = {}
+        # 从起点到cur的最多还剩转机次数, 我们始终保持更新，确保是最优路径
+        # 假如没有这条路径优，则跳过
+        visited = {}
         while heap:
             d1, cur, steps = heapq.heappop(heap)
             # 记录当前节点，以及走到当前节点的步数
-            res[cur] = steps
+            visited[cur] = steps
 
             # 假如到达终点
             if cur == dst:
                 return d1
 
-            # 假如还可以继续转机
+            # 假如还可以继续转机，则继续添加新的可能路线进heap
+            # 假如当前路线使用的step已经超了，则继续遍历heap，看看剩下有没有其他路线可以到达
             if steps > 0:
                 for to, d2 in graph[cur]:
                     # 假如目的地我们没去过，我们需要探索
                     # 假如目的地我们去过，但我们有更优的方案到达这个目的地(转机次数更少)，那么我们需要继续探索
                     # 我们希望，每次push进heap中的，都是局部最佳的答案
-                    if to not in res or steps > res[to]:
+                    if to not in visited or steps > visited[to]:
                         heapq.heappush(heap, (d1 + d2, to, steps - 1))
 
         return -1
 
 """
-本题相当于在743的基础上，加了一个中转站点的限制
+本题相当于在743的基础上，加了一个中转站点的限制，以及多了一个对visited对step的记录
 https://www.youtube.com/watch?v=y_wHjstds4o
 """
