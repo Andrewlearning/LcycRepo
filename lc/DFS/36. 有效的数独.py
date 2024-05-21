@@ -48,6 +48,9 @@ class Solution(object):
                 [1,0] [1,1] [1,2]
                 [2,0] [1,1] [2,2]
                 遵循下面 nrow, ncol的规律
+                
+                且对于nrow, ncol, 他们的值只能为0,3,6,9
+                所以很容易得出 3 * (row|col // 3) 是每个九宫格的最左上角
             """
 
             nrow = 3 * (row // 3) + i // 3
@@ -81,13 +84,16 @@ class Solution:
                 if board[i][j] == board[i][dj]:
                     return False
 
-            for x in range(9):
-                di = 3 * (i // 3) + x // 3
-                dj = 3 * (j // 3) + x % 3
-                if di == i and dj == j:
-                    continue
-                if board[i][j] == board[di][dj]:
-                    return False
+            # 且对于nrow, ncol, 他们的值只能为0,3,6,9
+            # 所以很容易得出 3 * (row|col // 3) 是每个九宫格的最左上角
+            for di in range(3):
+                for dj in range(3):
+                    ni = 3 * (i // 3) + di
+                    nj = 3 * (j // 3) + dj
+                    if ni == i and nj == j:
+                        continue
+                    if board[i][j] == board[ni][nj]:
+                        return False
             return True
 
         for i in range(nr):

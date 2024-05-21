@@ -15,11 +15,12 @@
 """
 class UF:
     def __init__(self, M):
+        # key:child, value:parent
         self.parent = {}
         self.cnt = 0
 
         # 我们要理解，为什么这里self.parent只构造到n位
-        # 因为这是本题的特性，因为例如本题的3*3 矩阵，其实这只有3个人
+        # 因为题目说的有 n 个城市
         n = len(M)
         for i in range(n):
             self.parent[i] = i
@@ -27,11 +28,14 @@ class UF:
             self.cnt += 1
 
     # 使用了path compression
+    # 会把从x到最终parent一条路上的所有节点都指向最高的parent
+    # time: O(n), 主要为find的时间, 最差情况下为n, 但但凡遍历过一次就变为O(1)
     def find(self, x):
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
+    # time: O(n), 主要为find的时间
     def union(self, x, y):
         fx = self.find(x)
         fy = self.find(y)
@@ -56,6 +60,6 @@ class Solution:
 
 
 """
-时间复杂度：O(n^3) 访问整个矩阵一次，并查集操作需要最坏O(n) 的时间。
+时间复杂度：O(n^2) 访问整个矩阵一次，并查集操作需要最坏O(n) 的时间。
 空间复杂度：O(n)，parent 大小为 n。
 """

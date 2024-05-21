@@ -23,40 +23,41 @@ class Solution(object):
 
         # 存放nums2[i]右边更大元素的列表，可供即将遍历到的nums[i]进行选择
         # 从栈顶 -> 栈底，数字是越来越接近nums2[i]的，因为总是从栈顶新加入元素
-        # 从栈顶 -> 栈底, 数字是递减的
+        # 从栈顶 -> 栈底, 数字是递减的 e.g. [4,3,2,1]
         stack = []
 
-        # nums2的每一个数的下一个更大元素 答案
-        q = [0] * len(nums2)
+        n = len(nums2)
+        # 记录nums2的每一个数的下一个更大元素的下标
+        nextLarger = [-1] * n
 
-        for i in range(len(nums2) - 1, -1, -1):
+        for i in range(n - 1, -1, -1):
             x = nums2[i]
+
             # 当新来的x比栈的堆顶元素大时，说明堆里面的数不能成为x的下一个更大数
             # 把堆顶元素pop出，直到在栈中找到第一个 > x的数为止
+            # = 也要pop的愿意是，例如[2,3，3] 我们希望找到2的下一个最大值，所以希望拿到的时第一个3的下标
+            # 所以当我我们遍历到第一个3的时候，也要把更远的那个3的下标给pop掉
             while len(stack) > 0 and x >= stack[-1]:
                 stack.pop()
 
-            # 假如栈长度为0，说明当前数nums[i] 在 nums[i+1, -1]中不存在比它大的数
-            if len(stack) == 0:
-                q[i] = -1
-            # 假如栈长度不为0，说明当前数nums[i] nums[i+1, -1]中存在比它大的数
+            # 假如栈长度不为0，说明当前数nums2[i] nums2[i+1 ~ -1]中存在比它大的数
             # 下一个比与nums2[i]大的数是堆顶元素
-            else:
-                q[i] = stack[-1]
+            if len(stack) != 0:
+                nextLarger[i] = stack[-1]
 
-            # 处理完后，把当前nums2[i]放入栈，用于给nums2[i-1]去做检验
+            # 处理完后，把当前nums2[i]放入单调栈中
             stack.append(x)
 
-        # 记录 nums2[i] : 对应下标i
+        # 记录 nums2[i] : 对应nums2[i]右边第一个更大数的下标是多少
         hashmap = {}
-        for i in range(len(nums2)):
-            hashmap[nums2[i]] = i
+        for i in range(n):
+            hashmap[nums2[i]] = nextLarger[i]
 
         res = []
-        # 由于nums1是nums2的子集，然后nums2每个数的下一个更大数已经被我们记录在q里
+        # 由于nums1是nums2的子集，然后nums2每个数的下一个更大数已经被我们记录在nextLarger里
         # 所以我们只用把nums1的结果翻译出来就好
         for x in nums1:
-            res.append(q[hashmap[x]])
+            res.append(hashmap[x])
 
         return res
 

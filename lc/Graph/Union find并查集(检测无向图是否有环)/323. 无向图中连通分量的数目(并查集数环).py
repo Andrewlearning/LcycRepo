@@ -20,7 +20,6 @@ class UF:
         # 一开始有n个各自为政的连通分量，他们都指向自己
         self.cnt = n
 
-
     def find(self, x):
         if x != self.parent[x]:
             self.parent[x] = self.find(self.parent[x])

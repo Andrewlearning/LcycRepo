@@ -21,11 +21,10 @@ class Solution(object):
 
         stack = []
 
-        # 每一个数的下一个更大元素, 作为答案
-        q = [0] * len(nums)
-
-        # 原数组长度
         n = len(nums)
+        
+        # 每一个数的下一个更大元素, 作为答案
+        nextLarger = [-1] * n
 
         # 原数组后面插入一个相同数组，因为本题为循环，同时这不会影响到判断
         nums.extend(nums)
@@ -39,18 +38,37 @@ class Solution(object):
 
             # 前面通过先遍历完后一个数组，已经把下一个最大元素找完了，当i<n的时候，我们要正式开始记录结果
             if i < n:
-                # 假如栈长度为0，说明当前数nums[i] 在 nums[i+1, -1]中不存在比它大的数
-                if len(stack) == 0:
-                    q[i] = -1
                 # 假如栈长度不为0，说明当前数nums[i] nums[i+1, -1]中存在比它大的数
-                # 下一个比与nums2[i]大的数是堆顶元素
-                else:
-                    q[i] = stack[-1]
+                # 下一个比与x(nums[i])大的数是堆顶元素
+                if len(stack) > 0:
+                    nextLarger[i] = stack[-1]
 
-            # 处理完后，把当前nums2[i]放入栈，用于给nums2[i-1]去做检验
+            # 处理完后，把当前nums[i]放入栈，用于给剩下的元素
             stack.append(x)
-        return q
+        return nextLarger
 
 
 # https://www.acwing.com/video/1918/
 # 处理环形问题时，我们可以通过extend一个相同数组来解决
+
+# 我另一个做法
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        stack = []
+        n = len(nums)
+        nextLarger = [-1] * (n)
+        nums.extend(nums)
+
+        for i in range(2 * n - 1, -1, -1):
+            x = nums[i]
+
+            while len(stack) > 0 and x >= stack[-1]:
+                stack.pop()
+
+            if len(stack) > 0:
+                ni = i % n
+                nextLarger[ni] = stack[-1]
+
+            stack.append(x)
+
+        return nextLarger

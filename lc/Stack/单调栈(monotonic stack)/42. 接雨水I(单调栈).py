@@ -4,9 +4,9 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        # 单调递增的栈，越栈底的值越小
+        # 单调递增的栈，越栈底的值越小 e.g [4,3,1]
         # 遍历时只有碰到比stack[-1]大的值，才会被加进栈中
-        # 碰到比stack[-1]大的元素，说明都有可能会构成一个凹槽
+        # 碰到比stack[-1]大的元素，说明都有可能会构成一个凹槽 e.g. [4,3,1] 3
         stack = []
         res = 0
 
