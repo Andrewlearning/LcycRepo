@@ -30,6 +30,7 @@ class Solution(object):
         # 当区间翻转完成后，我们用edge.next 和 edge.next.next来连接头尾
         edge = dummy
 
+        # left-1和right-left这两个值，是根据现场需要走几步计算出来的，本题需要走几步的都是通过这个计算
         for _ in range(left-1):
             edge = edge.next
 

@@ -22,7 +22,6 @@ class Solution(object):
         """
 
         # 存放nums2[i]右边更大元素的列表，可供即将遍历到的nums[i]进行选择
-        # 从栈顶 -> 栈底，数字是越来越接近nums2[i]的，因为总是从栈顶新加入元素
         # 从栈顶 -> 栈底, 数字是递减的 e.g. [4,3,2,1]
         stack = []
 
@@ -33,10 +32,17 @@ class Solution(object):
         for i in range(n - 1, -1, -1):
             x = nums2[i]
 
-            # 当新来的x比栈的堆顶元素大时，说明堆里面的数不能成为x的下一个更大数
-            # 把堆顶元素pop出，直到在栈中找到第一个 > x的数为止
-            # = 也要pop的愿意是，例如[2,3，3] 我们希望找到2的下一个最大值，所以希望拿到的时第一个3的下标
-            # 所以当我我们遍历到第一个3的时候，也要把更远的那个3的下标给pop掉
+            """
+            [1,3,4,2]  [] stack head -> 2没有next large value -> 2进入stack, [1,3,4] [2] stack head 
+            [1,3]  4   [2] stack head -> stack里没有比4大的，stack里的元素都被pop了 [1,3] 4 [] stack head -> 4进入stack [1,3] [4] stack head
+            [1]    3   [4] stack head -> 3的next large value=4 -> 3进入了stack [1]  [3,4] stack head
+            []     1   [3,4] stack head -> 1的next larget value=3 -> 1进入了stack[] [1,3,4] stack head
+            
+            当新来的x比栈的堆顶元素大时，说明堆里面的数不能成为x的下一个更大数
+            把堆顶元素pop出，直到在栈中找到第一个 > x的数为止
+            = 也要pop的愿意是，例如[2,3，3] 我们希望找到2的下一个最大值，所以希望拿到的时第一个3的下标
+            所以当我我们遍历到第一个3的时候，也要把更远的那个3的下标给pop掉
+            """
             while len(stack) > 0 and x >= stack[-1]:
                 stack.pop()
 

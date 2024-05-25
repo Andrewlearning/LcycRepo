@@ -21,11 +21,12 @@ class Solution(object):
 
         res = []
         nums.sort()
-        for i in range(len(nums)-2):
+        n = len(nums)
+        for i in range(n-2):
             #查看当前的nums[i]和上一个index是否相同，如相同则跳过，因为会产生相同的结果
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
-            l, r = i + 1 ,len(nums)-1
+            l, r = i + 1 ,n-1
             while l < r:
                 s = nums[i] + nums[l] + nums[r]
                 if s > 0:
@@ -35,8 +36,13 @@ class Solution(object):
                 else:
                     res.append([nums[i],nums[l],nums[r]])
 
-                    #假如说当前循环left,right左右都有相同元素，则进行一次去重处理，不然会返回相同结果
-                    # 例如 1,2,3,3,3,4 那么这个left最终会停留到最后一个3， 因为[3,4]是不相同的
+                    """
+                        在这层做判断是，假如数字l, r移动到下一位的数字还是相同的话，会再次进入这个判断
+                        记录一次重复的答案
+                        
+                        假如说当前循环left,right左右都有相同元素，则进行一次去重处理，不然会返回相同结果
+                        例如 1,2,3,3,3,4 那么这个left最终会停留到最后一个3， 因为[3,4]是不相同的
+                    """
                     while l < r and nums[l] == nums[l+1]:
                         l += 1
                     # 同理这个 1,2,3,3,3,4 这个right最终会停留到最左的一个3，因为[2,3]不同
@@ -66,8 +72,4 @@ if __name__ == "__main__":
   4。找到返回true,没找到推出循环返回false
   两个循环 O（n^2)
 
-注意：
-    假如说单纯按照方法3来写的话，有可能会出现重复的数导致出错，例如[0,0,0,0,0],那么直接把
-    所有符合要求的答案都加进res的话，就会输出[[0,0,0],[0,0,0],[0,0,0]]
-    所以我们还要进一步对代码进行处理
 """
