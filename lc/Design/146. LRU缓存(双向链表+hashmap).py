@@ -11,9 +11,9 @@ class DLinkedNode:
         self.val = value
         self.pre = pre
         self.next = next
-        # head.pre  最晚创建的节点，最新的节点
-        # head      最早创建的节点, 在此新加节点
-        # head.next 第二早创建的节点
+        # head.pre  最晚创建的节点, 最新的节点，每次put existing key & get完都把节点放在这里
+        # head      最早创建的节点, 每次put new key都先在这里新增/修改，再把head node转移到head.pre
+        # head.next 第二早创建的节点, put new key结束后移动到这里
 
 
 class LRUCache(object):
@@ -22,6 +22,7 @@ class LRUCache(object):
         :type capacity: int
         """
         # key: key value: node
+        # put时需要修改
         self.m = {}
         self.capacity = capacity
         self.head = DLinkedNode(-1, -1, None, None)
@@ -76,12 +77,12 @@ class LRUCache(object):
         :type value: int
         :rtype: None
         """
-        # 假如说我们要插入的节点存在，更新它的value后，再把它挪到head.pre就好
+        # 假如说我们要插入的existing key，更新它的node&self.m value后，再把node挪到head.pre就好
         if key in self.m:
             cur_node = self.m[key]
             cur_node.val = value
             self.move2HeadPre(cur_node)
-        # 假如要插入的值是新值
+        # 假如要插入的是new key
         else:
             # 我们要看当前头节点是否有值
             # 如果有值，那么把它给清空，因为head是最老的值，要把它替换掉放最新的值
