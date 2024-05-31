@@ -69,6 +69,8 @@ class Solution(object):
 
             step += 1
 
+        # 走到这里，肯定是beginSet,endSet其中一个为空了，说明这两个单词不可能走到一起，返回0
+        # 比如 "hot" "dog" ["hot","dog"]
         return 0
 
 """

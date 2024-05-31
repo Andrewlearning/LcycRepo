@@ -58,6 +58,16 @@ class Solution:
         if isLast:
             self.res.append(isLast)
 
+        """
+        2.剪枝，重要优化，加上在碰到极端case能快接近十倍 
+        假如存在形如这种的trie={a:{b:{}}} -> {a:{}}
+        则把b:{}给pop掉，以减少下次查询的长度
+        且已知当前trie[cur]后面已经没字母了，所以也没必要继续遍历下去了，直接return
+        """
+        if node[cur] == {}:
+            node.pop(cur)
+            return
+
         # 本次dfs遍历过这个点，标记，在本单词的遍历中不会再被访问
         # 同位置在同一个单词里不能经过两次，但是同位置在不同单词是可以被使用两次的
         board[i][j] = "#"
@@ -69,13 +79,6 @@ class Solution:
         # 本次dfs遍历完成，解除标记，在下个dfs会被再使用
         board[i][j] = cur
 
-        """
-        2. 重要优化，加上在碰到极端case能快接近十倍 
-        假如存在形如这种的trie, 则把b:{}给pop掉，以减少下次查询的长度
-        {a:{b:{}}} -> {a:{}}
-        """
-        if node[cur] == {}:
-            node.pop(cur)
 
 # 链接：https://leetcode.cn/problems/word-search-ii/solution/python3-dfs-by-trojanmaster-7zmx/
 # 古城算法的超时了

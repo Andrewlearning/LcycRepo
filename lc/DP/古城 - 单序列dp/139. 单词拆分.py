@@ -39,13 +39,13 @@ class Solution(object):
         # 我们通过判断 s[0,i-1] 和 s[i,j] 这两段，是否都可以拆分成在wordDict中的单词
         for i in range(n):
             if dp[i] == True:
-                for j in range(i, n):
+                for j in range(i+1, n+1):
                     # dp[i] 表示s[0, i-1]可以拼成单词
-                    # s[i,j+1] 表示s[i, j] 可以拼成单词
-                    if s[i: j+1] in wordMap:
-                        dp[j+1] = True
+                    # s[i:j] 表示s[i, j-1] 可以拼成单词
+                    if s[i: j] in wordMap:
+                        dp[j] = True
 
-        return dp[n]
+        return dp[-1]
 
 """
 // Time: O(n^2), Space: O(n+m)

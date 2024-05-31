@@ -1,5 +1,63 @@
-class WordDictionary(object):
+"""
+Design a data structure that supports adding new words and finding if a string matches any previously added string.
 
+Implement the WordDictionary class:
+
+WordDictionary() Initializes the object.
+void addWord(word) Adds word to the data structure, it can be matched later.
+bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise.
+word may contain dots '.' where dots can be matched with any letter.
+
+WordDictionary wordDictionary = new WordDictionary();
+wordDictionary.addWord("bad");
+wordDictionary.addWord("dad");
+wordDictionary.addWord("mad");
+wordDictionary.search("pad"); // return False
+wordDictionary.search("bad"); // return True
+wordDictionary.search(".ad"); // return True
+wordDictionary.search("b.."); // return True
+"""
+# 自己的写法
+class WordDictionary:
+    def __init__(self):
+        self.m = {}
+
+    def addWord(self, word: str) -> None:
+        m = self.m
+        for c in word:
+            if c in m:
+                m = m[c]
+            else:
+                m[c] = {}
+                m = m[c]
+        m["#"] = {}
+
+    def search(self, word: str) -> bool:
+        # 因为我们要跳过带"."的字母，所以需要传一个跳过后"."的m
+        # 这个函数的参数被限定死了，没办法满足我们的要求，所以我们要先创建一个helper函数来查找，
+        return self.h(self.m, word)
+
+    def h(self, m, word):
+        n = len(word)
+        for i in range(n):
+            c = word[i]
+            if c in m: # 当前c在字典里，说明当前是匹配的，进入匹配下一位
+                m = m[c]
+            elif c == ".": #遍历到当前为.的情况，则dfs找到当前m所有key,看看哪个可以search成功
+                options = m.keys()
+                for key in options:
+                    newm = m[key]
+                    res = self.h(newm, word[i + 1:])
+                    if res:
+                        return True
+                return False
+            else: # 当前c不存在字典里，说明没找到
+                return False
+        # 我们以#作为单词结束的标记，假如最后一位是#, 说明这个单词被找到了
+        return "#" in m
+
+
+class WordDictionary(object):
     def __init__(self):
         self.m = {}
 
