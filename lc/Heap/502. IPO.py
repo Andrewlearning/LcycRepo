@@ -30,15 +30,16 @@ class Solution(object):
 
         # 由于项目有资本门槛，所以我们先按资本门槛排序，然后再按项目的利润排序
         # 这样就能保证假如两个项目资本门槛相同，我们能优先选择到利润高的
-        pjs = []
-        for i in range(n):
-            pjs.append([capital[i], profits[i]])
+        # pjs = []
+        # for i in range(n):
+        #     pjs.append([capital[i], profits[i]])
+        pjs = list(zip(capital, profits))
         pjs.sort()
 
         # 创建一个heap, 里面存放目前资本可以做的项目
         hp = []
         i = 0
-        while k:
+        for _ in range(k):
             # 把达到当前门槛的先都加进heap里
             while i < n and pjs[i][0] <= w:
                 profit = pjs[i][1]
@@ -52,9 +53,6 @@ class Solution(object):
             # 记录当前可做的项目
             curMaxProfit = -1 * heappop(hp)
             w += curMaxProfit
-
-            # 每做完一个项目，k-=1
-            k -= 1
 
         return w
 
