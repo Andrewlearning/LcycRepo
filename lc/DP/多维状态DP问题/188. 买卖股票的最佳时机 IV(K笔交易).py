@@ -13,6 +13,75 @@ Output: 2
 Explanation: Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.
 """
 
+"""
+定义 
+dfs(i,j,0) 表示到第i天结束时完成至多j笔交易，未持有股票的最大利润
+dfs(i,j,1) 表示到第i天结束时完成至多j笔交易，持有股票的最大利润
+
+如何算一次交易: 
+买和卖都完成了才算一次交易
+所以可以把j-1放在买入流程或者是卖出流程中，下面是在买入时就把交易次数-1
+dfs(i,j,0)= max(dfs(i-1,j,0), dfs(i-1,j,1) + prices[i])
+dfs(i,j,1)= max(dfs(i-1,j,1), dfs(i-1,j-1,0) - prices[i])
+
+归边界:
+dfs(·,-1,·) =-inf 任何情况下，j都不能为负
+dfs(-1,j,0) = 0   第0天开始未持有股票，利润为0
+dfs(-1,j,1) =-inf 第0天开始不可能持有股票
+
+递归入口:
+max(dfs(n-1,k,0), dfs(n-1,k,1)) 
+= dfs(n-1,k,0)，由于最后一天手里肯定没股票的时候收益才可能是最大的
+"""
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        n = len(prices)
+
+        @cache
+        def dfs(i, j, hold):
+            # 递归边界
+            # 完成-1笔交易，不可能，返回-inf
+            if j < 0:
+                return -inf
+
+            # 递归边界
+            # i = -1 case, 说明第0天开始
+            if i < 0:
+                # 第0天开始持有股票，不可能的情况，返回-inf
+                if hold:
+                    return -inf
+                # 第0天开始没持有股票，利润为0，返回0
+                else:
+                    return 0
+
+            # 第i天结束交易j次持有股票的最大值 = max(i-1天交易j次持有股票，i-1天交易j-1次未持有股票 + 第i天买入股票)
+            if hold:
+                return max(dfs(i - 1, j, True), dfs(i - 1, j - 1, False) - prices[i])
+            # 第i天结束交易j次未持有股票的最大值 = max(i-1天交易j次未持有股票，i-1天交易j次(不用-1，已在买入时计算过)持有股票 + 第i天卖出股票)
+            else:
+                return max(dfs(i - 1, j, False), dfs(i - 1, j, True) + prices[i])
+
+        # 递归入口，最后一天结束，完成j笔交易，未持有股票的最大利润
+        return dfs(n - 1, k, False)
+
+"""
+1:1 翻译成递推
+f[i][j][0] = max(f[i-1][j][0], f[i-1][j][1] + prices[i])
+f[i][j][1] = max(f[i-1]|j][1], f[i-1][j-1][0] - prices[i])
+由于i和j都有=0的情况，但没有办法表示 f[-1][.][.] 和 f[·][-1][.] 这两个状态
+那就在f 和每个 f[i] 的最前面插入一个状态
+
+最终递推式
+f[.][0][.] = -inf, 表示到无论在第几天且是否持有股票，交易次数为-1时最大利润，为-inf(不可能的情况)
+f[0][j][0] = 0,    j>=1 表示到第0天开始时，未持有股票的最大利润，为0
+f[0][j][1] = -inf, j>=1 表示到第0天开始时，持有股票的最大利润，为-inf(不可能的情况)
+
+f[i + 1][j][0] = max(f[i][j][0], f[i][j][1] + prices[i])
+f[i + 1][j][1] = max(f[i][j][1], f[i][j-1][0] - prices[i])
+答案为 f[n][k+1][0]
+"""
+
+
 
 class Solution(object):
     def maxProfit(self, k, prices):
@@ -48,4 +117,3 @@ class Solution(object):
 跟acwing思路接近
 来自宋姐: https://github.com/Christinezy/Leetcode/blob/main/Dp/%E5%A4%9A%E7%BB%B4%E7%8A%B6%E6%80%81dp%E9%97%AE%E9%A2%98/188.%20%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%20IV.py
 """
-
