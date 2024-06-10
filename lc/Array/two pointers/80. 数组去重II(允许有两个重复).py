@@ -4,6 +4,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        # 把不重复的元素，都通过这个指针来放置
+        # 我们只用判断，最新的元素(num) 和 不重复区最后两位的关系
         k = 0
         for num in nums:
             # k < 2, 前两位的数字不用考虑重复问题

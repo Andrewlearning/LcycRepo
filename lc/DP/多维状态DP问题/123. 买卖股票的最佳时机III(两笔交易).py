@@ -56,4 +56,6 @@ class Solution(object):
 
 """
 acwing: https://www.acwing.com/activity/content/problem/content/2551/
+
+本题使用灵神模板会超空间，得使用db的压缩空间的方式才能通过
 """

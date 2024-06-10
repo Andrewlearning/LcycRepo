@@ -24,8 +24,8 @@ dfs(i,j,1) 表示到第i天结束时完成至多j笔交易，持有股票的最�
 dfs(i,j,0)= max(dfs(i-1,j,0), dfs(i-1,j,1) + prices[i])
 dfs(i,j,1)= max(dfs(i-1,j,1), dfs(i-1,j-1,0) - prices[i])
 
-归边界:
-dfs(·,-1,·) =-inf 任何情况下，j都不能为负
+递归边界:
+dfs(·,-1,·) =-inf 任何情况下，j都不能为负，不能完成负数次交易
 dfs(-1,j,0) = 0   第0天开始未持有股票，利润为0
 dfs(-1,j,1) =-inf 第0天开始不可能持有股票
 
@@ -83,13 +83,25 @@ f[i + 1][j][1] = max(f[i][j][1], f[i][j-1][0] - prices[i])
 class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         n = len(prices)
+
+        # base case
+        # f[.][0][.] = -inf, 表示到无论在第几天且是否持有股票，交易次数为-1时最大利润，为-inf(不可能的情况)
+        # 最后我们return的结果是 f[n][k+1][0]
         f = [[[-inf] * 2 for _ in range(k + 2)] for _ in range(n+1)]
 
+        # base case
+        # f[0][j][0] = 0, j >= 1
+        # 表示到第0天开始时，未持有股票的最大利润，为0
+        # f[0][j][1] = -inf, j >= 1
+        # 表示到第0天开始时，持有股票的最大利润，为 - inf(不可能的情况)
         for j in range(1, k+2):
             f[0][j][0] = 0
+
         for i, p in enumerate(prices):
             for j in range(1, k+2):
+                # 第i天结束交易j次未持有股票的最大值 = max(i-1天交易j次未持有股票，i-1天交易j次(不用-1，已在买入时计算过)持有股票 + 第i天卖出股票)
                 f[i+1][j][0] = max(f[i][j][0], f[i][j-1][1] + p)
+                # 第i天结束交易j次持有股票的最大值 = max(i-1天交易j次持有股票，i-1天交易j-1次未持有股票 + 第i天买入股票)
                 f[i+1][j][1] = max(f[i][j][1], f[i][j][0] - p)
 
         return f[n][k+1][0]
