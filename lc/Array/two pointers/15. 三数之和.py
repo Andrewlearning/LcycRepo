@@ -23,7 +23,7 @@ class Solution(object):
         nums.sort()
         n = len(nums)
         for i in range(n-2):
-            #查看当前的nums[i]和上一个index是否相同，如相同则跳过，因为会产生相同的结果
+            # 查看当前的nums[i]和上一个index是否相同，如相同则跳过，因为会产生相同的结果
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
             l, r = i + 1 ,n-1
@@ -60,16 +60,3 @@ class Solution(object):
 if __name__ == "__main__":
     solution = Solution()
     print(solution.threeSum([-3,-2,0,1,2,5]))
-
-
-"""
-答案：  
-3.sort and find(two pointer) 
-  1。首先先把数组sort一遍，O(nlogn)
-  2。开始遍历数组，定遍历的指针为index,[index,-1,0,1,2,3]
-  3。然后创建两个指针，left是index右的第一个元素，right是列表最后一个元素
-  3。开始一个while 循环，当 index + left + rigth > 0时，right左移，反之left右移
-  4。找到返回true,没找到推出循环返回false
-  两个循环 O（n^2)
-
-"""

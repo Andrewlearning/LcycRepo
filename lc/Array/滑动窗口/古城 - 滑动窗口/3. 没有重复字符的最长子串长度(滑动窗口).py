@@ -19,23 +19,24 @@ class Solution(oblect):
         :type s: str
         :rtype: int
         """
-        hm = {}
+        from collections import defaultdict
+        # 滑动窗口，记录窗口内的元素出现次数
+        w = defaultdict(int)
         res = 0
         # 记录滑动窗口的左端点
         l = 0
 
         for i in range(len(s)):
-            c = s[i]
-            if c not in hm:
-                hm[c] = 1
-            else:
-                hm[c] += 1
-                # 说明s[i]在window中有重复，那么则从前往后删，直到s[i]只出现一次
-                while hm[c] > 1:
-                    hm[s[l]] -= 1
-                    l += 1
+            # 每次都把新元素加进w
+            c = s[r]
+            w[c] += 1
 
+            # 当前r字母出现次数>1, 则从左缩小窗口，知道出现次数=1
+            while w[c] > 1:
+                w[s[l]] -= 1
+                l += 1
             res = max(res, i - l + 1)
+
         return res
 
 
