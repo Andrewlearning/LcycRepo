@@ -24,6 +24,8 @@ class Solution(object):
                 while cur and temp == cur.val:
                     cur = cur.next
                 # 让pre连接到不重复区域
+                # 注意，这里pre.next=cur,不代表就直接连上了
+                # 因为有可能r在另一个重复区间，下一轮循环会再连到下一个区域
                 pre.next = cur
 
             # 我们需要这个else, 因为有可能会出现连续的循环区 2 3 3 4 4 5

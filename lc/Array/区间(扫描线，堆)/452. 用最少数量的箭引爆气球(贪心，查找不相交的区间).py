@@ -36,7 +36,7 @@ class Solution:
         """
         points.sort(key=lambda x: x[1])
         
-        # 表明了有几个没有相互连接关系气球组
+        # 表明了有几个没有相互连接关系 气球组
         res = 1
         curEnd = points[0][1]
 

@@ -33,7 +33,7 @@ class Solution(object):
         while k < n and new[1] >= old[k][0]:
             new[0] = min(new[0], old[k][0])
             new[1] = max(new[1], old[k][1])
-            i += 1
+            k += 1
         # 然后把合并好的区间加到答案里
         res.append(new)
 

@@ -21,9 +21,6 @@ class Solution(object):
         l = 0
         r = 0
         while r < len(nums):
-            # 新开始一个区间
-            l = r
-
             # 假如存在连续的数，那么r一直移动到没有连续的数为止
             while r + 1 < len(nums) and nums[r] + 1 == nums[r+1]:
                 r += 1
@@ -38,6 +35,8 @@ class Solution(object):
 
             # 当前区间已经记录完成，跳到下一个区间继续
             r += 1
+            # 新开始一个区间
+            l = r
 
         return res
 

@@ -24,17 +24,14 @@ class Solution(object):
 
         for i in range(1, len(itvs)):
             cur = itvs[i]
-            #  情况2.2，两个区间没有交集, 则记录p
-            if p[1] < cur[0]:
+            # 情况2.1，两个区间有交集，更新合并区间的最右值
+            if l[1] >= cur[0]:
+                l[1] = max(l[1], cur[1])
+            else: #  情况2.2，两个区间没有交集
+                # 记录前面合并好的区间
                 res.append(p)
-
-                # 切换到下一个区间
+                # 切换到下一个区间开始合并
                 p = cur
-
-            # 情况2.1，两个区间有交集
-            else:
-                # 更新当前区间的右端点
-                p[1] = max(p[1], cur[1])
 
         # 保存最后一个区间
         res.append(p)

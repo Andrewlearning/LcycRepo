@@ -17,6 +17,12 @@ class Solution(object):
         # 用dummy的原因是，有可能出现链表只有一个元素的情况，例如 [1] 1, 结果是[]
         dummy = ListNode(0)
         dummy.next = head
+
+        # 我们全程使用slow指针进行操作，fast只是用于帮我们定位slow的位置
+        # 例如 head = [1,2,3,4,5], n = 2，我们要删除4，则要让slow移动到3
+        #
+        # 注意，不能让slow.next与fast连接
+        # 要不然例如head=[1] n=1, 移动到最后时，fast此时=1，slow=0, slow.next=head不满足答案
         fast = slow = dummy
 
         # 先让快指针领先k个节点
