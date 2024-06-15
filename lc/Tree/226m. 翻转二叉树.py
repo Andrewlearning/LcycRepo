@@ -47,7 +47,10 @@ class Solution(object):
         if not root:
             return
 
+        # 我们把当前root的下面两个子节点给反转了，对所有的节点都执行这个操作
+        # 最终结果就是所有节点都反转了
         root.left, root.right = root.right, root.left
+
         self.helper(root.left)
         self.helper(root.right)
 

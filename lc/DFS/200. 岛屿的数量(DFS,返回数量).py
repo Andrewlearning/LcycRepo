@@ -11,43 +11,32 @@ Input:
 
 Output: 1
 """
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        n = len(grid)
+        m = len(grid[0])
 
+        def dfs(i, j):
+            if not (0 <= i < n) or not (0 <= j < m) or not grid[i][j] == "1":
+                return
 
-class Solution(object):
-    def numIslands(self, grid):
-        """
-        :type grid: List[List[str]]
-        :rtype: int
-        """
-        self.nr = len(grid)
-        self.nc = len(grid[0])
-        self.visited = set()
-        self.res = 0
+            # 把当前 "1" -> "0"，相当于起到记录到visited的意思，后续就遍历不到了
+            grid[i][j] = "0"
+            for di, dj in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
+                ni = i + di
+                nj = j + dj
+                dfs(ni, nj)
 
-        for i in range(self.nr):
-            for j in range(self.nc):
-                # 这里需要过滤掉已经去过的"1"，因为假如不过滤的话res会+1
-                if grid[i][j] == "1" and (i, j) not in self.visited:
-                    self.dfs(grid, i, j)
-                    self.res += 1
+        res = 0
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == "1":
+                    dfs(i, j)
+                    # 每次遍历，我们都期望把鱼当前[i][j]相连的节点都变为0
+                    # 并且记录为这是一座岛屿
+                    res += 1
 
-        return self.res
-
-    def dfs(self, grid, i, j):
-        if not (0 <= i < self.nr) or not (0 <= j < self.nc) or (i, j) in self.visited:
-            return
-
-        # 每次到达一个地方，都要记录这里遍历过了
-        self.visited.add((i, j))
-
-        # 我们只遍历"1"的节点，忽略掉其他
-        if grid[i][j] == "0":
-            return
-
-        self.dfs(grid, i + 1, j)
-        self.dfs(grid, i - 1, j)
-        self.dfs(grid, i, j + 1)
-        self.dfs(grid, i, j - 1)
+        return res
 
 
 """

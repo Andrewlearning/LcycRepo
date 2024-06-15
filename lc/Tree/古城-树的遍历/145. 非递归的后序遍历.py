@@ -24,7 +24,7 @@ class Solution(object):
 
         while stack:
             # root
-            node = stack.pop(-1)
+            node = stack.pop()
             res.append(node.val)
 
             # 先进后出

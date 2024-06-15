@@ -31,9 +31,9 @@ class Solution(object):
             return root
         # 假如说只找到p, q中的一个，则返回p或q
         # 说明那两个节点在左右子树的其中一边，所以最低公共父节点不在这一层，可能在更上一层或在更下一层
-        if left is not None:
+        if left:
             return left
-        if right is not None:
+        if right:
             return right
         # 假如都没找到, return None
         return None

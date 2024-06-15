@@ -12,46 +12,40 @@ class TreeNode(object):
         self.right = None
 
 
-class Solution(object):
-    def buildTree(self, preorder, inorder):
-        """
-        :type preorder: List[int]
-        :type inorder: List[int]
-        :rtype: TreeNode
-        """
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # pre: root,left,right
+        # in: left,root,right
         # key:inorder的值 value:值在数组里的下标
-        self.inOrderMap = {}
-        self.preOrderIndex = 0
-        self.preorder = preorder
-        n = len(self.preorder)
+        inm = {}
+        n = len(preorder)
 
         # 记录inorder的下标在map里，使得获取下标时时间复杂度为O(1)，这是一个最优化的做法
-        for i in range(len(self.preorder)):
-            self.inOrderMap[inorder[i]] = i
-        
-        return self.helper(0, n - 1)
+        for i in range(n):
+            inm[inorder[i]] = i
+        self.preidx = 0
 
-    def helper(self, inStart, inEnd):
-        # 当遍历到只有最后一个叶节点时，从index来看
-        # 再没有左右子树了，所以可以返回None
-        if inStart > inEnd:
-            return None
+        def helper(l, r):
+            # 当遍历到只有最后一个叶节点时
+            # 从inorder来看在当前l~r的区间内，没有val可以使用了，所以可以返回None
+            if l > r:
+                return None
 
-        # 因为preOrder是 root,left,right
-        # 第一个节点总是其他节点的根节点，所以我们preorder的第一个节点作为root构造树
-        root = TreeNode(self.preorder[self.preOrderIndex])
-        # 每次构造完一个root节点后，都需要把preOrderIndex +1，用于构造下一个root
-        self.preOrderIndex += 1
+            # 因为preOrder是 root,left,right
+            # 第一个节点总是其他节点的根节点，所以我们preorder的第一个节点作为root构造树
+            root = TreeNode(preorder[self.preidx])
+            # 每次构造完一个root节点后，都需要把preOrderIndex +1，用于构造下一个root
+            self.preidx += 1
 
-        # 获取这个根节点在 inOrder中的下标
-        # root下标的左边是左子树，下标的右边是右子树
-        # 假如
-        rootIndex = self.inOrderMap[root.val]
+            # 获取这个根节点在 inOrder中的下标
+            # root下标的左边是左子树，下标的右边是右子树
+            idx = inm[val]
+            root.left = helper(l, idx - 1)
+            root.right = helper(idx + 1, r)
 
-        root.left = self.helper(inStart, rootIndex - 1)
-        root.right = self.helper(rootIndex + 1, inEnd)
+            return root
 
-        return root
+        return helper(0, n - 1)
 
 """
 古城算法 O(n) 22:00

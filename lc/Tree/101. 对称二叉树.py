@@ -16,6 +16,7 @@ class Solution(object):
 
         return self.helper(root.left, root.right)
 
+    # 我们把需要判断是否对称的节点，放在left和right
     def helper(self, left, right):
         # 假如说两个节点都为空，那么说明走过的路上面所有的节点都是满足条件的
         if not left and not right:
@@ -29,7 +30,7 @@ class Solution(object):
         if left.val != right.val:
             return False
 
-        # 我们继续判断下面的节点
+        # 判断最外侧的两个节点是否对称 and 判断最里面的两个节点是否对称
         return self.helper(left.left, right.right) and self.helper(left.right, right.left)
 
 # 跟100类似

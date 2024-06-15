@@ -26,27 +26,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[float]
         """
-        if not root:
-            return []
+        res = []
 
         q = [root]
-        res = []
 
         while q:
             temp = []
-
-            n = len(q)
-            ttl = 0
-
-            for i in range(n):
-                node = q[i]
-                ttl += node.val
+            cur = 0
+            for node in q:
+                cur += node.val
                 if node.left:
                     temp.append(node.left)
                 if node.right:
                     temp.append(node.right)
 
-            res.append(float(ttl) / n)
-
+            res.append(float(cur) / len(q))
             q = temp
+
         return res

@@ -21,25 +21,28 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if len(s) != len(t):
-            return False
+        # 记录当前字符串每个字符所对应另一个字符串的字符
+        sm = {} # key=schar, value=tchar
+        tm = {} # key=tchar, value=schar
+        n = len(s)
 
-        sm = {}
-        tm = {}
+        for i in range(n):
+            schar = s[i]
+            tchar = t[i]
 
-        for i in range(len(s)):
-            sv = s[i]
-            tv = t[i]
+            if schar in sm:
+                pre = sm[schar]
+                if pre != tchar:
+                    return False
+            else:
+                sm[schar] = tchar
 
-            if sv in sm and sm[sv] != tv:
-                return False
-            if tv in tm and tm[tv] != sv:
-                return False
-
-            # 讲究一个匹配，因为我们要让两个字符串的字母，在每一个位置上，都是可以相互替换的，出现频率一样
-            # 所以每次在结尾都做个匹配，下次假如匹配不到则说明不满足题目要求
-            sm[sv] = tv
-            tm[tv] = sv
+            if tchar in tm:
+                pre = tm[tchar]
+                if pre != schar:
+                    return False
+            else:
+                tm[tchar] = schar
 
         return True
 
