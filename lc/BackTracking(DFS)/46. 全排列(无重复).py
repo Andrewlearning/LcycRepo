@@ -15,43 +15,36 @@
 ]
 
 """
-class Solution(object):
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        if not nums:
-            return []
 
 
-        self.res = []
-        self.temp = []
-        self.nums = nums
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
         # 这属于一个比较通用的解法，因为在全排序2会碰到有相同元素的情况
         # 在那个时候就不太适合用一个 set去储存元素了
-        self.seen = [False] * len(nums)
-        self.helper()
+        visited = [False] * n
 
-        return self.res
+        def dfs(n, temp):
+            if len(temp) > n:
+                return
 
-    def helper(self):
-        if len(self.temp) > len(self.nums):
-            return
+            if len(temp) == n:
+                res.append(temp[:])
+                return
 
-        if len(self.temp) == len(self.nums):
-            self.res.append(self.temp[:])
-            return
+            for i in range(n):
+                # 过滤掉已经使用过的元素
+                if visited[i]:
+                    continue
+                temp.append(nums[i])
+                visited[i] = True
+                dfs(n, temp)
+                visited[i] = False
+                temp.pop()
 
-        for i in range(len(self.nums)):
-            if self.seen[i] == True:
-                continue
-
-            self.seen[i] = True
-            self.temp.append(self.nums[i])
-            self.helper()
-            self.seen[i] = False
-            self.temp.pop()
+        dfs(n, [])
+        return res
 
 
 """

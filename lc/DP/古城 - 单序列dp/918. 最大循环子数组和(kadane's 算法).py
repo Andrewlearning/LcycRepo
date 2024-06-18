@@ -21,7 +21,7 @@ def maxSubarraySumCircular(self, nums):
     """
     # 局部最大序列和
     curMax = 0
-    # 全局最大序列和
+    # 全局最大序列和，初始化为nums[0]是担心nums[0]为负数，这样第一轮max的时候就引入了不存在的和0
     maxSum = nums[0]
 
     # 局部最小序列和
@@ -33,9 +33,11 @@ def maxSubarraySumCircular(self, nums):
     total = 0
 
     for num in nums:
+        # 这个写法，使得当curMax + num 的和不够大的时候，可以被num替换掉
         curMax = max(curMax + num, num)
         maxSum = max(maxSum, curMax)
 
+        # 这个写法，使得当curMin + num 的和不够小的时候，可以被num替换掉
         curMin = min(curMin + num, num)
         minSum = min(minSum, curMin)
 
@@ -52,6 +54,7 @@ def maxSubarraySumCircular(self, nums):
 参考自 https://leetcode.com/problems/maximum-sum-circular-subarray/discuss/178422/One-Pass
 
 例如 [5,-3, 5], 我们可以把它想象成存在 [5,-3, 5 | 5,-3, 5]
+
 case1: 最大子数组没有跨越边界
 例如: [-4,1,2,-5], 最大子数组是[1,2]
 

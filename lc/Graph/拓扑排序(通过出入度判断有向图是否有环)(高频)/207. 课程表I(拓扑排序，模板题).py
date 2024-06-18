@@ -24,13 +24,15 @@ class Solution(object):
             return True
 
         from collections import defaultdict
-        # 初始化图, 节点为 pre -> [next1, next2], 先修课 指向 后修课
-        graph = defaultdict(list)
         # 初始化入度，pre -> next -> 0
         # pre 的入度为0，因为每节点指向pre
         # next 入度为1，因为pre指向它
         indegree = defaultdict(int)
+        for i in range(numCourses):
+            indegree[i] = 0
 
+        # 初始化图, 节点为 pre -> [next1, next2], 先修课 指向 后修课
+        graph = defaultdict(list)
         for next, pre in prereq:
             # 开始给图的顶点赋予意义，先修课->[下一节课]
             graph[pre].append(next)

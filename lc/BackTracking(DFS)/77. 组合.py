@@ -21,24 +21,23 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        self.n = n
-        self.k = k
-        self.res = []
-        self.helper(1, [])
-        return self.res
+        res = []
 
-    def helper(self, startFrom, temp):
-        if len(temp) > self.k:
-            return
+        def dfs(n, k, startFrom, temp):
+            if len(temp) > k:
+                return
 
-        if len(temp) == self.k:
-            self.res.append(temp[:])
-            return
+            if len(temp) == k:
+                res.append(temp[:])
+                return
 
-        for i in range(startFrom, self.n + 1):
-            temp.append(i)
-            self.helper(i + 1, temp)
-            temp.pop()
+            for i in range(startFrom, n + 1):
+                temp.append(i)
+                dfs(n, k, i + 1, temp)
+                temp.pop()
+
+        dfs(n, k, 1, [])
+        return res
 
 
 """
