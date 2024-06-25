@@ -12,13 +12,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if not nums and len(nums) == 0:
-            return 0
-        if len(nums) == 1:
-            return nums[0]
+        n = len(nums)
+        dp = [0] * n
 
-        # 初始化dp数组
-        dp = [0] * len(nums)
+        if n <= 2:
+            return max(nums)
 
         # 没有选择的时候，抢当前房子肯定是收益最大
         dp[0] = nums[0]

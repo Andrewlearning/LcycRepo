@@ -25,6 +25,7 @@ class LRUCache(object):
         # put时需要修改
         self.m = {}
         self.capacity = capacity
+        # 默认key,value为-1的原因是，题目key,value有可能取到0
         self.head = DLinkedNode(-1, -1, None, None)
 
         cur = self.head
@@ -39,12 +40,13 @@ class LRUCache(object):
 
     # get和push节点后，都要把该节点移动到head.pre的位置，这个位置代表最近被访问过的节点
     def move2HeadPre(self, node):
-        # 假如说我们要处理的节点，刚好是head
+        # 假如说我们要处理的节点是head
         # 那么我们就把head，变为最新的节点(head.pre)，把head.next作为新的head节点
         if node == self.head:
             self.head = self.head.next
             return
 
+        # 假如说我们要处理的节点不是head
         # 解除指向cur的指针, 让cur.pre 和 node.next相互连接
         node.pre.next = node.next
         node.next.pre = node.pre
@@ -62,10 +64,11 @@ class LRUCache(object):
         :type key: int
         :rtype: int
         """
-        # 要获取的节点不存在
+        # key不存在
         if key not in self.m:
             return -1
 
+        # key已存在
         cur_node = self.m[key]
         self.move2HeadPre(cur_node)
         return cur_node.val
@@ -77,18 +80,19 @@ class LRUCache(object):
         :type value: int
         :rtype: None
         """
+        # key已存在
         # 假如说我们要插入的existing key，更新它的node&self.m value后，再把node挪到head.pre就好
         if key in self.m:
             cur_node = self.m[key]
             cur_node.val = value
             self.move2HeadPre(cur_node)
-        # 假如要插入的是new key
+        # key不存在
         else:
-            # 我们要看当前头节点是否有值
-            # 如果有值，那么把它给清空，因为head是最老的值，要把它替换掉放最新的值
+            # 假如head有值，那么把它给清空，因为head是最老的值，要把它替换掉放最新的值
             if self.head.val != -1:
                 del self.m[self.head.key]
 
+            # 假如head没值，则要赋予值
             self.head.key = key
             self.head.val = value
             self.m[key] = self.head

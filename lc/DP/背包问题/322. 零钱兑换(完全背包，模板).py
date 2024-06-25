@@ -22,7 +22,7 @@ class Solution(object):
         # j表示，在coins[0~i]范围内，我们要在其中最少选用多少次硬币，才能使得硬币和为j，且使用硬币数量最少
         dp = [float('inf')] * (amount + 1)
 
-        # base case, 构成和为0，需要任何0枚硬币
+        # base case, 构成和为0，需要0枚硬币
         dp[0] = 0
 
         # 遍历每个石头

@@ -19,28 +19,29 @@ class Solution(object):
         if n == 0:
             return [new]
 
-        # 用k来作为遍历的old的下标
-        k = 0
+        # 用r来作为遍历的old的下标
+        r = 0
         # 左边无交集部分，老区间的右端点 < 新区间的左端点
-        while k < n and old[k][1] < new[0]:
-            res.append(old[k])
-            k += 1
+        while r < n and old[r][1] < new[0]:
+            res.append(old[r])
+            r += 1
 
         # 中间有交集部分
         # 持续更新区间的右端点
-        # 我们怎么确认还有交集，new[1] >= old[k][0]，就说明还有交集
-        # 没有交集的情况: new[1] < old[k][0]
-        while k < n and new[1] >= old[k][0]:
-            new[0] = min(new[0], old[k][0])
-            new[1] = max(new[1], old[k][1])
-            k += 1
+        # 我们怎么确认还有交集，我们不看左边，因为上面已经替我们判断过了，到了这里肯定有交集了
+        # 只看最右边 new[1] >= old[r][0]，就说明还有交集
+        # 没有交集的情况: new[1] < old[r][0]
+        while r < n and new[1] >= old[r][0]:
+            new[0] = min(new[0], old[r][0])
+            new[1] = max(new[1], old[r][1])
+            r += 1
         # 然后把合并好的区间加到答案里
         res.append(new)
 
         # 把剩余没有交集的区间也加入到res中
-        while k < n:
-            res.append(old[k])
-            k += 1
+        while r < n:
+            res.append(old[r])
+            r += 1
 
         return res
 
