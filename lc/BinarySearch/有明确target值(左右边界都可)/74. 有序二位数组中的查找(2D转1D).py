@@ -11,23 +11,26 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        lr = len(matrix)
-        lc = len(matrix[0])
-        l = 0
-        r = lr * lc - 1
+        n = len(matrix)
+        m = len(matrix[0])
 
-        # 这里只找答案，所以使用左右边界都可以
+        l = 0
+        r = n * m - 1
+
+        def getNum(i):
+            row = i // m
+            col = i % m
+            return matrix[row][col]
+
         while l < r:
+            # 这里只找答案，所以使用左右边界都可以
             mid = (l + r) // 2
 
-            mi = mid // lc
-            mj = mid % lc
-
-            if matrix[mi][mj] >= target:
+            if getNum(mid) >= target:
                 r = mid
             else:
                 l = mid + 1
 
-        return matrix[l // lc][l % lc] == target
+        return getNum(l) == target
 
 #  https://www.acwing.com/solution/content/159/

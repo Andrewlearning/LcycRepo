@@ -14,18 +14,15 @@
 输出：2
 """
 class UF:
-    def __init__(self, M):
+    def __init__(self, n):
         # key:child, value:parent
         self.parent = {}
-        self.cnt = 0
+        self.cnt = n
 
         # 我们要理解，为什么这里self.parent只构造到n位
         # 因为题目说的有 n 个城市
-        n = len(M)
         for i in range(n):
             self.parent[i] = i
-            # 我们每创建一个新的父亲，就把父亲的数量，self.cnt +1
-            self.cnt += 1
 
     # 使用了path compression
     # 会把从x到最终parent一条路上的所有节点都指向最高的parent
@@ -50,7 +47,7 @@ class Solution:
     def findCircleNum(self, M):
         n = len(M)
 
-        uf = UF(M)
+        uf = UF(n)
         for i in range(n):
             for j in range(n):
                 # [i][j] == 1, 那就说 i,j有朋友关系，意思就是他们共属于同一个父亲

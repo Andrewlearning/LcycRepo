@@ -36,7 +36,8 @@ class Solution(object):
             prefix = (prefix + num % k + k) % k
 
             # 两个mod相同的prefix相减，中间这一段子两次出现余数i,j之间的subarray一定是能够被k整除的串
-            res += m.get(prefix, 0)
+            if prefix in m:
+                res += m[prefix]
 
             # 更新这个mod的出现次数
             m[prefix] += 1

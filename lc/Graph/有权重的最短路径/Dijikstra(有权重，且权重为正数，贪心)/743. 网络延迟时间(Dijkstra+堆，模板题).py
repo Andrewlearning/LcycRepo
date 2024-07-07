@@ -22,6 +22,7 @@ class Solution:
             graph[f].append((to, weight))
 
         heap = [(0, k)]
+        # 从起点到某个节点的最小距离
         visited = [float('inf')] * (n + 1)
         visited[k] = 0
 

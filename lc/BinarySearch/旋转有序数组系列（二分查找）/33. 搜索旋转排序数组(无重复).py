@@ -57,7 +57,7 @@ class Solution(object):
             else:
                 r = mid - 1
 
-        # 为什么这里用r, 因为在假如输入数组只有一个元素时，l=r+1, r=n-1, 这个时候l=1,r=0
+        # 为什么这里用r, 因为在假如输入数组只有1个元素时，l=r+1, r=n-1, 这个时候l=1,r=0
         # 会导致上面那个循环无法进入，所以nums[l=1]导致越界
         # 改成 if l > r or nums[l] != target: 也可以，因为当l > r时，说明异常情况发生
         if nums[r] == target:

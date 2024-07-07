@@ -14,7 +14,7 @@ class Solution(object):
         return [left, right]
 
     def findLeft(self, nums, target):
-        # 这个取值范围，主要是看想返回数的下标的范围，关系应该是[l,r)
+        # 这个取值范围，主要是看想返回数的下标的范围，关系应该是[l,r]
         l = 0
         r = len(nums) - 1
 

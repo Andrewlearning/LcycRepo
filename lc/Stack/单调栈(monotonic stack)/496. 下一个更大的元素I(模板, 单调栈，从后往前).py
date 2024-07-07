@@ -48,7 +48,7 @@ class Solution(object):
 
             # 假如栈长度不为0，说明当前数nums2[i] nums2[i+1 ~ -1]中存在比它大的数
             # 下一个比与nums2[i]大的数是堆顶元素
-            if len(stack) != 0:
+            if len(stack) > 0:
                 nextLarger[i] = stack[-1]
 
             # 处理完后，把当前nums2[i]放入单调栈中

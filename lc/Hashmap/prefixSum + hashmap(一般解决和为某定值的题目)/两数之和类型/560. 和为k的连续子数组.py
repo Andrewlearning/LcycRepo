@@ -20,12 +20,11 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-
-        hashmap = {}
+        from collections import defaultdict
+        hashmap = defaultdict(int)
         # key = preFixSum的值
         # value = 这个值所出现过的次数
-        # hashmap[0] = 1 这相当于一个base case, 当prefixSum = curSum = k的这种情况发生时，能统计到这种结果
-        # 例如 nums[1,1] k=2
+        # hashmap[0] = 1 这相当于一个base case, 当prefixSum = curSum = k的这种情况发生时，能统计到这种结果, 例如 nums=[1,1], k=2
         hashmap[0] = 1
         curSum = 0
         res = 0
@@ -41,8 +40,7 @@ class Solution(object):
                 res += hashmap[curSum - k]
 
             # 记录当前前缀和出现的次数
-            # 假如curSum存在于hashmap中，则能取出结果，不存在则取出0
-            hashmap[curSum] = hashmap.get(curSum, 0) + 1
+            hashmap[curSum] += 1
 
         return res
 

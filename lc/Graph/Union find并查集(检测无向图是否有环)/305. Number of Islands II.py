@@ -45,10 +45,15 @@ class Uf:
             self.p[px] = py
             self.cnt -= 1
 
-    def add(self, i, j):
-        if (i, j) not in self.p:
-            self.p[(i, j)] = (i, j)
+    def add(self, x):
+        # 过滤掉重复的添加
+        if x not in self.p:
+            self.p[x] = x
             self.cnt += 1
+
+    # 看这个点之前有没有添加过
+    def exist(self, x):
+        return x in self.p
 
     def getCount(self):
         return self.cnt
@@ -63,25 +68,19 @@ class Solution:
     """
     def num_islands2(self, n: int, m: int, operators: List[Point]) -> List[int]:
         uf = Uf()
-        g = [[0] * m for _ in range(n)]
         res = []
 
         for p in operators:
             i, j = p.x, p.y
-            # 假如之前已经构造这个岛屿了，则不往下处理了，直接记录一次答案
-            if g[i][j] == 1:
-                res.append(uf.getCount())
-                continue
 
             # 初始化这个新岛屿的信息
-            uf.add(i, j)
-            g[i][j] = 1
+            uf.add((i, j))
 
             # 遍历这个新岛屿附近的岛屿，假如发现附近有其他岛屿，则进行union
             for di, dj in [[1, 0], [-1, 0], [0, 1], [0, -1]]:
                 ni = i + di
                 nj = j + dj
-                if 0 <= ni < n and 0 <= nj < m and g[ni][nj] == 1:
+                if 0 <= ni < n and 0 <= nj < m and uf.exist((ni,nj)):
                     uf.union((i, j), (ni, nj))
 
             res.append(uf.getCount())

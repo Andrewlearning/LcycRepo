@@ -16,8 +16,8 @@ class Solution(object):
 
         points = []
         for interval in intervals:
-            # 1 会议开始，1表示记录这个房间
-            # -1 会议结束，-1取消对这个房间的追踪
+            # [会议开始时间,1]，1表示记录这个房间
+            # [会议结束时间,-1] -1取消对这个房间的追踪
             points.append((interval[0], 1))
             points.append((interval[1], -1))
 
@@ -43,6 +43,7 @@ class Solution(object):
         return res
 
 # 古城算法，扫描线: https://docs.google.com/presentation/d/1RGF03Syyw2rhU7MojUWT3G-ejw8NFHEANbgnY2AuDEo/edit#slide=id.g885522199d_0_54
+# 这题不能用不相交的区间数量来获取到答案，因为这个边扫边记录最好状态
 
 # lintcode
 # https://www.lintcode.com/problem/919/

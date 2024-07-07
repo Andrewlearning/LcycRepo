@@ -28,9 +28,8 @@ class Solution(object):
 
         # 中间有交集部分
         # 持续更新区间的右端点
-        # 我们怎么确认还有交集，new[1] >= old[k][0]，就说明还有交集
-        # 没有交集的情况: new[1] < old[k][0]
-        while k < n and new[1] >= old[k][0]:
+        # 无交集 new[1] < old[k][0] -> 有交集 not new[1] < old[k][0]
+        while k < n and not new[1] < old[k][0]:
             new[0] = min(new[0], old[k][0])
             new[1] = max(new[1], old[k][1])
             k += 1
