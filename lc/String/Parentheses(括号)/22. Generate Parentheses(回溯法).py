@@ -10,6 +10,29 @@ For example, given n = 3, a solution set is:
 ]
 n为括号数量，要求要形成有效括号才能返回结果
 """
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        self.res = []
+        self.h(n, 0, 0, [])
+        return self.res
+
+    def h(self, n, l, r, temp):
+        if l > n or r > n:
+            return
+
+        if l == n and r == n:
+            self.res.append("".join(temp))
+            return
+
+        if l < n:
+            temp.append("(")
+            self.h(n, l + 1, r, temp)
+            temp.pop()
+
+        if r < l and r < n:
+            temp.append(")")
+            self.h(n, l, r + 1, temp)
+            temp.pop()
 
 
 class Solution(object):

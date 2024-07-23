@@ -56,6 +56,34 @@ dfs(i,c)= max(dfs(i-1,c), dfs(i,c-w[i]) + v[i])
 dfs(i,c) = min(dfs(i-1,c), dfs(i,c-w[i]) + v[i])
 """
 
+# dp版本
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+
+        # dp[i][j]
+        # i表示，选用硬币的范围 - 0个硬币 ~ coins[0~n-1]范围以内的硬币
+        # j表示，在0个硬币 ~ coins[0~n-1]范围以内，我们要在其中最少选用多少次硬币，才能使得硬币和为j，且使用硬币数量最少
+        dp = [[float('inf')] * (amount + 1) for _ in range(n + 1)]
+        dp[0][0] = 0
+
+        for i in range(n):
+            for j in range(amount + 1):
+                # 无法使用当前硬币，因为当前硬币面额过大
+                if coins[i] > j:
+                    dp[i + 1][j] = dp[i][j]
+                # 可以使用当前硬币，取min(不使用当前硬币的最小数量，使用当前硬币的最小数量)
+                else:
+                    dp[i + 1][j] = min(dp[i][j], dp[i + 1][j - coins[i]] + 1)
+
+        # 获取目标结果
+        res = dp[n][amount]
+        if res == float('inf'):
+            return -1
+        return res
+
+
+# 空间压缩版本
 class Solution(object):
     def coinChange(self, coins, amount):
         """

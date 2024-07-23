@@ -17,7 +17,7 @@ class Solution(object):
         cur = head
 
         while cur:
-            # 当cur检测到重复
+            # 当cur检测到cur和cur.next是重复的
             if cur.next and cur.val == cur.next.val:
                 temp = cur.val
                 # 一直让cur移动到不重复区域

@@ -54,9 +54,9 @@ class Solution:
         例如 {a:{b:{finish:ab}}} -> {a:{b:{}}}, 然后在下面2处进行清理
         """
         cur = board[i][j]
-        isLast = node[cur].pop("finish", False)
-        if isLast:
-            self.res.append(isLast)
+        finalWord = node[cur].pop("finish", False)
+        if finalWord:
+            self.res.append(finalWord)
 
         """
         2.剪枝，重要优化，加上在碰到极端case能快接近十倍 
@@ -65,7 +65,7 @@ class Solution:
         且已知当前trie[cur]后面已经没字母了，所以也没必要继续遍历下去了，直接return
         """
         if node[cur] == {}:
-            node.pop(cur)
+            del node[cur]
             return
 
         # 本次dfs遍历过这个点，标记，在本单词的遍历中不会再被访问

@@ -1,5 +1,5 @@
 """
-本题意思是，给你两个数字，一个大（n）一个小(m)，求出 m ~ n 范围内，所以数字的&的答案
+本题意思是，给你两个数字，一个大（n）一个小(m)，求出 m ~ n 范围内，所有数字的&的答案
 让我们求出他们在二进制中的公共前缀
 
 输入: [5,7]
@@ -9,6 +9,20 @@
 7 :  00111
 res: 00100 = 4
 """
+# GPT给的大难
+class Solution:
+    def rangeBitwiseAnd(self, left: int, right: int) -> int:
+        move = 0
+
+        # 一直删除后缀，知道left == right, 说明此时left, right都等于彼此的公共前缀
+        while left != right:
+            left >>= 1
+            right >>= 1
+            move += 1
+
+        # 由于此时left只剩下公共前缀，所以我们把剩下的位补充为0就好了
+        return left << move
+
 class Solution(object):
     def rangeBitwiseAnd(self, left, right):
         """
