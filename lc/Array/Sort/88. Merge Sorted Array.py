@@ -24,6 +24,7 @@ class Solution(object):
         # 从后往前插不会影响到nums1前面的元素
         pi = m + n - 1
 
+        # 注意这里是and哈，任意一个结束了就退出循环
         while p1 >= 0 and p2 >= 0:
             if nums1[p1] > nums2[p2]:
                 nums1[pi] = nums1[p1]

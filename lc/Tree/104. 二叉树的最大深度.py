@@ -11,22 +11,6 @@
 #         self.left = None
 #         self.right = None
 
-# 好像这种更好记忆一点
-class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        self.res = 0
-        self.dfs(root, 1)
-        return self.res
-
-    def dfs(self, root, depth):
-        if not root:
-            return
-
-        self.res = max(self.res, depth)
-
-        self.dfs(root.left, depth + 1)
-        self.dfs(root.right, depth + 1)
-
 class Solution(object):
     def maxDepth(self, root):
         """

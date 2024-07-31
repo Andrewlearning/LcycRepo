@@ -11,10 +11,12 @@ class Solution(object):
             curSum = curSum + num
 
             # 看之前结果大, 还是当前结果大
+            # 1.先记录结果
+            # 记录得放在reset前面，因为reset是针对下一次的状态，记录是针对当前的状态
             res = max(res, curSum)
 
             # 假如当前序列和 < 0的话，那么后面无论加什么数都会更小
-            # 所以开始重新统计序列和
+            # 2.有问题了，再所以开始重新统计序列和
             if curSum < 0:
                 curSum = 0
 

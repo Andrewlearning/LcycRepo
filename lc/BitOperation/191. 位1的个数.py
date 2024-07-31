@@ -19,6 +19,7 @@ class Solution(object):
             n = n & (n-1)
         return count
 
+    # 使用这个比较好
     def hammingWeight(self, n):
         """
         :type n: int

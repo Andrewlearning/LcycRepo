@@ -10,23 +10,20 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        if not prices:
-            return 0
-
-        minprice = sys.maxsize
-        maxprofit = 0
+        premin = sys.maxsize
+        res = 0
 
         for price in prices:
             # max(历史最大profit, 当日价格 - 之前该股最低价格)
-            maxprofit = max(maxprofit, price - minprice)
+            res = max(res, price - minprice)
 
             # 我们更新股票的历史最低价格
-            minprice = min(minprice, price)
+            premin = min(premin, price)
 
-        return maxprofit
+        return res
 
 """
 这是贪心做法
-我们可以维持两个变量——minprice 和 maxprofit
+我们可以维持两个变量 —— res 和 premin
 它们分别对应迄今为止所得到的最小的谷值和最大的利润（卖出价格与最低价格之间的最大差值）。
 """

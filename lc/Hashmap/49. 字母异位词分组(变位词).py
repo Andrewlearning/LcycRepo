@@ -20,29 +20,20 @@ class Solution(object):
         :type strs: List[str]
         :rtype: List[List[str]]
         """
-
+        from collections import defaultdict
         # key:每个字母出现的次数  value:一个装单词的list
-        hashmap = {}
+        m = defaultdict(list)
 
-        for string in strs:
-            key = self.getKeybyCount(string)
-            if key in hashmap:
-                hashmap[key].append(string)
-            else:
-                hashmap[key] = [string]
+        for s in strs:
+            key = [0] * 26
+            for c in s:
+                key[ord(c) - ord('a')] += 1
+            m[str(key)].append(s)
 
-        return hashmap.values()
-
-    # 把每个单词所对应的hash给记录下来
-    def getKeybyCount(self, string):
-        table = [0] * 26
-        for char in string:
-            table[ord(char) - ord("a")] += 1
-
-        return str(table)
+        return m.values()
 
 
 """   
-Time: O(n*k)
-https://algocasts.io/episodes/vkmerKGb
+时间复杂度：O(n * k)，其中 n 是字符串的数量，k 是字符串的最大长度。我们不再需要排序，而是使用计数方法。
+空间复杂度：O(n * 26)，即 O(n)。虽然我们为每个字符串创建了一个长度为 26 的数组，但这个长度是固定的，不随输入增大而增大。
 """

@@ -35,7 +35,8 @@ class Solution(object):
         # 在存在i个节点时
         for i in range(2, n + 1):
             # 我们用j作为root节点
-            # 所以比j小的共有j-1个元素，比j大的有i-j个元素
+            # 左子树，由比j小的元素构成，已知比j小的共有j-1个元素
+            # 右子树，由比j大的元素构成，已知比j大的有i-j个元素
             for j in range(1, i + 1):
                 # i所有能构成树的情况， 等于左右子树的所有可能性相乘
                 dp[i] += dp[j - 1] * dp[i - j]

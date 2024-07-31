@@ -30,8 +30,9 @@ class Solution(object):
             pre = cur
             cur = temp
 
-        # 假如说链表长度为奇数，那么我们的cur要往下走一步
-        # 1 2 3(cur) 2 1
+        # 长度为偶数，1 2(pre) 2(cur) 1
+        # 长度为奇数，1 2(pre) 3(cur) 2 1
+        # 假如说链表长度为奇数，那么我们的cur要往下走一步, 1 2(pre) 3 2(cur) 1
         if length % 2 == 1:
             cur = cur.next
 

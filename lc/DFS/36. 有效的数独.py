@@ -55,7 +55,7 @@ class Solution(object):
 
             nrow = 3 * (row // 3) + i // 3
             ncol = 3 * (col // 3) + i % 3
-            if nrow != row and ncol != col and board[nrow][ncol] == num:
+            if (nrow, ncol) != (row, col) and board[nrow][ncol] == num:
                 return False
         return True
 

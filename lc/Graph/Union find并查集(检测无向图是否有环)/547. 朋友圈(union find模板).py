@@ -28,6 +28,8 @@ class UF:
     # 会把从x到最终parent一条路上的所有节点都指向最高的parent
     # time: O(n), 主要为find的时间, 最差情况下为n, 但但凡遍历过一次就变为O(1)
     def find(self, x):
+        # 1. 要是x != self.parent[x], 说明x还不是最parent的节点，则把当前x的parent通过递归指向最父亲的节点，并返回最父亲节点
+        # 2. 要是 x == self.parent[x], 说明x是最parent的节点，返回最父亲节点
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]

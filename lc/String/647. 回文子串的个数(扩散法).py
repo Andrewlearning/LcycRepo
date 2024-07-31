@@ -17,22 +17,19 @@ class Solution(object):
         res = 0
         for i in range(len(s)):
             res += self.expend(s, i, i)
-            res += self.expend(s, i, i + 1)
+            res += self.expend(s, i, i + 1) #当i=len(s)-1时，这个case会返回0
 
         return res
 
     def expend(self, s, l, r):
-        if len(s) == 0 or r >= len(s):
-            return 0
-
-        res = 0
-        # 当发现可以扩散的时候，res += 1
+        cur = 0
+        # 当发现扩散后，依然满足Palindromic的条件时，说明又找到一个组合，cur += 1
         while -1 < l <= r < len(s) and s[l] == s[r]:
-            res += 1
+            cur += 1
             l -= 1
             r += 1
 
-        return res
+        return cur
 
 
 

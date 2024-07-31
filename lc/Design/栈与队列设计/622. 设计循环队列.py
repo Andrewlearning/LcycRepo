@@ -8,27 +8,29 @@ class MyCircularQueue(object):
         # 构造队列
         self.q = [0] * k
 
-        # 队列头指针
+        # 队列头指针，从这里推出元素
+        # 第一个推出元素的位置是0
         self.front = 0
 
-        # 队列尾指针
-        # 因为第一个插入的位置是0，然后我们是(self.rear + 1) % len(self.q)，所以初始化为-1
-        self.rear = -1
+        # 队列尾指针，从这里插入元素
+        # 因为第一个插入的位置是0，然后我们是(self.tail + 1) % len(self.q)，所以初始化为-1
+        self.tail = -1
 
         # 队列的size
         self.size = 0
 
-    # 往队列新插入一个元素，假如队列已满，则会覆盖掉下一个元素
+    # 往队列新插入一个元素，假如队列已满，则无法插入
     def enQueue(self, value):
         """
         Insert an element into the circular queue. Return true if the operation is successful.
         :type value: int
         :rtype: bool
         """
+        # 如何保证循环队列，不会把元素赋值到有效元素那里，通过isFull()来判断
         if not self.isFull():
             # 指针往后移动一位取mod再插入
-            self.rear = (self.rear + 1) % len(self.q)
-            self.q[self.rear] = value
+            self.tail = (self.tail + 1) % len(self.q)
+            self.q[self.tail] = value
             self.size += 1
             return True
         else:
@@ -66,7 +68,7 @@ class MyCircularQueue(object):
         """
         if self.isEmpty():
             return -1
-        return self.q[self.rear]
+        return self.q[self.tail]
 
     def isEmpty(self):
         """

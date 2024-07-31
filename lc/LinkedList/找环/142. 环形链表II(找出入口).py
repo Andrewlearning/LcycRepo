@@ -26,19 +26,25 @@ class Solution(object):
         if not head or not head.next:
             return None
 
-        quick = head
+        fast = head
         slow = head
 
-        while quick and quick.next:
-            quick = quick.next.next
+        """
+        退出循环有两种情况
+        1. fast = slow, 这说明找到了相交节点
+        2. fast = None or fast.next = None, 这说明没找到相交节点，说明链表没环
+        """
+        while fast and fast.next:
+            fast = fast.next.next
             slow = slow.next
-            if quick == slow:
+            if fast == slow:
                 break
 
-        # 链表已经走出范围了
-        if quick is None or quick.next is None:
+        # 链表没环的情况
+        if fast is None or fast.next is None:
             return
 
+        # 有数学证明，比较麻烦
         fast = head
         while slow != fast:
             fast = fast.next

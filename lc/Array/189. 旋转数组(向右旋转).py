@@ -19,19 +19,19 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        length = len(s)
+        n = len(s)
 
-        # 处理k 大于长度的情况，我们已知旋转 length次的话，是会回到之前的起点， 所以我们就这样取%
-        n = k % length
+        # 处理k 大于长度的情况，我们已知旋转 n次的话，是会回到之前的起点， 所以我们就这样取%
+        k = k % n
 
         # 先总体反转一遍
-        self.reverse(s, 0, length - 1)
-
-        # 然后再把 [0，n] 反转一遍
         self.reverse(s, 0, n - 1)
 
-        # 然后再把 [n， length-1] 反转一遍
-        self.reverse(s, n, length - 1)
+        # 然后再把 [0，k] 反转一遍
+        self.reverse(s, 0, k - 1)
+
+        # 然后再把 [k， n-1] 反转一遍
+        self.reverse(s, k, n - 1)
 
         # 这样就能达到我们想要的效果了
 

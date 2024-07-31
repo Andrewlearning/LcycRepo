@@ -1,5 +1,5 @@
 """
-给定两个字符串 s1 和 s2，写一个函数来判断 s2 是否包含 s1 的排列。
+给定两个字符串s1和s2，写一个函数来判断 s2 是否包含 s1的排列。
 
 换句话说，第一个字符串的排列之一是第二个字符串的子串。
 
@@ -16,6 +16,7 @@ class Solution(object):
         :type s2: str
         :rtype: bool
         """
+        from collections import defaultdict
         n1 = len(s1)
         n2 = len(s2)
 
@@ -23,22 +24,30 @@ class Solution(object):
         if n1 > n2:
             return False
 
-        list1 = [0] * 26
-        list2 = [0] * 26
-
+        # 统计 s1, s2[:n1] 中每个字符的出现次数
+        w1 = defaultdict(int)
+        w2 = defaultdict(int)
         for i in range(n1):
-            list1[ord(s1[i]) - ord("a")] += 1
-            list2[ord(s2[i]) - ord("a")] += 1
+            w1[s1[i]] += 1
+            w2[s2[i]] += 1
 
-        if list1 == list2:
+        # 先判断一波[:n1]出现频率是否相等
+        if w1 == w2:
             return True
 
-        for i in range(n1, n2):
-            list2[ord(s2[i - n1]) - ord("a")] -= 1
-            list2[ord(s2[i]) - ord("a")] += 1
+        l = 0
+        for r in range(n1, n2):
+            w2[s2[l]] -= 1
+            w2[s2[r]] += 1
 
-            if list1 == list2:
+            # 当value=0, 要清理掉, 要不然对于dict{"a":0, "b":1} 与 {"b":1}不相等
+            if w2[s2[l]] == 0:
+                del w2[s2[l]]
+
+            if w1 == w2:
                 return True
+
+            l += 1
 
         return False
 

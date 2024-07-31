@@ -30,9 +30,7 @@ class Solution(object):
                 ps += 1
                 pt += 1
 
-        if ps == ns:
-            return True
-        return False
+        return ps == ns
 
 """
 Time:O(n) space:O(1)

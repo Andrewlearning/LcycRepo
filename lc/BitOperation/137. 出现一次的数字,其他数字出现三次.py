@@ -10,7 +10,9 @@ class Solution(object):
         2. 与本题无关，因为signed int需要考虑正负， unsigned int不需要考虑正负，所以它的取值范围是 [0, 2**32-1]
         关于更多二进制正负数的细节，可以参考 https://blog.csdn.net/dovakejin/article/details/112446946
         """
-        if x >= 2 ** 31:
+        # x 超出正整数的最大范围，说明是负数
+        # -1 -> -1, -2 -> -10
+        if x > 2 ** 31 - 1:
             x -= 2 ** 32
         return x
 
@@ -29,7 +31,7 @@ class Solution(object):
                 cur_sum += (num >> bit) & 1
 
             if cur_sum % 3 == 1:
-                # 假如说当前bit sum mod=1
+                # 假如说当前bit sum mod=1, cur_sum = 3*n + 1
                 # 这说明了出现一次的数字在当前bit上不为0
                 # 我们这样拼接32个bit, 就能还原出只出现一次的数字
                 # 我们把mod = 1的位，全部or到res上去

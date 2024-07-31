@@ -29,7 +29,7 @@ class Solution(object):
         nw = len(words[0])
         n = len(s)
         # 这也是一个dafaultdict(int), 假如[不存在的key]=0
-        wmap = Counter(words)
+        reqW = Counter(words)
         res = []
 
         """
@@ -41,7 +41,7 @@ class Solution(object):
         # 我们只遍历一个单词的长度是在于
         for i in range(nw):
             # 创建滑动窗口
-            window = Counter()
+            curW = Counter()
             # 窗口的左右边界
             l = i
             r = i
@@ -49,19 +49,19 @@ class Solution(object):
             # 只要没有越界，持续移动指针，因为right指向的是匹配的单词的下一位，所以这里需要=
             while r + nw <= n:
                 curWord = s[r: r + nw]
-                window[curWord] += 1
+                curW[curWord] += 1
                 # r的下标放在这里更新
                 r += nw
 
                 # 1. 如果窗口里的所需单词数量超过了目标数量，移动左边界，去除单词
                 # 2. 假如curWord不在要求的列表里，则不断更新l的位置,直到indow里不再有这个单词
-                while window[curWord] > wmap[curWord]:
-                    window[s[l:l + nw]] -= 1
+                while curW[curWord] > reqW[curWord]:
+                    curW[s[l:l + nw]] -= 1
                     l += nw
 
                 # 假如窗口长度 = 所需单词连在一起的长度
                 # 且走到这里时，说明所需单词数量<=目标数量
-                # 则说明当前window里的单词和数量 与我们的目标一致
+                # 则说明当前curW里的单词和数量 与我们的目标一致
                 if r - l == nw * len(words):
                     res.append(l)
 
