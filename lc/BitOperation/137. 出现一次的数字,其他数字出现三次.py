@@ -67,4 +67,16 @@ Time: O(n), Space: O(1)
 总结
 通过检查数字是否大于等于 2^31，你可以确定它是否在signed int范围内表示为负数。
 减去 2^32 是在高位溢出的情况下，将其转化为正确的负数值。这种方法简洁而有效。
+
+------------------------------------
+
+有符号整数和无符号整数的相互转换
+有符号整数（signed int）转无符号整数（unsigned int）
+unsigned_int = signed_int % (2**32)
+
+无符号整数（unsigned int）转有符号整数（signed int）
+if unsigned_int >= 2**31:
+    signed_int = unsigned_int - 2**32
+else:
+    signed_int = unsigned_int
 """
