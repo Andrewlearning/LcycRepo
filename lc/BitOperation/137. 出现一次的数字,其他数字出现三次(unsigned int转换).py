@@ -1,5 +1,21 @@
 class Solution(object):
     def convert(self, x):
+
+        res = 0
+        for bit in range(32):
+            count = 0
+
+            for num in nums:
+                # 统计当前bit上，有多少个1
+                count += (num >> bit) & 1
+
+            # 假如说当前bit sum mod=1, count = 3*n + 1
+            # 这说明了出现一次的数字在当前bit上不为0
+            # 我们这样拼接32个bit, 就能还原出只出现一次的数字
+            # 我们把mod = 1的位，全部or到res上去
+            if count % 3 == 1:
+                res |= (1 << bit)
+        
         """
         - 有符号整数：从 -2^31 到 2^31 - 1，即从 -2147483648 到 2147483647。
         - 无符号整数：从 0 到 2^32 - 1，即从 0 到 4294967295。
@@ -10,33 +26,9 @@ class Solution(object):
         所以在这里，假如我们发现x > 2 ** 31 - 1，说明超出signed int正数范围了，则说明这个无符号整数对应的是有符号整数的负数，所以我们要减去 2**32
         至于为什么是2**32, 这是signed int和unsigned int转换的一种通用做法，数学逻辑过于复杂，不去深究
         """
-        if x > 2 ** 31 - 1:
-            x -= 2 ** 32
-        return x
-
-    def singleNumber(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        res = 0
-
-        for bit in range(32):
-            cur_sum = 0
-
-            for num in nums:
-                # 统计当前bit上，有多少个1
-                cur_sum += (num >> bit) & 1
-
-            if cur_sum % 3 == 1:
-                # 假如说当前bit sum mod=1, cur_sum = 3*n + 1
-                # 这说明了出现一次的数字在当前bit上不为0
-                # 我们这样拼接32个bit, 就能还原出只出现一次的数字
-                # 我们把mod = 1的位，全部or到res上去
-                res |= (1 << bit)
-
-        return self.convert(res)
-
+        if res > 2 ** 31 - 1:
+            res -= 2 ** 32
+        return res
 
 """
 https://algocasts.io/episodes/qjG0eXpK

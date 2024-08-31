@@ -9,7 +9,7 @@
 7 :  00111
 res: 00100 = 4
 """
-# GPT给的大难
+# GPT给的答案
 class Solution:
     def rangeBitwiseAnd(self, left: int, right: int) -> int:
         move = 0
@@ -62,4 +62,9 @@ https://www.acwing.com/activity/content/problem/content/2569/
 对于n, xxxx1____, 必然存在一个数是 xxxx1000..0 <= n
 由于在and操作中，数字的位置不重要，所以我们可以把那两个数给提取出来
 xxxx011..11 &  xxxx1000..0 & ... & n & m 结果得到除共同前缀以外，其他位置的数都是0
+
+例如,5,6,7可以发现两两之间必有公共前缀
+>>> bin(5) - 101
+>>> bin(6) - 110
+>>> bin(7) - 111
 """
