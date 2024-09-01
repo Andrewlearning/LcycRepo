@@ -24,11 +24,9 @@ class Solution(object):
         nt = len(t)
 
         while ps < ns and pt < nt:
-            if s[ps] != t[pt]:
-                pt += 1
-            else:
+            if s[ps] == t[pt]:
                 ps += 1
-                pt += 1
+            pt += 1
 
         return ps == ns
 

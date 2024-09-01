@@ -13,7 +13,7 @@ class Solution:
 
     """
         解题几个关键点
-        1. 首先得先去除s里的所有空格，为判断负数情况做好猪呢比
+        1. 首先得先去除s里的所有空格，为判断负数情况做好准备
         2. 在两个地方计算
             2.1.在处理"+-"时，遇到之前优先级>=s[i]全部计算掉
             2.2 当遇到")", 则需要把当前括号内的元素全部计算掉
@@ -49,6 +49,7 @@ class Solution:
                     self.nums.append(0)
 
                 # 什么时候在进行计算，当发现前面还有更高优先级，或者相等优先级没算完的时候
+                # 但不计算当前符号，只append
                 while len(self.ops) > 0 and self.p[self.ops[-1]] >= self.p[char]:
                     # debug用
                     # (1+(4+5 + ['(', '+', '(', '+']
@@ -60,7 +61,7 @@ class Solution:
             elif char == "(":
                 self.ops.append(char)
             elif char == ")":
-                # 假如栈顶不是(, 说明()里的数还没算完，需要算一遍
+                # 假如栈顶不是(, 说明()里的数还没算完，需要把括号之间的数算完
                 # 算到直到只剩下 ( x，退出循环
                 while len(self.ops) and self.ops[-1] != "(":
                     self.helper()
@@ -68,7 +69,7 @@ class Solution:
                 # debug用 
                 # print(char, s[:i+1], self.ops)
 
-                # sekf,ops最后一个元素是"("了，然后把 "(" 给pop掉，那么一个括号里的数就全部算完了
+                # self,ops最后一个元素是"("了，然后把 "(" 给pop掉，那么一个括号里的数就全部算完了
                 self.ops.pop()
             elif char.isdigit():
                 # 处理数字，把一个完整的数字(int[i:j])给丢到栈里去, 例如 +100, 要把100都处理进去

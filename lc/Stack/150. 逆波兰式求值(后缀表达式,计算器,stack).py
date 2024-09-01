@@ -13,38 +13,28 @@
 输出: 9
 解释: 该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9
 """
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        nums = []
 
-
-class Solution(object):
-    def helper(self):
-        y = self.nums.pop()
-        x = self.nums.pop()
-        sign = self.ops.pop()
-
-        if sign == "+":
-            self.nums.append(x + y)
-        elif sign == "-":
-            self.nums.append(x - y)
-        elif sign == "*":
-            self.nums.append(x * y)
-        elif sign == "/":
-            self.nums.append(int(float(x) / y))
-
-    def evalRPN(self, tokens):
-        """
-        :type tokens: List[str]
-        :rtype: int
-        """
-        self.nums = []
-        self.ops = []
         for t in tokens:
             if t in "+-*/":
-                self.ops.append(t)
-                self.helper()
+                y = nums.pop()
+                x = nums.pop()
+                if t == "+":
+                    nums.append(x + y)
+                elif t == "-":
+                    nums.append(x - y)
+                elif t == "*":
+                    nums.append(x * y)
+                else:
+                    # 在python里面 遇到 -1/22 这种情况，会 = -0.004xxxx
+                    # 但是这里要求的是 -1/22 = 0, 所以我们用 int(float(devidend) / devisor) 来使-0.0004x向下取整变成0
+                    nums.append(int(float(x) / y))
             else:
-                self.nums.append(int(t))
+                nums.append(int(t))
 
-        return self.nums[0]
+        return nums[-1]
 
 
 """
@@ -54,8 +44,8 @@ https://www.acwing.com/video/1522/
 遇到一个符号，就把栈顶元素取出来处理一下
 
 
-注意，在python里面 遇到 -1/22 这种情况，还是会= -0.004xxxx
-    但是这里要求的是 -1/22 = 0, 所以我们用 int(float(be_do) / do 来使-0.0004x向下取整变成0
+注意，在python里面 遇到 -1/22 这种情况，会 = -0.004xxxx
+    但是这里要求的是 -1/22 = 0, 所以我们用 int(float(devidend)) / devisor 来使-0.0004x向下取整变成0
     int()总是向下取整
     
 什么是逆波兰表达式

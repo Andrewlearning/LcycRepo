@@ -26,6 +26,7 @@ def isValid(self, s):
         if char in match.keys():
             stack.append(char)
         else:
+            # 说明没有左括号进行匹配
             if len(stack) == 0:
                 return False
 
@@ -35,10 +36,7 @@ def isValid(self, s):
             else:
                 return False
 
-    if len(stack) != 0:
-        return False
-
-    return True
+    return len(stack) == 0
 
 
 """

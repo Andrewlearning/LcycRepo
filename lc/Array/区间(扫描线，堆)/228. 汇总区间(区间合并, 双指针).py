@@ -18,6 +18,7 @@ class Solution(object):
 
         res = []
         # l,r代表一个组合的左右边界
+        # 每次循环开始前，都让r代表未记录区间的下一个元素，这样才能保证在一个循环里能完成遍历
         l = 0
         r = 0
         while r < len(nums):
