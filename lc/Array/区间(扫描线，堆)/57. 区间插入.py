@@ -16,7 +16,9 @@ class Solution(object):
         """
         res = []
         n = len(old)
-        if n == 0:
+
+        # 处理new=[]的情况, 直接返回old,
+        if new == []:
             return [new]
 
         # 用r来作为遍历的old的下标
@@ -36,6 +38,7 @@ class Solution(object):
             new[1] = max(new[1], old[r][1])
             r += 1
         # 然后把合并好的区间加到答案里
+        # 这里r<n, 处理的是old=[]的情况，所以要跳过所有add old的情况，只添加new
         res.append(new)
 
         # 把剩余没有交集的区间也加入到res中

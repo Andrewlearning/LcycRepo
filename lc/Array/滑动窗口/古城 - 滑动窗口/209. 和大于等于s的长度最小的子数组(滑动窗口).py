@@ -36,7 +36,7 @@ class Solution(object):
             # 假如滑动窗口内的和 >= s了，说明我们可以缩小窗口了
             # 用while的原因是，有可能这个窗口可以缩小不止一次
             # 例如 [0,0,3,4] s = 7, 那么这个窗口就可以缩小两次
-            while wSum >= s:
+            while l <= r and wSum >= s:
                 res = min(res, i - l + 1)
                 wSum -= nums[l]
                 l += 1
