@@ -15,7 +15,7 @@ class Solution(object):
                 stack.append(cur)
                 cur = cur.left
 
-            cur = stack.pop(-1)
+            cur = stack.pop(0)
             k -= 1
             if k == 0:
                 return cur.val
