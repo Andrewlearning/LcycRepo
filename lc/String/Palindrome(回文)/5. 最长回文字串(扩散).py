@@ -1,44 +1,44 @@
-class Solution(object):
-    def expend(self, s, l, r):
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            if r - l + 1 > len(self.res):
-                self.res = s[l:r+1]
-            l -= 1
-            r += 1
+"""
+Given a string s, return the longest palindromic substring in s.
 
-    def longestPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        if s is None or len(s) == 0:
-            return ""
+Example 1:
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
 
+Example 2:
+Input: s = "cbbd"
+Output: "bb"
+
+"""
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
         self.res = ""
-        for i in range(len(s)):
-            self.check(s, i, i)
-            self.check(s, i, i+1)
+        n = len(s)
+
+        def expend(i, j):
+            while i >= 0 and j < n and s[i] == s[j]:
+                if j - i + 1 > len(self.res):
+                    self.res = s[i:j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            expend(i, i)
+            if i > 0:
+                expend(i - 1, i)
+
         return self.res
 
 
 """
-https://algocasts.io/episodes/VBpLqWD8
-Time: O(n^2), Space: O(1)
-答案：
-1.本体的解体关键函数是 expend函数，他的作用是，给定两个index,会一直对比，看 nums[l] ==? nums[r]
- 一直向外扩散
+该算法的时间复杂度为 O(n²)，其中 n 是字符串 s 的长度。
+分析：
+    外层 for 循环遍历字符串中的每一个字符，总共执行 n 次。
+    对于每个字符，调用两次 expend 函数（分别检查奇数长度和偶数长度的回文子串）。
+    expend 函数中的 while 循环，最坏情况下在每次调用时会进行 O(n) 次字符比较。
+    因此，外层循环执行 n 次，expend 函数的最坏时间复杂度是 O(n)，总体的时间复杂度为 O(n²)。
 
-2.所以在主函数里面，我们定下了两个len,分别调用这个函数，之所以这样调用，是
-  有可能出现 1 2 3 2 1 
-  或者      1 1 2 2 3 3 这两种回文的情况
-
-3. 精妙的在这里，我们要找出这个回文字串的起始 index
-   start = i(当前index) - (字串长度 - 1) // 2
-   
-   例如： i = 2, 1 2 3 2 1 
-         那么start = 2 - (5-1)//2 = 0 (正确）
-         i = 2, 1 1 2 2 1 1 
-         那么start = 2 - （6-1)//2 = 0(正确）
-
-4.我们返回 s[start: start+maxLen]就好了 
+空间复杂度：
+该算法的空间复杂度为 O(1)，因为除了存储结果的 self.res 字符串和一些辅助变量外，没有使用额外的空间。
 """

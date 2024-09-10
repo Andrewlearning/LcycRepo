@@ -33,6 +33,7 @@ class Solution(object):
         """
         # 找到两个相邻节点的差的最小值
         res = float("inf")
+        # pre - 第一个节点的值，是无效的，我们故意设置一个最大值使这个结果不会被记录
         pre = float("-inf")
         stack = []
         cur = root

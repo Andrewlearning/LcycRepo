@@ -32,3 +32,24 @@ class Solution(object):
 https://www.acwing.com/video/1402/
   // Time: O(m*n), Space: O(m*n)
 """
+
+# 另一种做法，类似
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        g = grid
+        n = len(g)
+        m = len(g[0])
+
+        dp = [[0] * m for _ in range(n)]
+        dp[0][0] = g[0][0]
+
+        for i in range(n):
+            for j in range(m):
+                if i == 0 and j > 0:
+                    dp[i][j] = dp[i][j - 1] + g[i][j]
+                if i > 0 and j == 0:
+                    dp[i][j] = dp[i - 1][j] + g[i][j]
+                if i > 0 and j > 0:
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + g[i][j]
+
+        return dp[-1][-1]
