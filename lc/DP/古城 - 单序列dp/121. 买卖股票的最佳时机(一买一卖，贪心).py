@@ -14,7 +14,7 @@ class Solution(object):
         res = 0
 
         for price in prices:
-            # max(历史最大profit, 当日价格 - 之前该股最低价格)
+            # max(之前最大profit, 当日价格 - 之前该股最低价格)
             res = max(res, price - minprice)
 
             # 我们更新股票的历史最低价格
@@ -27,3 +27,17 @@ class Solution(object):
 我们可以维持两个变量 —— res 和 premin
 它们分别对应迄今为止所得到的最小的谷值和最大的利润（卖出价格与最低价格之间的最大差值）。
 """
+
+# 相反方向遍历亦可，只要保证遍历为 前面所有值的最大值 - 当前值，就能得到最终大难
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+
+        res = 0
+        curMax = 0
+        curMin = float(inf)
+        for i in range(n - 1, -1, -1):
+            res = max(res, curMax - prices[i])
+            curMax = max(curMax, prices[i])
+
+        return res

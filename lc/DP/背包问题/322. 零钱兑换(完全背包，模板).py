@@ -91,12 +91,12 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
-        # dp[i][j]
+        # dp[i][j] = the fewest number of coins that you need to make up that amount.
         # i表示，选用coins [0~i]范围以内的硬币
         # j表示，在coins[0~i]范围内，我们要在其中最少选用多少次硬币，才能使得硬币和为j，且使用硬币数量最少
         dp = [float('inf')] * (amount + 1)
 
-        # base case, 构成和为0，需要0枚硬币
+        # base case, 和为0，需要0枚硬币
         dp[0] = 0
 
         # 遍历每个石头

@@ -1,5 +1,5 @@
 """
-
+记录可以完成所有课程的可行性路径
 """
 class Solution(object):
     def findOrder(self, num, prereq):

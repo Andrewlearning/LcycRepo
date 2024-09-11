@@ -17,7 +17,7 @@ class Solution(object):
         if not root:
             return None
         # base case2, 遍历过程中找到p,q的情况，则返回p或q
-        if root == p or root == q:
+        if root.val == p.val or root.val == q.val:
             return root
 
         """
