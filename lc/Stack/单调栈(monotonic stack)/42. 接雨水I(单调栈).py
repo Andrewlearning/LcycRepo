@@ -21,11 +21,11 @@ class Solution(object):
             # 同时我们怎么保证一定 左墙壁stack[-2] > 底stack[-1]，因为假如左墙壁stack[-2] < 底stack[-1]
             # 那么左墙壁就已经进入下面流程被pop掉了
             while stack and height[stack[-1]] < height[i]:
-                # 获取底
+                # 获取底, 同时pop掉，因为一个底只会被用一次
                 button = stack.pop()
 
                 # 假如栈里没元素了，说明我们没有左墙壁了，无法接到雨水
-                # pop的元素也不用理会，因为目前无法构成说明后面也无法构成
+                # pop的元素也不用理会，因为目前无法构成也意味着后面也无法构成
                 if len(stack) == 0:
                     break
 

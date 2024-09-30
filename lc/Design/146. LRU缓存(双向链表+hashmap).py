@@ -11,9 +11,9 @@ class DLinkedNode:
         self.val = value
         self.pre = pre
         self.next = next
-        # head.pre  最晚创建的节点, 最新的节点，每次put existing key & get完都把节点放在这里
-        # head      最早创建的节点, 每次put new key都先在这里新增/修改，再把head node转移到head.pre
-        # head.next 第二早创建的节点, put new key结束后移动到这里
+        # head.pre  最新创建的节点, 最新的节点，每次put existing key & get完都把节点放在这里
+        # head      最久创建的节点, 每次put new key都先在这里新增/修改，再把head node转移到head.pre
+        # head.next 第二久创建的节点, put new key结束后移动到这里
 
 
 class LRUCache(object):
@@ -69,9 +69,9 @@ class LRUCache(object):
             return -1
 
         # key已存在
-        cur_node = self.m[key]
-        self.move2HeadPre(cur_node)
-        return cur_node.val
+        curNode = self.m[key]
+        self.move2HeadPre(curNode)
+        return curNode.val
 
     # O(1) 时间复杂度
     def put(self, key, value):
@@ -83,22 +83,22 @@ class LRUCache(object):
         # key已存在
         # 假如说我们要插入的existing key，更新它的node&self.m value后，再把node挪到head.pre就好
         if key in self.m:
-            cur_node = self.m[key]
-            cur_node.val = value
-            self.move2HeadPre(cur_node)
+            curNode = self.m[key]
+            curNode.val = value
+            self.move2HeadPre(curNode)
         # key不存在
         else:
             # 假如head有值，那么把它给清空，因为head是最老的值，要把它替换掉放最新的值
             if self.head.val != -1:
                 del self.m[self.head.key]
 
-            # 假如head没值，则要赋予值
+            # 假如head没值(-1)，则要赋予值
             self.head.key = key
             self.head.val = value
             self.m[key] = self.head
 
             # head往前移动一个节点，指向第二久未使用的节点
-            self.head = self.head.next
+            self.move2HeadPre(self.head)
 
 
 # https://algocasts.io/episodes/rLmP8moY

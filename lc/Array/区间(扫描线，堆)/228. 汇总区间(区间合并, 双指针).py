@@ -36,7 +36,7 @@ class Solution(object):
 
             # 当前区间已经记录完成，跳到下一个区间继续
             r += 1
-            # 新开始一个区间
+            # r移动到一个新区间，重新开始
             l = r
 
         return res
