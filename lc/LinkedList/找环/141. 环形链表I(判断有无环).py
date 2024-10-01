@@ -30,6 +30,8 @@ class Solution(object):
         # 因为fast永远走的比slow快，所以我们只用看fast和fast.next是不是None就行
         while fast and fast.next:
             slow, fast = slow.next, fast.next.next
+
+            # 这里注意不要fast.val, 因为有可能fast是空指针
             if fast == slow:
                 return True
 
