@@ -15,7 +15,7 @@
 """
 class UF:
     def __init__(self, n):
-        # key:child, value:parent
+        # key:child(int), value:parent(int)
         self.parent = {}
         self.cnt = n
 
