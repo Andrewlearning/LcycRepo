@@ -24,7 +24,7 @@ class Solution:
             # 假如当前下标已经到达或超过最后一位了，说明可以到达终点
             if cur >= n - 1:
                 return True
-            # # 假如从当前下标出发，说明可以到达或超过终点
+            # 假如从当前下标出发，说明可以到达或超过终点
             if cur + nums[cur] >= n - 1:
                 return True
 

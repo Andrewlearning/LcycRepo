@@ -18,6 +18,7 @@ class Solution(object):
 
         while l < r:
             # 跳过非字母数字
+            # 注意要有判断条件 l<r, 以为一直跳的话l可能会out of range
             while l < r and not s[l].isalnum():
                 l += 1
 
