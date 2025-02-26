@@ -1,46 +1,42 @@
-package Design
-
-import (
-	"math"
-)
-
 type MinStack struct {
-	stack []int
-	min []int
+    st []int
+    mst []int // min stack
 }
 
+
 func Constructor() MinStack {
-	return MinStack{
-		stack: []int{},
-		min: []int{math.MaxInt64},
-	}
+    return MinStack{
+        st: []int{},
+        mst: []int{},
+    }
 }
 
 
 func (this *MinStack) Push(val int)  {
-	this.stack = append(this.stack, val)
-	if val < this.min[len(this.min) - 1] {
-		this.min = append(this.min, val)
-	} else {
-		this.min = append(this.min, this.min[len(this.min) - 1])
-	}
+    this.st = append(this.st, val)
+    if len(this.mst) == 0 || val <= this.mst[len(this.mst) - 1] {
+        this.mst = append(this.mst, val)
+    }
 }
 
 
 func (this *MinStack) Pop()  {
-	this.stack = this.stack[0: len(this.stack) - 1]
-	this.min = this.min[0: len(this.min) - 1]
+    lastVal := this.st[len(this.st) - 1]
 
+    this.st = this.st[:len(this.st) - 1]
+    if lastVal == this.mst[len(this.mst) - 1] {
+        this.mst = this.mst[:len(this.mst) - 1]
+    }
 }
 
 
 func (this *MinStack) Top() int {
-	return this.stack[len(this.stack) - 1]
+    return this.st[len(this.st) - 1]
 }
 
 
 func (this *MinStack) GetMin() int {
-	return this.min[len(this.min) - 1]
+    return this.mst[len(this.mst) - 1]
 }
 
 

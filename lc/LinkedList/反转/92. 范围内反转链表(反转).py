@@ -39,6 +39,7 @@ class Solution(object):
         pre = edge.next
         cur = edge.next.next
 
+        # 1. 我们在这里，只反转区间内部的指针，区间外部的不反转
         # right - left的原因是，例如left=2,right=4,完成这个翻转我们只移动两次指针
         for _ in range(right-left):
             # 记录下一个节点，方便cur向后移动
@@ -51,6 +52,7 @@ class Solution(object):
             pre = cur
             cur = temp
 
+        # 1. 我们在这里，连接反转区间外部的指针
         # 0 -> 1(edge) <=> 2 <- 3 <- 4(pre) 5(cur)
         # 让2连到了5
         edge.next.next = cur

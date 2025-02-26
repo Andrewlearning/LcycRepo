@@ -1,5 +1,3 @@
-package LinkedList
-
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -8,39 +6,29 @@ package LinkedList
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-
-    head := new(ListNode)
-    res := head
     carry := 0
-    cur := 0
-    p1 := l1
-    p2 := l2
+    res := &ListNode{}
+    head := res
 
-    for p1 != nil || p2 != nil || carry > 0 {
-        cur = carry
+    for carry != 0 || l1 != nil || l2 != nil {
+        cur := carry
         carry = 0
-
-        if p1 != nil {
-            cur += p1.Val
-            p1 = p1.Next
+        if l1 != nil {
+            cur += l1.Val
+            l1 = l1.Next
         }
-
-        if p2 != nil {
-            cur += p2.Val
-            p2 = p2.Next
+        if l2 != nil {
+            cur += l2.Val
+            l2 = l2.Next
         }
 
         if cur >= 10 {
-            carry = 1
             cur -= 10
+            carry = 1
         }
 
-        nxt := &ListNode {
-            Val : cur,
-        }
-        head.Next = nxt
-        head = nxt
+        head.Next = &ListNode{Val:cur}
+        head = head.Next
     }
-
     return res.Next
 }

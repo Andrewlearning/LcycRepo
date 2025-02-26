@@ -1,67 +1,56 @@
-
 type Trie struct {
-    m map[byte]*Trie
-    end bool
+    m map[rune]*Trie
 }
+
 
 func Constructor() Trie {
     return Trie{
-        m: make(map[byte]*Trie),
-        end: false,
+        m: make(map[rune]*Trie),
     }
 }
 
 
 func (this *Trie) Insert(word string)  {
-    node := this
-    n := len(word)
-
-    for i := 0; i < n; i++ {
-        char := word[i]
-        _, found := node.m[char]
-        if !found {
-            node.m[char] = &Trie{
-                m: make(map[byte]*Trie),
-                end: false,
-            }
+    cm := this.m
+    for _, char := range word {
+        _, exist := cm[char]
+        if !exist {
+            cm[char] = &Trie{m: make(map[rune]*Trie)}
         }
-        node = node.m[char]
+        cm = cm[char].m
     }
-    node.end = true
+    // 这里'#'是rune类型
+    cm['#'] = nil
 }
 
 
 func (this *Trie) Search(word string) bool {
-    node := this
-    n := len(word)
-    for i := 0; i < n; i++ {
-        char := word[i]
-        _, found := node.m[char]
-        if !found {
+    cm := this.m
+    for _, char := range word {
+        _, exist := cm[char]
+        if !exist {
             return false
         }
-        node = node.m[char]
+        cm = cm[char].m
     }
-    if node.end != true {
-        return false
+    // 这里'#'是rune类型
+    _, exist := cm['#']
+    if exist {
+        return true
     }
-
-    return true
+    return false
 }
 
 
 func (this *Trie) StartsWith(prefix string) bool {
-    node := this
-    n := len(prefix)
-    for i := 0; i < n; i++ {
-        char := prefix[i]
-        _, found := node.m[char]
-        if !found {
+    cm := this.m
+    for _, char := range prefix {
+        _, exist := cm[char]
+        if !exist {
             return false
         }
-        node = node.m[char]
+        cm = cm[char].m
     }
-
     return true
 }
 

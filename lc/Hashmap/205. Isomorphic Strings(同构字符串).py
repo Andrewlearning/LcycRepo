@@ -30,6 +30,7 @@ class Solution(object):
             schar = s[i]
             tchar = t[i]
 
+            # 一个字典为什么不够，因为可以 "a" -> "a" and "b" -> "a", 不能反映一对一的关系
             if schar in sm:
                 pre = sm[schar]
                 if pre != tchar:
@@ -49,6 +50,17 @@ class Solution(object):
 """
 Time O(n) space O(0)
 https://www.acwing.com/solution/content/315/
+
+以 s = "ab", t = "aa" 为例：
+使用两个哈希表：
+遍历到 s[0] = 'a', t[0] = 'a'：
+sToT['a'] = 'a'
+tToS['a'] = 'a'
+
+遍历到 s[1] = 'b', t[1] = 'a'：
+检查 sToT['b'] 是否已经存在：不存在，记录 sToT['b'] = 'a'。
+检查 tToS['a'] 是否已经存在：已经存在，且 tToS['a'] = 'a'，但当前 s[1] = 'b'，与之前的映射 'a' -> 'a' 冲突。
+因此，返回 false。
 """
 
 

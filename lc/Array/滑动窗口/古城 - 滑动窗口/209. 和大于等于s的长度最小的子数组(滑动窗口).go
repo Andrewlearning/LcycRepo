@@ -8,7 +8,7 @@ func minSubArrayLen(target int, nums []int) int {
     for r := 0; r < n; r ++ {
         w += nums[r]
 
-        for w >= target {
+        for l <= r && w >= target {
             res = min(res, r - l + 1)
             w -= nums[l]
             l += 1

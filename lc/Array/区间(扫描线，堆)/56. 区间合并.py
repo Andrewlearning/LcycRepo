@@ -12,29 +12,23 @@ class Solution(object):
         :type itvs: List[List[int]]
         :rtype: List[List[int]]
         """
-        if not itvs or len(itvs) == 0:
-            return []
-
-        itvs.sort(key = lambda x: x[0])
-        # itvs.sort()也行，默认是按第一个元素排序的
-
+        # 按照区间第一个元素进行排序
+        itvs = sorted(intervals)
+        n = len(itvs)
         res = []
-        # 先记录第一个区间的左右断点
-        p = itvs[0]
 
-        for i in range(1, len(itvs)):
+        i = 0
+        while i < n:
             cur = itvs[i]
-            # 情况2.1，两个区间有交集，更新合并区间的最右值
-            if l[1] >= cur[0]:
-                l[1] = max(l[1], cur[1])
-            else: #  情况2.2，两个区间没有交集
-                # 记录前面合并好的区间
-                res.append(p)
-                # 切换到下一个区间开始合并
-                p = cur
 
-        # 保存最后一个区间
-        res.append(p)
+            # 看当前区间和下一个区间可不可以融合
+            while i + 1 < n and cur[1] >= itvs[i + 1][0]:
+                cur[1] = max(cur[1], itvs[i + 1][1])
+                i += 1
+
+            # 每次把融合结束，或者没办法融合的区间给加进res
+            res.append(cur)
+            i += 1
         return res
 
 """
@@ -45,5 +39,5 @@ Space complexity : O(1) (or O(n))
 此题思路不难
 1. 按照左端点排序
 2.1 如果上一个区间和下一个区间有交集，则更新上一个区间的右端点
-2.2 如果上一个区间和下一个区间无交集，则保存当前区间，并把l,r却换到下一个区间继续查找
+2.2 如果上一个区间和下一个区间无交集，则保存当前区间
 """

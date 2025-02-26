@@ -17,10 +17,6 @@ class Solution(object):
         res = []
         n = len(old)
 
-        # 处理new=[]的情况, 直接返回old,
-        if new == []:
-            return [new]
-
         # 用r来作为遍历的old的下标
         r = 0
         # 左边无交集部分，老区间的右端点 < 新区间的左端点

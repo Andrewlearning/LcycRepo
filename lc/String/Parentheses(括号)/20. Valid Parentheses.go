@@ -1,33 +1,34 @@
-package Parentheses_括号_
+package main
 
+import "fmt"
 
 func isValid(s string) bool {
+    st := []rune{} // 用切片模拟栈
+    m := map[string]bool{"()": true, "[]": true, "{}": true}
 
-	pairs := map[byte]byte{
-		')': '(',
-		']': '[',
-		'}': '{',
-	}
+    for _, c := range s {
+        if c == '(' || c == '[' || c == '{' {
+            st = append(st, c) // 入栈
+        } else {
+            if len(st) == 0 {
+                return false
+            }
+            left := st[len(st)-1] // 取栈顶元素
+            st = st[:len(st)-1]   // 出栈
+            key := string(left) + string(c)
+            if !m[key] {
+                return false
+            }
+        }
+    }
 
-	// stack里存的是
-	stack := []byte{}
-	for i:= 0; i < len(s); i++{
-		// 来了一个右括号
-		if pairs[s[i]] > 0 {
-			// 并且此时 stack里没有对应的左括号
-			if len(stack) == 0 || stack[len(stack) - 1] != pairs[s[i]] {
-				return false
-			} else {
-				// 假如有对应的左括号，stack pop
-				stack = stack[: len(stack)-1]
-			}
-		} else {
-			// 来了左括号，把左括号加进stack
-			stack = append(stack, s[i])
-		}
+    return len(st) == 0 // 栈为空表示匹配成功
+}
 
-	}
-
-
-	return len(stack) == 0
+func main() {
+    fmt.Println(isValid("()"))     // true
+    fmt.Println(isValid("()[]{}")) // true
+    fmt.Println(isValid("(]"))     // false
+    fmt.Println(isValid("([)]"))   // false
+    fmt.Println(isValid("{[]}"))   // true
 }

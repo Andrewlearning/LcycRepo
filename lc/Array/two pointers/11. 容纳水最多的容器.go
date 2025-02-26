@@ -1,31 +1,17 @@
-package two_pointers
+func maxArea(height []int) int {
+    res := 0
+    l := 0
+    r := len(height) - 1
 
-func maxArea(nums []int) int {
+    for l < r {
+        res = max(res, min(height[l], height[r]) * (r - l))
+        if height[l] > height[r] {
+            r -= 1
+        } else {
+            l += 1
+        }
+    }
 
-	var area int
-	l := 0
-	r := len(nums) - 1
-
-	for l < r {
-		if (r - l) * min(nums[l], nums[r]) > area {
-			area = (r - l) * min(nums[l], nums[r])
-		}
-
-		if nums[l] < nums[r] {
-			l += 1
-		} else {
-			r -= 1
-		}
-
-	}
-
-	return area
-}
-
-func min(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+    return res
 }
 

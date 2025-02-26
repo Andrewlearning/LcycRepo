@@ -22,20 +22,23 @@ class Solution(object):
         :type head: Node
         :rtype: Node
         """
+        # hashmap key=old node, value=new node
         hashmap = {}
 
         cur = head
-        # hashmap key=old node value=new node
+        # 第一次遍历，先复制每个节点的值
         while cur:
             hashmap[cur] = Node(cur.val)
             cur = cur.next
 
+        # 第二次遍历，复制每个节点的next 和 random
         cur = head
         while cur:
-            # 注意这里要使用dict.get(), 因为cur.next和cur.random有可能是None
-            # 假如是None则返回None
-            hashmap[cur].next = hashmap.get(cur.next, None)
-            hashmap[cur].random = hashmap.get(cur.random, None)
+            # 注意, cur.next和cur.random有可能是None
+            if cur.next != None:
+                hashmap[cur].next = hashmap[cur.next]
+            if cur.random != None:
+                hashmap[cur].random = hashmap[cur.random]
             cur = cur.next
 
         return hashmap.get(head, None)
