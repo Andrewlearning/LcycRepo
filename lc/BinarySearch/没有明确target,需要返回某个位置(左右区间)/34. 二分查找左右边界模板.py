@@ -21,7 +21,8 @@ class Solution(object):
         while l < r:
             mid = (l + r) // 2
 
-            # [l, traget, mid] [mid+1, r]
+            # [l, target, mid] [mid+1, r]
+            # 满足条件的区间，target要在右边
             if nums[mid] >= target:
                 r = mid
             # [l, mid, mid+1) [target, r]
@@ -39,6 +40,7 @@ class Solution(object):
             mid = (l + r + 1) // 2
 
             # [l, mid-1] [mid, target, r]
+            # 满足条件的区间, target要在右边
             if nums[mid] <= target:
                 l = mid
             else:
