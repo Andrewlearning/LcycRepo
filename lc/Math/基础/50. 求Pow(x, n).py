@@ -11,6 +11,7 @@ class Solution(object):
         :type n: int
         :rtype: float
         """
+        # 必须要把这个条件放在最前面，因为0%2=0
         if n == 0:
             return 1.0
         elif n < 0:
