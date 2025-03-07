@@ -1,12 +1,9 @@
 package Palindrome_回文_
 
 func longestPalindrome(s string) string {
-
-	var res string
-	var maxLen int
-	var check func(l int, r int)
-
-	check = func(l int, r int) {
+	res := ""
+	maxLen := 0
+	check := func(l int, r int) {
 		for l >= 0 && r < len(s) && s[l] == s[r] {
 			if r - l + 1 > maxLen {
 				maxLen = r - l + 1
