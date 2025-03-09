@@ -21,7 +21,7 @@ class Solution(object):
                     # 假如i或j>0, 到[i][j]都有1条或2条路可以选
                     # 所以相当于我们选用更小的一条路，并记录
                     if i > 0:
-                        dp[i][j] = min(dp[i][j], dp[i - 1][j] + grid[i][j])
+                        dp[i][j] = dp[i - 1][j] + grid[i][j]
                     if j > 0:
                         dp[i][j] = min(dp[i][j], dp[i][j - 1] + grid[i][j])
 
