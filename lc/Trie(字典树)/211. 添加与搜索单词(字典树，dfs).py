@@ -38,20 +38,16 @@ class WordDictionary:
         return self.h(self.m, word)
 
     def h(self, m, word):
-        n = len(word)
-        for i in range(n):
+        for i in range(len(word)):
             c = word[i]
-            if c in m: # 当前c在字典里，说明当前是匹配的，进入匹配下一位
-                m = m[c]
-            elif c == ".": #遍历到当前为.的情况，则dfs找到当前m所有key,看看哪个可以search成功
-                options = m.keys()
-                for key in options:
-                    newm = m[key]
-                    res = self.h(newm, word[i + 1:])
-                    if res:
+            if c == ".": #遍历到当前为.的情况，则dfs找到当前m所有key,看看哪个可以search成功
+                for key in m.keys():
+                    if self.h(m[key], word[i + 1:]):
                         return True
                 return False
-            else: # 当前c不存在字典里，说明没找到
+            if c in m: # 当前c在字典里，说明当前是匹配的，进入匹配下一位
+                m = m[c]
+            else: # 当前c不存在字典里，说明没找到、这个不能放前面，因为有可能是"."
                 return False
         # 我们以#作为单词结束的标记，假如最后一位是#, 说明这个单词被找到了
         return "#" in m

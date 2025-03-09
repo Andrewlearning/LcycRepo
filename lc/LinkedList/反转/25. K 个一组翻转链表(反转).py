@@ -24,6 +24,44 @@ class ListNode(object):
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+# 这个做法更好
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        tail = head
+        for i in range(k):
+            if not tail:
+                return head  # 如果不足 k 个，直接返回原链表
+            tail = tail.next
+        
+        # 反转前 k 个节点
+        newHead = self.reverse(head, tail)
+        head.next = self.reverseKGroup(tail, k)  # 递归反转剩余部分
+        
+        #  因为翻转后变为 newHead -> xx -> head -> self.reverseKGroup(tail, k)
+        return newHead
+
+    def reverse(self, head: ListNode, tail: ListNode) -> ListNode:
+        prev = None
+        cur = head
+        
+        while cur != tail:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        
+        return prev  # 返回反转后的头节点
+
+"""
+时间复杂度： O(n)，每个节点最多访问两次（一次遍历 tail 一次翻转）
+空间复杂度： O(n/k)，由于递归调用栈的深度是 n/k。
+"""
+
+
+
+
+
 class Solution(object):
     def reverseKGroup(self, head, k):
         """

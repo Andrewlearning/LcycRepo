@@ -73,15 +73,11 @@ class Solution:
 
         def verify(i, j):
             for di in range(nr):
-                if i == di:
-                    continue
-                if board[i][j] == board[di][j]:
+                if i!=di and board[i][j] == board[di][j]:
                     return False
 
             for dj in range(nc):
-                if j == dj:
-                    continue
-                if board[i][j] == board[i][dj]:
+                if j!=dj and board[i][j] == board[i][dj]:
                     return False
 
             # 且对于nrow, ncol, 他们的值只能为0,3,6,9

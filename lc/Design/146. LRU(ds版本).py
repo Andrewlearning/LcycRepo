@@ -12,8 +12,9 @@ class LRUCache:
         self.cache = {}  # 哈希表，存储键到链表节点的映射
         self.head = DLinkedNode()  # 头节点，head.next放最久未使用的节点
         self.tail = DLinkedNode()  # 尾节点, tail.pre放着最近被访问的节点
+        # head -> 最久未使用 -> xx -> 最近被使用 -> tail
 
-        # 收尾节点相连
+        # 首尾节点相连
         self.head.next = self.tail
         self.tail.prev = self.head
 
