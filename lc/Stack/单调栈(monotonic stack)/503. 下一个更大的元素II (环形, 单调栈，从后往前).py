@@ -25,10 +25,10 @@ class Solution(object):
         
         # 每一个数的下一个更大元素, 作为答案
         # 这里不建议使用map来存，因为一个数在不同位置对应的下一个更大元素不一定一样
-        nextLarger = [-1] * n
+        res = [-1] * n
 
         # 原数组后面插入一个相同数组，因为本题为循环，同时这不会影响到判断
-        nums.extend(nums)
+        nums = nums*2
 
         for i in range(2 * n - 1, -1, -1):
             x = nums[i]
@@ -38,15 +38,14 @@ class Solution(object):
                 stack.pop()
 
             # 前面通过先遍历完后一个数组，已经把下一个最大元素找完了，当i<n的时候，我们要正式开始记录结果
-            if i < n:
-                # 假如栈长度不为0，说明当前数nums[i] nums[i+1, -1]中存在比它大的数
-                # 下一个比与x(nums[i])大的数是堆顶元素
-                if len(stack) > 0:
-                    nextLarger[i] = stack[-1]
+            # 假如栈长度不为0，说明当前数nums[i] nums[i+1, -1]中存在比它大的数
+            # 下一个比与x(nums[i])大的数是堆顶元素
+            if i < n and len(stack) > 0:
+                res[i] = stack[-1]
 
             # 处理完后，把当前nums[i]放入栈，用于给剩下的元素
             stack.append(x)
-        return nextLarger
+        return res
 
 
 # https://www.acwing.com/video/1918/

@@ -24,28 +24,27 @@ class Solution(object):
         # value = 这个值所出现过的次数
         m = defaultdict(int)
 
-        # base caas, 当两个sum%后的余数相等的数相减，他们原始值的差一定是k的倍数
-        m[0] = 1
-        prefix = 0
+        hashmap = defaultdict(int)  # 记录前缀和余数出现次数
+        hashmap[0] = 1  # 初始前缀和余数为 0，默认出现一次
+        cur = 0
         res = 0
 
         for num in nums:
-            # 本来(prefix + num) % k 就行了，我们后面加了这么多
-            # num % k 是防止num是一个很大的负数
-            # + k 是最后确保 num % k + k 始终是大于0的，而且不会影响mod的值
-            prefix = (prefix + num % k + k) % k
+            cur += num
+            remainder = cur % k  # 计算余数
 
-            # 两个mod相同的prefix相减，中间这一段子两次出现余数i,j之间的subarray一定是能够被k整除的串
-            if prefix in m:
-                res += m[prefix]
-
-            # 更新这个mod的出现次数
-            m[prefix] += 1
+            # 如果相同余数已经出现，则这些子数组都是符合条件的
+            if remainder in hashmap:
+                res += hashmap[remainder]
+            
+            # 记录当前余数出现次数
+            hashmap[remainder] += 1
 
         return res
 
-
 """
+chatgpt答案
+
 古城算法 21:38
 https://www.bilibili.com/video/BV1xB4y1N7Ut/?spm_id_from=333.999.0.0&vd_source=b81616a45fd239becaebfee25e0dbd35
 

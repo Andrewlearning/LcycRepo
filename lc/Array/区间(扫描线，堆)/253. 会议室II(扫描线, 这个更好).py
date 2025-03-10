@@ -21,9 +21,13 @@ class Solution(object):
             points.append((interval[0], 1))
             points.append((interval[1], -1))
 
-        # 我们首先按照房间的开始时间来排序从先到后排序
-        # 其次再由房间的结束时间从先到后进行排序，这样处理掉先结束的会议又可以空出新的房间
-        # 可以直接points.sort()
+        # 假如[(0,8), (8,10)], 看8这个时间点是否冲突
+        # 不冲突（标准做法）
+        #     事件排序方式：points.sort(key=lambda x: (x[0], x[1]))
+        #     结束事件 (-1) 优先于开始事件 (1)，确保同一时刻会议室可以被重用。
+        # 冲突（需要额外会议室）
+        #     事件排序方式：points.sort(key=lambda x: (x[0], -x[1]))
+        #     开始事件 (1) 优先于结束事件 (-1)，确保新会议不能重用同一时刻结束的会议室。
         points.sort(key=lambda x: (x[0], x[1]))
 
         res = 0
