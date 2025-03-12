@@ -25,7 +25,7 @@ class Solution:
         # 在那个时候就不太适合用一个 set去储存元素了
         visited = [False] * n
 
-        def dfs(n, temp):
+        def dfs(temp):
             if len(temp) > n:
                 return
 
@@ -39,11 +39,11 @@ class Solution:
                     continue
                 temp.append(nums[i])
                 visited[i] = True
-                dfs(n, temp)
+                dfs(temp)
                 visited[i] = False
                 temp.pop()
 
-        dfs(n, [])
+        dfs([])
         return res
 
 

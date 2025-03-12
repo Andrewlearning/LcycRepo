@@ -23,7 +23,7 @@ class Solution(object):
         """
         res = []
 
-        def dfs(n, k, startFrom, temp):
+        def dfs(startFrom, temp):
             if len(temp) > k:
                 return
 
@@ -33,10 +33,10 @@ class Solution(object):
 
             for i in range(startFrom, n + 1):
                 temp.append(i)
-                dfs(n, k, i + 1, temp)
+                dfs(i + 1, temp)
                 temp.pop()
 
-        dfs(n, k, 1, [])
+        dfs(1, [])
         return res
 
 
