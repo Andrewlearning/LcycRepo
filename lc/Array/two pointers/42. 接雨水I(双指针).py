@@ -1,5 +1,38 @@
+class Solution:
+    def trapTwoPointer(self, h: List[int]) -> int:
+        if not h:
+            return 0
+        
+        l, r = 0, len(h) - 1
+        
+        # 记录左右两边遇到的最大高度
+        lmax, rmax = h[l], h[r]
+        res = 0
+        
+        while l < r:
+            # 如果左边最大高度小于右边最大高度
+            # 说明当前下标的储水量由左边最大高度决定
+            if lmax < rmax:
+                l += 1
+                # 更新左边最大高度
+                lmax = max(lmax, h[l])
+                # 当前下标的储水量 = 左边最大高度 - 当前位置高度
+                res += lmax - h[l]
+            else:
+                # 如果右边最大高度小于等于左边最大高度
+                # 说明当前下标的储水量由右边最大高度决定
+                r -= 1
+                # 更新右边最大高度
+                rmax = max(rmax, h[r])
+                # 当前下标的储水量 = 右边最大高度 - 当前位置高度
+                res += rmax - h[r]
+        
+        return res
+
+
+# time, space 都是O(n), 而且难记
 class Solution(object):
-    def trap(self, height):
+    def trapStack(self, height):
         """
         :type height: List[int]
         :rtype: int
@@ -40,43 +73,10 @@ class Solution(object):
             stack.append(i)
 
         return res
+
 # 古城算法: https://www.youtube.com/watch?v=7QEIZy1pp2o 35:00
+# 使用用单调栈的做法
 # 只有高度从低到高的时候我们才需要计算储水
 # 高度递减的时候我们不需要管，因为不储水
-
-class Solution(object):
-    def trap(self, height):
-        """
-        :type height: List[int]
-        :rtype: int
-        """
-        if not height or len(height) == 0: return 0
-
-        left_max = -1
-        right_max = -1
-        res = 0
-        record = [0 for i in range(len(height))]
-
-        for i in range(len(height)):
-            left_max = max(height[i],left_max)
-            record[i] = left_max
-
-        for i in range(len(height)-1,-1,-1):
-            right_max = max(height[i],right_max)
-            record[i] = min(right_max,record[i])
-            res += (record[i] - height[i])
-
-        return res
-
-"""
-DP做法
-https://algocasts.io/episodes/eAGQ1MG4
-这题其实不难，看algocast的第一种解法
-主要是，我们要从左到右遍历一次，记录当前到当前位置为止，从左到当当前位置的最大值（意味着左墙壁）
-再从右向左遍历一次，记录到当前位置为止，从右往左的最大值（意味着右墙壁）
-最后我们记录当前位置左右墙壁的最小值（木桶效应）
-然后用当前左右墙壁的最小值 - 当前位置的高度，得到当前index的盛水量
-然后我们把所有index的盛水量都加在一起得到最后的结果
-"""
 
 
