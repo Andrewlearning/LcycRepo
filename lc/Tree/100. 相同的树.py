@@ -27,22 +27,22 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
-        return self.helper(p, q)
+        def helper(r1, r2):
+            # 当两个节点都不存在，说明判断完了，没出错
+            if not r1 and not r2:
+                return True
 
-    def helper(self, r1, r2):
-        # 当两个节点都不存在，说明判断完了，没出错
-        if not r1 and not r2:
-            return True
+            # 一个节点存在，一个节点不存在，返回false
+            if not r1 or not r2:
+                return False
 
-        # 一个节点存在，一个节点不存在，返回false
-        if not r1 or not r2:
-            return False
+            # 两个节点值不一样
+            if r1.val != r2.val:
+                return False
 
-        # 两个节点值不一样
-        if r1.val != r2.val:
-            return False
+            # 继续往下判断
+            return helper(r1.left, r2.left) and helper(r1.right, r2.right)
 
-        # 继续往下判断
-        return self.h(r1.left, r2.left) and self.h(r1.right, r2.right)
+        return helper(p, q)
 
 # 跟101类似

@@ -48,6 +48,7 @@ class Solution:
         pre = None
         cur = head
         
+        # cur表示需要被翻转的节点，而tail我们不翻转，所以当cur=tail时返回
         while cur != tail:
             nxt = cur.next
             cur.next = pre
