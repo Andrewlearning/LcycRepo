@@ -41,7 +41,7 @@ class Solution:
         
         return newHead
 
-    # 反转[head ~ tail)的节点, tail节点不反转
+    # 反转[head ~ tail)的节点, tail.next不改动
     # head -> n1 -> n2 -> tail
     # head <- n1 <- n2(pre) tail(cur)
     def reverse(self, head: ListNode, tail: ListNode) -> ListNode:
