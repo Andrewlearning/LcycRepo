@@ -19,10 +19,10 @@ class Solution(object):
         n = len(nums)
         # 表示到当前位置上，最长且不连续的递增子串长度是多少
         dp = [1] * n
-        res = 0
+        res = 1
 
         for i in range(n):
-            for j in range(0, i):
+            for j in range(i):
                 # 假如说我们发现当前字母[i], 大于之前的某个字母[j]
                 # 那么我们就要看是否能更新dp[i]的最大值
                 if nums[i] > nums[j]:

@@ -40,18 +40,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        self.helper(root)
-        return root
-
-    def helper(self, root):
         if not root:
-            return
+            return None
 
-        # 我们把当前root的下面两个子节点给反转了，对所有的节点都执行这个操作
-        # 最终结果就是所有节点都反转了
+        # 交换左右子树
         root.left, root.right = root.right, root.left
 
-        self.helper(root.left)
-        self.helper(root.right)
+        # 递归处理左右子树
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
 
 
