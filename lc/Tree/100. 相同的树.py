@@ -20,29 +20,23 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def isSameTree(self, p, q):
-        """
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: bool
-        """
-        def helper(r1, r2):
-            # 当两个节点都不存在，说明判断完了，没出错
-            if not r1 and not r2:
-                return True
+class Solution:
+    def isSameTree(self, l: TreeNode | None, r: TreeNode | None) -> bool:
+        if l == None and r == None:
+            return True
+        if l == None or r == None:
+            return False
+        if l.val != r.val:
+            return False
+        
+        return self.isSameTree(l.left, r.left) and self.isSameTree(l.right, r.right)
+    
+# 时间复杂度：O(min(N, M))
+# 空间复杂度：O(min(H_L, H_R))
 
-            # 一个节点存在，一个节点不存在，返回false
-            if not r1 or not r2:
-                return False
-
-            # 两个节点值不一样
-            if r1.val != r2.val:
-                return False
-
-            # 继续往下判断
-            return helper(r1.left, r2.left) and helper(r1.right, r2.right)
-
-        return helper(p, q)
-
-# 跟101类似
+# 一句话解析
+# 时间：采用 DFS 同步遍历两棵树，只要遇到结构不同或节点值不同就会触发剪枝立即返回，因此最多只需遍历较小那棵树的节点数 min(N, M)。
+# 
+# 空间：取决于递归栈的最大深度，
+# 由于dfs是先遍历完一边再，回退到顶，然后再遍历另一边，所以递归栈的最大深度为两棵树中较矮树的高度，即 O(min(H_L, H_R))，其中 H_L 和 H_R 分别为两棵树的高度。
+# 最坏情况（单链树）为 O(min(N, M))，最好情况（平衡树）为 O(log(min(N, M)))。

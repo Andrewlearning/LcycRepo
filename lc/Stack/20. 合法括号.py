@@ -26,7 +26,7 @@ class Solution(object):
                 if len(stack) == 0:
                     return False
 
-                cur = stack.pop(-1) + char
+                cur = stack.pop() + char
                 if cur not in check:
                     return False
 

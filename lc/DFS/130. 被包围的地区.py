@@ -1,57 +1,57 @@
-class Solution(object):
-    def solve(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: None Do not return anything, modify board in-place instead.
-        """
-        self.lr = len(board)
-        self.lc = len(board[0])
-        self.v = [[False for j in range(self.lc)] for i in range(self.lr)]
-
-
-        # 第一次遍历，只遍历与四条边界相连的O, 我们遍历一遍只为了记录到visted中
-        # 为的是下次翻转遍历的时候，不翻转这些
-        for i in range(self.lr):
-            for j in range(self.lc):
-                if (i in [0, self.lr - 1] or j in [0, self.lc - 1]) and board[i][j] == "O":
-                    self.dfs(board, i, j, False)
-
-        # fipe the tile on the middle
-        for i in range(1, self.lr - 1):
-            for j in range(1, self.lc - 1):
-                if board[i][j] == "O" and self.v[i][j] == False:
-                    self.dfs(board,i,j,True)
-
-
-
-    def dfs(self, board, i, j, flip):
-        if i < 0 or i > self.lr - 1 or j < 0 or j > self.lc - 1:
+class Solution:
+    def solve(self, board: list[list[str]]) -> None:
+        if not board or not board[0]:
             return
-        if board[i][j] == "X":
-            return
-        if self.v[i][j]:
-            return
+        
+        m, n = len(board), len(board[0])
+        
+        def dfs(r: int, c: int):
+            # 超出边界或者不是 'O' 则停止扩散
+            if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != 'O':
+                return
+            
+            # 标记为 'E' (Escaped)
+            board[r][c] = 'E'
+            
+            # 向上下左右四个方向继续扩散
+            dfs(r + 1, c)
+            dfs(r - 1, c)
+            dfs(r, c + 1)
+            dfs(r, c - 1)
 
-        if flip: board[i][j] = "X"
+        # 1. 扫描左右边界列
+        for i in range(m):
+            dfs(i, 0)
+            dfs(i, n - 1)
+            
+        # 2. 扫描上下边界行
+        for j in range(n):
+            dfs(0, j)
+            dfs(m - 1, j)
 
-        self.v[i][j] = True
-        self.dfs(board, i + 1, j, flip)
-        self.dfs(board, i - 1, j, flip)
-        self.dfs(board, i, j + 1, flip)
-        self.dfs(board, i, j - 1, flip)
+        # 3. 统一重置/翻转
+        for r in range(m):
+            for c in range(n):
+                if board[r][c] == 'O':
+                    board[r][c] = 'X'  # 被完全包围的 'O' 替换成 'X'
+                elif board[r][c] == 'E':
+                    board[r][c] = 'O'  # 连通边界的 'O' 还原
+
 
 """
-https://www.youtube.com/watch?v=u0Xtggq0n10
-答案：
-思路其实挺简单的
-1.谁不能被翻。四条边上的0,因为总有一面是围不上的，所以与最外围边0相连的0，都不可能被翻的
-2.谁可以被翻。不在四条边上，且，没有与边上O相连的 O，可以被翻
-3.dfs，我们要给它一个定性
-  
-  3.1 flip是从主函数传过来的，他也是会贯穿一整串dfs,例如是四周的O，那么，凡事四周O能
-      连接到的O，flip都是false
-      于此同时，走过的点，在dfs里会在self.v里标记成True
-      所以，一个点，在第一次遍历的时候，就决定了它翻不翻，以及，不能再遍历
-  
-  3.2 对于要翻的点也是一样，只有一次遍历，一次翻的机会
+解题思路（三步走）
+边界扩散（DFS / BFS）：
+遍历矩阵的四周边界（第一行、最后一行、第一列、最后一列），凡是遇到 'O'，就从它出发做 DFS
+把所有与它直接或间接相连的 'O' 临时标记为 'E'（代表 Escaped / Edge-connected）。
+
+遍历全局替换：
+再次遍历整个矩阵：
+剩下的 'O'：说明无法到达边界，必定被包围，修改为 'X'。
+标记为 'E' 的单元格：说明连通边界，无法被包围，恢复为 'O'。
+
+
+复杂度分析
+时间复杂度：O(M * N)，其中 M 和 N 分别为矩阵的行数和列数。每个格子最多被访问和修改常数次。
+空间复杂度：O(M * N)，主要为递归调用的系统栈消耗（最坏情况下整个矩阵都是 'O'）。
+
 """
